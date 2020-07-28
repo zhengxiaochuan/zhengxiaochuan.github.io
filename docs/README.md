@@ -1,8 +1,8 @@
 ---
 home: true
 heroImage: /hero.png
-heroText: 云顶轩
-tagline: 记录点滴足迹,留下美好时光
+heroText: 豆子乐园
+tagline: 记录点滴足迹 留下美好时光
 actionText: Get Started →
 actionLink: /
 features:

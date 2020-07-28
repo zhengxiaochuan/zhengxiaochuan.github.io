@@ -18,13 +18,13 @@ module.exports = {
         // 作为特例，默认语言可以使用 '/' 作为其路径。
         '/': {
           lang: 'en-US', // 将会被设置为 <html> 的 lang 属性
-          title: '云顶轩',
-          description: '记录点滴足迹,留下美好时光'
+          title: '豆子乐园',
+          description: '记录点滴足迹  保留美好时光'
         },
         '/zh/': {
           lang: 'zh-CN',
-          title: '云顶轩',
-          description: '记录点滴足迹,留下美好时光'
+          title: '豆子乐园',
+          description: '记录点滴足迹  保留美好时光'
         }
     },       
     themeConfig: {
