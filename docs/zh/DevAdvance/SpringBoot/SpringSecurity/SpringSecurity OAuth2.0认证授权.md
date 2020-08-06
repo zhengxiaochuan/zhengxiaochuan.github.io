@@ -2535,52 +2535,304 @@ protected void configure(HttpSecurity http) throws Exception {
 
 在t_user数据库创建如下表：
 
-角色表：
+**角色表：**
+
+```sql
+CREATE TABLE `t_role` (
+  `id` varchar(32) NOT NULL,
+  `role_name` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `status` char(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_role_name` (`role_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+insert  into `t_role`(`id`,`role_name`,`description`,`create_time`,`update_time`,`status`) values
+('1','管理员',NULL,NULL,NULL,'');
+```
 
 
 
+**用户角色关系表：**
+
+```sql
+CREATE TABLE `t_user_role` ( 
+  `user_id` varchar(32) NOT NULL,
+  `role_id` varchar(32) NOT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `creator` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+insert  into `t_user_role`(`user_id`,`role_id`,`create_time`,`creator`) values
+('1','1',NULL,NULL);
+```
 
 
-用户角色关系表：
+
+**权限表：**
+
+```sql
+CREATE TABLE `t_permission` ( 
+  `id` varchar(32) NOT NULL,
+  `code` varchar(32) NOT NULL COMMENT '权限标识符',
+  `description` varchar(64) DEFAULT NULL COMMENT '描述',
+  `url` varchar(128) DEFAULT NULL COMMENT '请求地址',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+insert  into `t_permission`(`id`,`code`,`description`,`url`) values ('1','p1','测试资源
+1','/r/r1'),('2','p3','测试资源2','/r/r2');
+```
 
 
 
-权限表：
+**角色权限关系表：**
 
+```sql
+CREATE TABLE `t_role_permission` ( 
+  `role_id` varchar(32) NOT NULL,
+  `permission_id` varchar(32) NOT NULL,
+  PRIMARY KEY (`role_id`,`permission_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
-
-角色权限关系表：
+insert  into `t_role_permission`(`role_id`,`permission_id`) values ('1','1'),('1','2');
+```
 
 
 
 ##### 4.6.2.2 修改UserDetailService
 
-1、修改dao接口
+**1、修改dao接口**
+
 在UserDao中添加：
 
+```java
+// 根据用户id查询用户权限
+public List<String> findPermissionsByUserId(String userId){
+    String sql="SELECT * FROM t_permission WHERE id IN(\n" +
+            "SELECT permission_id FROM t_role_permission WHERE role_id IN(\n" +
+            "\tSELECT role_id FROM t_user_role WHERE user_id = ? \n" +
+            ")\n" +
+            ")";
+    List<PermissionDto> list = jdbcTemplate.query(sql, new Object[]{userId}, new
+BeanPropertyRowMapper<>(PermissionDto.class));
+    List<String> permissions = new ArrayList<>();
+    list.iterator().forEachRemaining(c‐>permissions.add(c.getCode()));
+    return permissions;
+}
+```
 
 
 
+**2、修改UserDetailService**
 
-2、修改UserDetailService
 实现从数据库读取权限
 
-
+```java
+@Override 
+public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    //登录账号
+    System.out.println("username="+username);
+    //根据账号去数据库查询...
+    UserDto user = userDao.getUserByUsername(username);
+    if(user == null){
+        return null;
+    }
+    //查询用户权限
+    List<String> permissions = userDao.findPermissionsByUserId(user.getId());
+    String[] perarray = new String[permissions.size()];
+    permissions.toArray(perarray);
+    //创建userDetails
+    UserDetails userDetails =
+User.withUsername(user.getFullname()).password(user.getPassword()).authorities(perarray).build();
+    return userDetails;
+}
+```
 
 
 
 #### 4.6.3.web授权
 
-在上面例子中我们完成了认证拦截，并对/r/**下的某些资源进行简单的授权保护，但是我们想进行灵活的授权控
-制该怎么做呢？通过给 http.authorizeRequests() 添加多个子节点来定制需求到我们的URL，如下代码：
+在上面例子中我们完成了认证拦截，并对/r/**下的某些资源进行简单的授权保护，但是我们想进行灵活的授权控制该怎么做呢？通过给 `http.authorizeRequests()` 添加多个子节点来定制需求到我们的URL，如下代码：
+
+```java
+@Override
+protected void configure(HttpSecurity http) throws Exception {
+    http
+            .authorizeRequests()                                                           (1)
+            .antMatchers("/r/r1").hasAuthority("p1")                                       (2)
+            .antMatchers("/r/r2").hasAuthority("p2")                                       (3)
+            .antMatchers("/r/r3").access("hasAuthority('p1') and hasAuthority('p2')")      (4)
+            .antMatchers("/r/**").authenticated()                                          (5)
+            .anyRequest().permitAll()                                                      (6)  
+            .and()      
+            .formLogin()
+        // ...      
+}
+```
+
+（1）`http.authorizeRequests()` 方法有多个子节点，每个macher按照他们的声明顺序执行。
+（2）指定"/r/r1"URL，拥有p1权限能够访问
+（3）指定"/r/r2"URL，拥有p2权限能够访问
+
+（4）指定了"/r/r3"URL，同时拥有p1和p2权限才能够访问
+（5）指定了除了r1、r2、r3之外"/r/**"资源，同时通过身份认证就能够访问，这里使用SpEL（Spring Expression
+Language）表达式。
+（6）剩余的尚未匹配的资源，不做保护。
+
+
+
+**注意：**
+**规则的顺序是重要的，更具体的规则应该先写。**现在以`/admin`开始的所有内容都需要具有ADMIN角色的身份验证用
+户，即使是/admin/login路径（因为/admin/login已经被/admin/ **规则匹配，因此第二个规则被忽略）。
+
+```java
+.antMatchers("/admin/**").hasRole("ADMIN") 
+.antMatchers("/admin/login").permitAll()
+```
+
+因此，登录页面的规则应该在 /admin/**规则之前。例如：
+
+```java
+.antMatchers("/admin/login").permitAll() 
+.antMatchers("/admin/**").hasRole("ADMIN")
+```
+
+
+
+保护URL常用的方法有：
+
+**authenticated()** ：保护URL，需要用户登录
+
+**permitAll()** ：指定URL无需保护，一般应用与静态资源文件
+
+**hasRole(String role)**： 限制单个角色访问，角色将被增加 “ROLE_” .所以”ADMIN” 将和 “ROLE_ADMIN”进行比较.
+
+**hasAuthority(String authority)** ：限制单个权限访问
+
+**hasAnyRole(String… roles)**：允许多个角色访问.
+
+**hasAnyAuthority(String… authorities)** ：允许多个权限访问.
+
+**access(String attribute)** ：该方法使用 SpEL表达式, 所以可以创建复杂的限制.
+
+**hasIpAddress(String ipaddressExpression)** ：限制IP地址或子网
+
+
+
+
+
+#### 4.6.3.方法授权
+
+现在我们已经掌握了使用如何使用 `http.authorizeRequests()` 对web资源进行授权保护，从Spring Security2.0版本开始，它支持服务层方法的安全性的支持。本节学习@PreAuthorize，@PostAuthorize，@Secured三类注解。
+
+我们可以在任何 `@Configuration` 实例上使用 `@EnableGlobalMethodSecurity` 注释来启用基于注解的安全性。
+
+以下内容将启用Spring Security的 @Secured 注释。
+
+```java
+@EnableGlobalMethodSecurity(securedEnabled = true) 
+public class MethodSecurityConfig {// ...}
+```
+
+然后向方法（在类或接口上）添加注解就会限制对该方法的访问。 Spring Security的原生注释支持为该方法定义了一组属性。 这些将被传递给AccessDecisionManager以供它作出实际的决定：
+
+```java
+public interface BankService {
+    @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
+    public Account readAccount(Long id);
+    
+    @Secured("IS_AUTHENTICATED_ANONYMOUSLY")
+    public Account[] findAccounts();
+    
+    @Secured("ROLE_TELLER")
+    public Account post(Account account, double amount);
+}
+```
+
+以上配置表明readAccount、findAccounts方法可匿名访问，底层使用WebExpressionVoter投票器，可从AffirmativeBased第23行代码跟踪。
+post方法需要有TELLER角色才能访问，底层使用RoleVoter投票器。
+
+
+
+使用如下代码可启用prePost注解的支持
+
+```java
+@EnableGlobalMethodSecurity(prePostEnabled = true) 
+public class MethodSecurityConfig {
+    // ...
+}
+```
+
+相应Java代码如下：
+
+```java
+public interface BankService {
+    
+    @PreAuthorize("isAnonymous()")
+    public Account readAccount(Long id);
+    
+    @PreAuthorize("isAnonymous()")
+    public Account[] findAccounts();
+    
+    @PreAuthorize("hasAuthority('p_transfer') and hasAuthority('p_read_account')")
+    public Account post(Account account, double amount);
+}
+```
+
+以上配置表明readAccount、findAccounts方法可匿名访问，post方法需要同时拥有p_transfer和p_read_account权限才能访问，底层使用WebExpressionVoter投票器，可从AffirmativeBased第23行代码跟踪。
 
 
 
 
 
 
+## 5. 分布式系统认证方案
+
+
+
+### 5.1什么是分布式系统
+
+随着软件环境和需求的变化 ，软件的架构由单体结构演变为分布式架构，具有分布式架构的系统叫分布式系统，分布式系统的运行通常依赖网络，它将单体结构的系统分为若干服务，服务之间通过网络交互来完成用户的业务处理，当前流行的微服务架构就是分布式系统架构，如下图：
 
 
 
 
+
+分布式系统具体如下基本特点：
+
+1、分布性：每个部分都可以独立部署，服务之间交互通过网络进行通信，比如：订单服务、商品服务。
+
+2、伸缩性：每个部分都可以集群方式部署，并可针对部分结点进行硬件及软件扩容，具有一定的伸缩能力。
+
+3、共享性：每个部分都可以作为共享资源对外提供服务，多个部分可能有操作共享资源的情况。
+
+4、开放性：每个部分根据需求都可以对外发布共享资源的访问接口，并可允许第三方系统访问。
+
+
+
+
+
+### 5.2 分布式认证需求
+
+分布式系统的每个服务都会有认证、授权的需求，如果每个服务都实现一套认证授权逻辑会非常冗余，考虑分布式系统共享性的特点，需要由独立的认证服务处理系统认证授权的请求；考虑分布式系统开放性的特点，不仅对系统内部服务提供认证，对第三方系统也要提供认证。分布式认证的需求总结如下：
+
+
+
+**统一认证授权**
+
+提供独立的认证服务，统一处理认证授权。
+
+无论是不同类型的用户，还是不同种类的客户端(web端，H5、APP)，均采用一致的认证、权限、会话机制，实现统一认证授权。
+
+要实现统一则认证方式必须可扩展，支持各种认证需求，比如：用户名密码认证、短信验证码、二维码、人脸识别等认证方式，并可以非常灵活的切换。
+
+
+
+**应用接入认证**
+
+应提供扩展和开放能力，提供安全的系统对接机制，并可开放部分API给接入第三方使用，一方应用（内部 系统服务）和三方应用（第三方应用）均采用统一机制接入。
 
