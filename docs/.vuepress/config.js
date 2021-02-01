@@ -370,6 +370,7 @@ module.exports = {
 				        	title: '第三方云服务',
 				        	children: [
 				              '/zh/DevOthers/CloudService/七牛云图床搭建',
+				              '/zh/DevOthers/CloudService/Typora+PicGo+七牛云实现图片上传',
 				              '/zh/DevOthers/CloudService/短信云服务',
 				          	]
 				        }
