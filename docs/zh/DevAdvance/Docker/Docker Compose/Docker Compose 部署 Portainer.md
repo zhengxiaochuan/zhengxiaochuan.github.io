@@ -56,7 +56,7 @@ services:
 
 ## 浏览器访问Portainer
 
-- **地址：** [http://IP地址:9000/](http://IP地址:9000)
+- **地址：** [http://IP地址:9001/](http://IP地址:9001)
 
 如果出现以下界面，则表示Portainer安装成功了。
 
