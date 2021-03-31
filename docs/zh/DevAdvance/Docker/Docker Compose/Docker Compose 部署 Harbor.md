@@ -85,11 +85,11 @@ Harbor 的各个容器会通过以下步骤处理：
 ![img](../assets/16daa18883a2fa5e.jpg)
 
 
-作者：哆啦A梦的猜想链接：https://juejin.im/post/5d9c2f25f265da5bbb1e3de5来源：掘金著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
-## 安装 Harbor
 
-[官方 GitHub](http://qfdmy.com/wp-content/themes/quanbaike/go.php?url=aHR0cHM6Ly9naXRodWIuY29tL2dvaGFyYm9yL2hhcmJvcg==) 上下载最新离线安装版，并上传至服务器
+## 安装 Harbor 1.10.1
+
+[官方 GitHub](https://github.com/goharbor/harbor/releases) 上下载最新离线安装版，并上传至服务器
 
 ### 解压安装包
 
@@ -118,7 +118,7 @@ hostname: 172.16.0.4
 harbor_admin_password: Harbor12345
 
 
-#如果需要打开Https，那么就将如下配置进行修改
+#如果需要打开Https，那么就将如下配置进行修改【我们这里就不用HTTPS了，将这段配置注释掉即可】
 https:
   # https port for harbor, default is 443
   port: 443
@@ -290,6 +290,274 @@ Creating nginx             ... done
 
 ![img](../assets/7de03f6aab763e8.png)
 
+
+
+## 安装 Harbor 2.2.0
+
+### 安装前准备
+
+1. 服务器上需要先安装好docker。
+
+   ```bash
+   yum install -y yum-utils device-mapper-persistent-data lvm2
+   yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+   
+   yum makecache fast
+   yum install -y docker-ce
+   systemctl daemon-reload
+   systemctl enable docker
+   systemctl start docker
+   ```
+
+2. 服务器上再安装docker-compose。
+
+   ```bash
+   #https://docs.docker.com/compose/install/#install-compose
+   
+   curl -L "https://github.com/docker/compose/releases/download/1.28.6/docker-compose-(uname -s)-(uname -m)" -o /usr/local/bin/docker-compose
+   
+   chmod +x /usr/local/bin/docker-compose
+   
+   ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+   
+   docker-compose --version
+   ```
+
+### 解压安装包
+
+[官方 GitHub](https://github.com/goharbor/harbor/releases) 上下载最新离线安装版，并上传至服务器
+
+```bash
+tar -xvf harbor-offline-installer-v2.2.0.tgz
+
+# 输出如下
+harbor/harbor.v2.2.0.tar.gz
+harbor/prepare
+harbor/LICENSE
+harbor/install.sh
+harbor/common.sh
+harbor/harbor.yml.tmpl
+```
+
+### 修改配置文件
+
+先执行以下命令
+
+```bash
+cp harbor.yml.tmpl harbor.yml
+
+vim harbor.yml
+```
+
+harbor.yml文件需要修改如下：
+
+```bash
+# 修改为域名或你服务器IP(如果使用的是阿里云等服务器，这里填写内网IP)
+hostname: 172.16.0.4
+
+
+#注意下面这个配置，定义了管理员的密码，可按自己的需求自行修改
+harbor_admin_password: Harbor12345
+
+
+#如果需要打开Https，那么就将如下配置进行修改
+https:
+  # https port for harbor, default is 443
+  port: 443
+  # The path of cert and key files for nginx
+  certificate: /your/certificate/path
+  private_key: /your/private/key/path
+
+#如果不需要Https，则将以上配置注释掉，否则直接执行下一步的安装，会出现以下错误
+[Step 4]: preparing harbor configs ...
+prepare base dir is set to /usr/local/docker/harbor
+ERROR:root:Error: The protocol is https but attribute ssl_cert is not set
+
+
+#Harbor数据存储路径，根据自己需要自行修改
+# The default data volume
+data_volume: /data
+```
+
+### 执行安装脚本
+
+```bash
+./install.sh
+
+# 输出如下
+[Step 0]: checking if docker is installed ...
+
+Note: docker version: 20.10.5
+
+[Step 1]: checking docker-compose is installed ...
+
+Note: docker-compose version: 1.28.6
+
+[Step 2]: loading Harbor images ...
+632651017131: Loading layer [==================================================>]  8.071MB/8.071MB
+cff019bd8e54: Loading layer [==================================================>]  3.584kB/3.584kB
+db8113c9a129: Loading layer [==================================================>]   2.56kB/2.56kB
+04eaffb344c9: Loading layer [==================================================>]  61.03MB/61.03MB
+30932a235d0d: Loading layer [==================================================>]  61.85MB/61.85MB
+Loaded image: goharbor/harbor-jobservice:v2.2.0
+68170e81b04b: Loading layer [==================================================>]  34.51MB/34.51MB
+c0276ff1011e: Loading layer [==================================================>]  7.815MB/7.815MB
+892518eb7e09: Loading layer [==================================================>]  17.61MB/17.61MB
+25f373af3c04: Loading layer [==================================================>]  4.608kB/4.608kB
+df5c0f8011ee: Loading layer [==================================================>]  18.43MB/18.43MB
+Loaded image: goharbor/harbor-exporter:v2.2.0
+d6b0c623c73b: Loading layer [==================================================>]  4.933MB/4.933MB
+494ceea2a6b4: Loading layer [==================================================>]  4.096kB/4.096kB
+64e95a63b7a3: Loading layer [==================================================>]  3.072kB/3.072kB
+f2c35b3b0dcd: Loading layer [==================================================>]  18.99MB/18.99MB
+5c74d99fc846: Loading layer [==================================================>]  19.81MB/19.81MB
+Loaded image: goharbor/registry-photon:v2.2.0
+3fbc0344880d: Loading layer [==================================================>]  8.072MB/8.072MB
+9c5adc52de0d: Loading layer [==================================================>]  3.584kB/3.584kB
+05781011aa08: Loading layer [==================================================>]   2.56kB/2.56kB
+19e4b43530bc: Loading layer [==================================================>]  53.27MB/53.27MB
+9a88bba5ca8d: Loading layer [==================================================>]  5.632kB/5.632kB
+7c2bf6707239: Loading layer [==================================================>]  87.55kB/87.55kB
+b1aeff496e1d: Loading layer [==================================================>]  11.78kB/11.78kB
+f8d3079c10d4: Loading layer [==================================================>]   54.2MB/54.2MB
+eb473baf6abd: Loading layer [==================================================>]   2.56kB/2.56kB
+Loaded image: goharbor/harbor-core:v2.2.0
+f649b07d9770: Loading layer [==================================================>]  63.77MB/63.77MB
+a1252bd74521: Loading layer [==================================================>]     80MB/80MB
+12a45cabca01: Loading layer [==================================================>]  6.144kB/6.144kB
+cb64020cac49: Loading layer [==================================================>]   2.56kB/2.56kB
+11273c337dac: Loading layer [==================================================>]   2.56kB/2.56kB
+06bf2b44257c: Loading layer [==================================================>]   2.56kB/2.56kB
+ae1d550e31f7: Loading layer [==================================================>]   2.56kB/2.56kB
+5418b645d05a: Loading layer [==================================================>]  11.26kB/11.26kB
+Loaded image: goharbor/harbor-db:v2.2.0
+165bc38d4a20: Loading layer [==================================================>]  4.926MB/4.926MB
+4450dd70e473: Loading layer [==================================================>]  5.926MB/5.926MB
+571aff5ac473: Loading layer [==================================================>]  14.86MB/14.86MB
+7213db5cd3f6: Loading layer [==================================================>]  27.36MB/27.36MB
+feb90353404b: Loading layer [==================================================>]  22.02kB/22.02kB
+2bf612d23dd5: Loading layer [==================================================>]  14.86MB/14.86MB
+Loaded image: goharbor/notary-server-photon:v2.2.0
+75b7bc9e1233: Loading layer [==================================================>]  6.237MB/6.237MB
+45cc62077a3e: Loading layer [==================================================>]  4.096kB/4.096kB
+0254af6d0275: Loading layer [==================================================>]  3.072kB/3.072kB
+6b42f8a7f98d: Loading layer [==================================================>]   28.3MB/28.3MB
+4c3750e9c704: Loading layer [==================================================>]  11.38MB/11.38MB
+2f3db0c6619f: Loading layer [==================================================>]   40.5MB/40.5MB
+Loaded image: goharbor/trivy-adapter-photon:v2.2.0
+bbd0a1895331: Loading layer [==================================================>]  4.933MB/4.933MB
+5db7b6078317: Loading layer [==================================================>]  4.096kB/4.096kB
+b2a993735d1e: Loading layer [==================================================>]  18.99MB/18.99MB
+46f8d3251467: Loading layer [==================================================>]  3.072kB/3.072kB
+36435ed81d46: Loading layer [==================================================>]  25.32MB/25.32MB
+586ede682f3f: Loading layer [==================================================>]  45.14MB/45.14MB
+Loaded image: goharbor/harbor-registryctl:v2.2.0
+59cead1174d4: Loading layer [==================================================>]  35.94MB/35.94MB
+8c26e21f2027: Loading layer [==================================================>]  3.072kB/3.072kB
+741a65c6dac7: Loading layer [==================================================>]   59.9kB/59.9kB
+438633fad008: Loading layer [==================================================>]  61.95kB/61.95kB
+Loaded image: goharbor/redis-photon:v2.2.0
+2fc5cd36d28c: Loading layer [==================================================>]  76.07MB/76.07MB
+6a135eaee93d: Loading layer [==================================================>]  3.584kB/3.584kB
+e5c3feb6aca0: Loading layer [==================================================>]  3.072kB/3.072kB
+a31d1977777a: Loading layer [==================================================>]   2.56kB/2.56kB
+0969721e9ff9: Loading layer [==================================================>]  3.072kB/3.072kB
+e790c9ba4ed2: Loading layer [==================================================>]  3.584kB/3.584kB
+ee43eb3a3893: Loading layer [==================================================>]  12.29kB/12.29kB
+Loaded image: goharbor/harbor-log:v2.2.0
+45a339152b94: Loading layer [==================================================>]  6.779MB/6.779MB
+Loaded image: goharbor/nginx-photon:v2.2.0
+e6c87254655c: Loading layer [==================================================>]  4.926MB/4.926MB
+385174b02cde: Loading layer [==================================================>]  5.926MB/5.926MB
+427415aeb0cc: Loading layer [==================================================>]  13.33MB/13.33MB
+a46c9a86420a: Loading layer [==================================================>]  27.36MB/27.36MB
+0646903e30c4: Loading layer [==================================================>]  22.02kB/22.02kB
+74c332a73d82: Loading layer [==================================================>]  13.33MB/13.33MB
+Loaded image: goharbor/notary-signer-photon:v2.2.0
+d6c1f4fe3f89: Loading layer [==================================================>]  4.932MB/4.932MB
+da140a6b9c66: Loading layer [==================================================>]  62.71MB/62.71MB
+014c145ecf1c: Loading layer [==================================================>]  3.072kB/3.072kB
+73ad0cb1c27d: Loading layer [==================================================>]  4.096kB/4.096kB
+4d442ea85017: Loading layer [==================================================>]  63.53MB/63.53MB
+Loaded image: goharbor/chartmuseum-photon:v2.2.0
+Loaded image: goharbor/prepare:v2.2.0
+366e44984cdc: Loading layer [==================================================>]  6.779MB/6.779MB
+eb1850e4d6ec: Loading layer [==================================================>]  9.096MB/9.096MB
+ecaa0fbfe5ea: Loading layer [==================================================>]  1.691MB/1.691MB
+Loaded image: goharbor/harbor-portal:v2.2.0
+
+
+[Step 3]: preparing environment ...
+
+[Step 4]: preparing harbor configs ...
+prepare base dir is set to /usr/local/docker/harbor
+Clearing the configuration file: /config/portal/nginx.conf
+Clearing the configuration file: /config/log/logrotate.conf
+Clearing the configuration file: /config/log/rsyslog_docker.conf
+Clearing the configuration file: /config/nginx/nginx.conf
+Clearing the configuration file: /config/core/env
+Clearing the configuration file: /config/core/app.conf
+Clearing the configuration file: /config/registry/passwd
+Clearing the configuration file: /config/registry/config.yml
+Clearing the configuration file: /config/registryctl/env
+Clearing the configuration file: /config/registryctl/config.yml
+Clearing the configuration file: /config/db/env
+Clearing the configuration file: /config/jobservice/env
+Clearing the configuration file: /config/jobservice/config.yml
+Generated configuration file: /config/portal/nginx.conf
+Generated configuration file: /config/log/logrotate.conf
+Generated configuration file: /config/log/rsyslog_docker.conf
+Generated configuration file: /config/nginx/nginx.conf
+Generated configuration file: /config/core/env
+Generated configuration file: /config/core/app.conf
+Generated configuration file: /config/registry/config.yml
+Generated configuration file: /config/registryctl/env
+Generated configuration file: /config/registryctl/config.yml
+Generated configuration file: /config/db/env
+Generated configuration file: /config/jobservice/env
+Generated configuration file: /config/jobservice/config.yml
+loaded secret from file: /data/secret/keys/secretkey
+Generated configuration file: /compose_location/docker-compose.yml
+Clean up the input dir
+
+
+
+[Step 5]: starting Harbor ...
+Creating network "harbor_harbor" with the default driver
+Creating harbor-log ... done
+Creating harbor-portal ... done
+Creating registry      ... done
+Creating redis         ... done
+Creating registryctl   ... done
+Creating harbor-db     ... done
+Creating harbor-core   ... done
+Creating nginx             ... done
+Creating harbor-jobservice ... done
+✔ ----Harbor has been installed and started successfully.----
+```
+
+### 验证安装是否成功
+
+通过浏览器访问 [http://172.16.0.4]() ，看到登录页面
+
+![img](../assets/hrc3ysgn0c.png)
+
+输入账号 `admin`，密码 `Harbor12345`，登录成功后进入系统首页，如下图所示：
+
+![img](../assets/2obnogo7c2.png)
+
+
+
+## 配置HTTPS访问Harbor
+
+在日常的开发或者测试环境中，我们可以直接使用HTTP来访问Harbor，这样是没有任何问题的。但是如果是在生产环境中，最好还是使用HTTPS来访问Harbor，这样更安全。
+
+关于如何配置HTTPS访问Harbor，我们可以直接查看[官方文档](https://goharbor.io/docs/2.2.0/install-config/configure-https/)，写的还是很明白的。
+
+
+
 ## Harbor 启动和停止
 
 Harbor 的日常运维管理是通过 docker-compose 来完成的，Harbor 本身有多个服务进程，都放在 docker 容器之中运行，我们可以通过 `docker ps` 命令查看。
@@ -321,7 +589,7 @@ docker-comose stop
 docker-compose restart
 ```
 
-说明：**
+**说明：**
 
 - **nginx：** nginx 负责流量转发和安全验证，对外提供的流量都是从 nginx 中转，所以开放 https 的 443 端口，它将流量分发到后端的 ui 和正在 docker 镜像存储的 docker registry。
 - **harbor-jobservice：** harbor-jobservice 是 harbor 的 job 管理模块，job 在 harbor 里面主要是为了镜像仓库之前同步使用的；
@@ -333,9 +601,15 @@ docker-compose restart
 
 这几个容器通过 Docker link 的形式连接在一起，这样，在容器之间可以通过容器名字互相访问。对终端用户而言，只需要暴露 proxy （即 Nginx）的服务端口。
 
-## 配置客户端
 
-在 `/etc/docker/daemon.json` 中增加如下内容（如果文件不存在请新建该文件）
+
+## 将仓库添加到docker
+
+docker 默认是按 https 请求，由于这次搭建的私有库是 http ，所以需要修改 docker 配置，将本次的库添加为可信任库。 
+
+在 `/etc/docker/daemon.json` 中添加 "insecure-registries": ["172.16.0.4"]，内容如下：
+
+（如果该文件不存在则新建）
 
 ```json
 {
@@ -350,7 +624,7 @@ docker-compose restart
 
 > **注意：** 该文件必须符合 JSON 规范，否则 Docker 将不能启动。
 
-重启服务
+重启docker服务
 
 ```bash
 systemctl daemon-reload
@@ -367,6 +641,21 @@ Insecure Registries:
   127.0.0.0/8
  Registry Mirrors:
   https://registry.docker-cn.com/
+```
+
+## 登录Harbor仓库
+
+默认账号： `admin` 密码：`Harbor12345`
+
+```bash
+[root@iZ2zeawqjv5unuxd1d1akaZ ~]# docker login 172.16.0.4
+Username: admin
+Password: 
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
 ```
 
 
