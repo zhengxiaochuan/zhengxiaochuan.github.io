@@ -1,7 +1,7 @@
 module.exports = {
     // 这是部署到github相关的配置	
     base: '/',
-    title: '云顶轩',
+    title: '狸猫小僧',
     description: 'YunDingXuan',
     // 注入到当前页面的 HTML <head> 中的标签
     head: [
@@ -18,12 +18,12 @@ module.exports = {
         // 作为特例，默认语言可以使用 '/' 作为其路径。
         '/': {
           lang: 'en-US', // 将会被设置为 <html> 的 lang 属性
-          title: '豆子乐园',
+          title: '狸猫小僧',
           description: '记录点滴足迹  保留美好时光'
         },
         '/zh/': {
           lang: 'zh-CN',
-          title: '豆子乐园',
+          title: '狸猫小僧',
           description: '记录点滴足迹  保留美好时光'
         }
     },       
