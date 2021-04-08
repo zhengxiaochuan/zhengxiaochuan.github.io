@@ -9,6 +9,8 @@ module.exports = {
 	'/zh/DevAdvance/': require('../zh/DevAdvance/sidebar'),
 	// 前端
 	'/zh/Frontend/': require('../zh/Frontend/sidebar'),
+	// 多媒体
+	'/zh/Media/': require('../zh/Media/sidebar'),
 	// 开发杂谈
 	'/zh/DevOthers/': require('../zh/DevOthers/sidebar'),
 	// 文章
