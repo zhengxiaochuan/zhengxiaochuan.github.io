@@ -12,6 +12,8 @@ module.exports = [
         '/zh/DevOthers/Chapter1/使用screw生成数据库文档',
         '/zh/DevOthers/Chapter1/IntelliJ IDEA 快捷键说明大全-Windows',
         '/zh/DevOthers/Chapter1/VS Code 常用快捷键-Windows版',
+        '/zh/DevOthers/Chapter1/文档写作利器：Markdown',
+        '/zh/DevOthers/Chapter1/靠开源项目弄到 IntelliJ IDEA 激活码',
         '/zh/DevOthers/Chapter1/Linux上kdevtmpfsi挖矿木马清除处理',
       ]
   },
