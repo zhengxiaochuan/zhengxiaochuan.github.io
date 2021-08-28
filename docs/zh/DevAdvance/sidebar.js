@@ -71,10 +71,12 @@ module.exports = [
       '/zh/DevAdvance/MicroServiceSkill/SpringCloud01/SpringCloud01',
       '/zh/DevAdvance/MicroServiceSkill/SpringCloud02/SpringCloud实用篇02',
       '/zh/DevAdvance/MicroServiceSkill/Docker/Docker实用篇',
+      '/zh/DevAdvance/MicroServiceSkill/Docker/Centos7安装Docker',
       '/zh/DevAdvance/MicroServiceSkill/MQ/RabbitMQ',
       '/zh/DevAdvance/MicroServiceSkill/Elasticsearch01/分布式搜索引擎01',
       '/zh/DevAdvance/MicroServiceSkill/Elasticsearch02/分布式搜索引擎02',
       '/zh/DevAdvance/MicroServiceSkill/Elasticsearch03/分布式搜索引擎03',
+      '/zh/DevAdvance/MicroServiceSkill/ElasticsearchInstall/安装Easticsearch',
     ]
   },
   {
