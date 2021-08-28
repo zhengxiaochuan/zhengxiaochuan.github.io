@@ -1,0 +1,21 @@
+version: '3.9'
+services:
+  kibana:
+    restart: always
+    image: kibana:7.12.1
+    container_name: kibana7
+    #环境变量
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch7:9200
+    #端口映射
+    ports:
+      - 5601:5601
+    #目录映射
+    volumes:
+      - ./kibana_config/:/usr/local/kibana/config/
+    
+#使用已存在的网络
+networks:
+  default:
+    external: true
+    name: es-net

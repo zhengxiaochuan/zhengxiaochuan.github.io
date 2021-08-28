@@ -324,7 +324,7 @@ docker restart es
 docker logs -f elasticsearch
 ```
 
-![image-20201115230900504](assets/image-20201115230900504.png)
+![image-20201115230900504](./assets/image-20201115230900504.png)
 
 日志中已经成功加载ext.dic配置文件
 
