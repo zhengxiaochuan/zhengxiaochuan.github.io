@@ -1,4 +1,4 @@
-// 云原生
+// 云原生模块
 module.exports = [
   {
     title: '云平台核心',
