@@ -7,6 +7,8 @@ module.exports = {
 	'/zh/DevBasic/': require('../zh/DevBasic/sidebar'),
 	// 高级
 	'/zh/DevAdvance/': require('../zh/DevAdvance/sidebar'),
+	// 云原生
+	'/zh/CloudNative/': require('../zh/CloudNative/sidebar'),
 	// 前端
 	'/zh/Frontend/': require('../zh/Frontend/sidebar'),
 	// 多媒体
