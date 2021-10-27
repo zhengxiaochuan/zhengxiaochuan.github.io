@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Kubernetes上安装KubeSphere | 狸猫小僧</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="description" content="记录点滴足迹  保留美好时光">
+    
+    <link rel="preload" href="/assets/css/0.styles.89e32c3d.css" as="style"><link rel="preload" href="/assets/js/app.2686c948.js" as="script"><link rel="preload" href="/assets/js/6.f28aab75.js" as="script"><link rel="preload" href="/assets/js/131.d745c2e4.js" as="script"><link rel="prefetch" href="/assets/js/10.b763c8f1.js"><link rel="prefetch" href="/assets/js/100.bbc653e5.js"><link rel="prefetch" href="/assets/js/101.303f2902.js"><link rel="prefetch" href="/assets/js/102.b46eceac.js"><link rel="prefetch" href="/assets/js/103.27a91564.js"><link rel="prefetch" href="/assets/js/104.c00f1ed6.js"><link rel="prefetch" href="/assets/js/105.bde509c2.js"><link rel="prefetch" href="/assets/js/106.c59cc983.js"><link rel="prefetch" href="/assets/js/107.e657f9c5.js"><link rel="prefetch" href="/assets/js/108.9c2b551a.js"><link rel="prefetch" href="/assets/js/109.adaf3848.js"><link rel="prefetch" href="/assets/js/11.b345e564.js"><link rel="prefetch" href="/assets/js/110.0bb4d0af.js"><link rel="prefetch" href="/assets/js/111.be633055.js"><link rel="prefetch" href="/assets/js/112.052b3ec1.js"><link rel="prefetch" href="/assets/js/113.d3671c1f.js"><link rel="prefetch" href="/assets/js/114.0a2c1702.js"><link rel="prefetch" href="/assets/js/115.af728f47.js"><link rel="prefetch" href="/assets/js/116.14ff2e8b.js"><link rel="prefetch" href="/assets/js/117.79557f53.js"><link rel="prefetch" href="/assets/js/118.74f98f90.js"><link rel="prefetch" href="/assets/js/119.51467a94.js"><link rel="prefetch" href="/assets/js/12.a485c9de.js"><link rel="prefetch" href="/assets/js/120.ee4fcdad.js"><link rel="prefetch" href="/assets/js/121.087c3cd0.js"><link rel="prefetch" href="/assets/js/122.019296cd.js"><link rel="prefetch" href="/assets/js/123.705b9709.js"><link rel="prefetch" href="/assets/js/124.dda0a008.js"><link rel="prefetch" href="/assets/js/125.697f6d9c.js"><link rel="prefetch" href="/assets/js/126.414448f4.js"><link rel="prefetch" href="/assets/js/127.c8ba301d.js"><link rel="prefetch" href="/assets/js/128.6570884f.js"><link rel="prefetch" href="/assets/js/129.c5944638.js"><link rel="prefetch" href="/assets/js/13.93f7e8ad.js"><link rel="prefetch" href="/assets/js/130.24bec6e4.js"><link rel="prefetch" href="/assets/js/132.5bb54b4f.js"><link rel="prefetch" href="/assets/js/133.e3055678.js"><link rel="prefetch" href="/assets/js/134.2042ac4b.js"><link rel="prefetch" href="/assets/js/135.34d87141.js"><link rel="prefetch" href="/assets/js/136.6919a9aa.js"><link rel="prefetch" href="/assets/js/137.d9ebed5e.js"><link rel="prefetch" href="/assets/js/138.374fb105.js"><link rel="prefetch" href="/assets/js/139.71d4b91f.js"><link rel="prefetch" href="/assets/js/14.ce1abb2e.js"><link rel="prefetch" href="/assets/js/140.0f3146bb.js"><link rel="prefetch" href="/assets/js/141.0ca16329.js"><link rel="prefetch" href="/assets/js/142.5cbc31cb.js"><link rel="prefetch" href="/assets/js/143.576bc4d5.js"><link rel="prefetch" href="/assets/js/144.0a30d887.js"><link rel="prefetch" href="/assets/js/145.dd22e6af.js"><link rel="prefetch" href="/assets/js/146.72dda13c.js"><link rel="prefetch" href="/assets/js/147.69599197.js"><link rel="prefetch" href="/assets/js/148.a178bca9.js"><link rel="prefetch" href="/assets/js/149.5cc779e7.js"><link rel="prefetch" href="/assets/js/15.4be6ef14.js"><link rel="prefetch" href="/assets/js/150.f26c0055.js"><link rel="prefetch" href="/assets/js/151.1cd8a8d9.js"><link rel="prefetch" href="/assets/js/152.b833e6fc.js"><link rel="prefetch" href="/assets/js/153.f83e7c18.js"><link rel="prefetch" href="/assets/js/154.d36938b5.js"><link rel="prefetch" href="/assets/js/155.2fd17237.js"><link rel="prefetch" href="/assets/js/156.b2f42612.js"><link rel="prefetch" href="/assets/js/157.6ba1373c.js"><link rel="prefetch" href="/assets/js/158.c49e15cb.js"><link rel="prefetch" href="/assets/js/159.3bb2f47e.js"><link rel="prefetch" href="/assets/js/16.4e1e43b9.js"><link rel="prefetch" href="/assets/js/160.cfee7494.js"><link rel="prefetch" href="/assets/js/161.88530881.js"><link rel="prefetch" href="/assets/js/162.cf6ff630.js"><link rel="prefetch" href="/assets/js/163.8d34fd88.js"><link rel="prefetch" href="/assets/js/164.9ef791a3.js"><link rel="prefetch" href="/assets/js/165.9ff0cb00.js"><link rel="prefetch" href="/assets/js/166.a0e3220f.js"><link rel="prefetch" href="/assets/js/167.6e641ec0.js"><link rel="prefetch" href="/assets/js/168.8c46e626.js"><link rel="prefetch" href="/assets/js/169.748c0ce0.js"><link rel="prefetch" href="/assets/js/17.55ad437f.js"><link rel="prefetch" href="/assets/js/170.cabc3c2a.js"><link rel="prefetch" href="/assets/js/171.8b20affa.js"><link rel="prefetch" href="/assets/js/172.45eba73a.js"><link rel="prefetch" href="/assets/js/173.e2e9d5be.js"><link rel="prefetch" href="/assets/js/174.ef85ed63.js"><link rel="prefetch" href="/assets/js/175.515109cf.js"><link rel="prefetch" href="/assets/js/176.b4e744a4.js"><link rel="prefetch" href="/assets/js/177.65b2e2ae.js"><link rel="prefetch" href="/assets/js/178.d127aed5.js"><link rel="prefetch" href="/assets/js/179.619136c1.js"><link rel="prefetch" href="/assets/js/18.27446c6b.js"><link rel="prefetch" href="/assets/js/180.6c956f0f.js"><link rel="prefetch" href="/assets/js/181.84621b09.js"><link rel="prefetch" href="/assets/js/182.b5c09870.js"><link rel="prefetch" href="/assets/js/183.a5b0e812.js"><link rel="prefetch" href="/assets/js/184.6aabcb35.js"><link rel="prefetch" href="/assets/js/185.2784f0d6.js"><link rel="prefetch" href="/assets/js/186.ab6fd87b.js"><link rel="prefetch" href="/assets/js/187.2428c146.js"><link rel="prefetch" href="/assets/js/188.88e21a61.js"><link rel="prefetch" href="/assets/js/189.f490bbae.js"><link rel="prefetch" href="/assets/js/19.7953675a.js"><link rel="prefetch" href="/assets/js/190.4380a2ee.js"><link rel="prefetch" href="/assets/js/191.77a345de.js"><link rel="prefetch" href="/assets/js/192.1a7d619d.js"><link rel="prefetch" href="/assets/js/193.3473161d.js"><link rel="prefetch" href="/assets/js/194.4ad1766e.js"><link rel="prefetch" href="/assets/js/195.28fa1081.js"><link rel="prefetch" href="/assets/js/196.6c32e661.js"><link rel="prefetch" href="/assets/js/197.281622bc.js"><link rel="prefetch" href="/assets/js/198.fbe485c4.js"><link rel="prefetch" href="/assets/js/199.8a9ebfe5.js"><link rel="prefetch" href="/assets/js/20.e7e70042.js"><link rel="prefetch" href="/assets/js/200.8b5ae38d.js"><link rel="prefetch" href="/assets/js/201.5e7b0f8a.js"><link rel="prefetch" href="/assets/js/202.902aaa93.js"><link rel="prefetch" href="/assets/js/203.2ee35155.js"><link rel="prefetch" href="/assets/js/204.b31d98db.js"><link rel="prefetch" href="/assets/js/205.077d3931.js"><link rel="prefetch" href="/assets/js/206.9b904563.js"><link rel="prefetch" href="/assets/js/207.bfb9cea3.js"><link rel="prefetch" href="/assets/js/208.5463413c.js"><link rel="prefetch" href="/assets/js/209.b21ae7e8.js"><link rel="prefetch" href="/assets/js/21.f4dbb75d.js"><link rel="prefetch" href="/assets/js/210.4cbdc8cb.js"><link rel="prefetch" href="/assets/js/211.8997c082.js"><link rel="prefetch" href="/assets/js/212.6aea7200.js"><link rel="prefetch" href="/assets/js/213.c272280b.js"><link rel="prefetch" href="/assets/js/214.6d338f6f.js"><link rel="prefetch" href="/assets/js/215.7915ed08.js"><link rel="prefetch" href="/assets/js/216.4ceb73a8.js"><link rel="prefetch" href="/assets/js/217.505493fc.js"><link rel="prefetch" href="/assets/js/218.6e59f36c.js"><link rel="prefetch" href="/assets/js/219.0031454e.js"><link rel="prefetch" href="/assets/js/22.c2caa7ab.js"><link rel="prefetch" href="/assets/js/220.c142e5f8.js"><link rel="prefetch" href="/assets/js/221.bfa6ecd0.js"><link rel="prefetch" href="/assets/js/222.8aba0a2e.js"><link rel="prefetch" href="/assets/js/223.b8746f71.js"><link rel="prefetch" href="/assets/js/224.6620f60e.js"><link rel="prefetch" href="/assets/js/225.230d50ca.js"><link rel="prefetch" href="/assets/js/226.db545c06.js"><link rel="prefetch" href="/assets/js/227.d7529dd0.js"><link rel="prefetch" href="/assets/js/228.57b5c786.js"><link rel="prefetch" href="/assets/js/229.c87e67e6.js"><link rel="prefetch" href="/assets/js/23.34880394.js"><link rel="prefetch" href="/assets/js/230.ccb5c81d.js"><link rel="prefetch" href="/assets/js/231.4f35e59c.js"><link rel="prefetch" href="/assets/js/232.0b4a59b1.js"><link rel="prefetch" href="/assets/js/233.44583e26.js"><link rel="prefetch" href="/assets/js/234.4bc02fd8.js"><link rel="prefetch" href="/assets/js/235.242b7fe8.js"><link rel="prefetch" href="/assets/js/236.7ecc8f79.js"><link rel="prefetch" href="/assets/js/237.87f86788.js"><link rel="prefetch" href="/assets/js/238.78b85082.js"><link rel="prefetch" href="/assets/js/239.4cb0a7b5.js"><link rel="prefetch" href="/assets/js/24.02b612ed.js"><link rel="prefetch" href="/assets/js/240.f71341c4.js"><link rel="prefetch" href="/assets/js/241.bb9ad1b4.js"><link rel="prefetch" href="/assets/js/242.8ff5c3a0.js"><link rel="prefetch" href="/assets/js/243.6925896c.js"><link rel="prefetch" href="/assets/js/244.6160a282.js"><link rel="prefetch" href="/assets/js/245.d058f9b2.js"><link rel="prefetch" href="/assets/js/246.cc9c0c42.js"><link rel="prefetch" href="/assets/js/247.e667a1b6.js"><link rel="prefetch" href="/assets/js/248.f9db695c.js"><link rel="prefetch" href="/assets/js/249.67a79ffe.js"><link rel="prefetch" href="/assets/js/25.4fe61d14.js"><link rel="prefetch" href="/assets/js/250.f2a1bcf8.js"><link rel="prefetch" href="/assets/js/251.fdb01957.js"><link rel="prefetch" href="/assets/js/252.af3ddb91.js"><link rel="prefetch" href="/assets/js/253.fd242587.js"><link rel="prefetch" href="/assets/js/254.f0d4d8cb.js"><link rel="prefetch" href="/assets/js/255.920e2aaf.js"><link rel="prefetch" href="/assets/js/256.f201d3aa.js"><link rel="prefetch" href="/assets/js/257.d88d4546.js"><link rel="prefetch" href="/assets/js/258.201cc7c8.js"><link rel="prefetch" href="/assets/js/259.b594548a.js"><link rel="prefetch" href="/assets/js/26.1aced081.js"><link rel="prefetch" href="/assets/js/260.4a70fbc2.js"><link rel="prefetch" href="/assets/js/261.db1451f7.js"><link rel="prefetch" href="/assets/js/262.cb04574e.js"><link rel="prefetch" href="/assets/js/263.55e6b97a.js"><link rel="prefetch" href="/assets/js/264.3a5da944.js"><link rel="prefetch" href="/assets/js/265.c5125ad7.js"><link rel="prefetch" href="/assets/js/266.46d07635.js"><link rel="prefetch" href="/assets/js/267.5ce32eda.js"><link rel="prefetch" href="/assets/js/268.91feac82.js"><link rel="prefetch" href="/assets/js/269.19e7e56e.js"><link rel="prefetch" href="/assets/js/27.f2890989.js"><link rel="prefetch" href="/assets/js/270.f5cf06a9.js"><link rel="prefetch" href="/assets/js/271.e4ba3a07.js"><link rel="prefetch" href="/assets/js/272.d08b6089.js"><link rel="prefetch" href="/assets/js/273.ebaba1e7.js"><link rel="prefetch" href="/assets/js/274.58530683.js"><link rel="prefetch" href="/assets/js/275.88b9d380.js"><link rel="prefetch" href="/assets/js/276.d7218364.js"><link rel="prefetch" href="/assets/js/277.c2a12ebc.js"><link rel="prefetch" href="/assets/js/278.21d0ecc8.js"><link rel="prefetch" href="/assets/js/279.f596d66c.js"><link rel="prefetch" href="/assets/js/28.4562264f.js"><link rel="prefetch" href="/assets/js/280.01393daa.js"><link rel="prefetch" href="/assets/js/281.bf1d971f.js"><link rel="prefetch" href="/assets/js/282.3d751344.js"><link rel="prefetch" href="/assets/js/283.6773bcbf.js"><link rel="prefetch" href="/assets/js/284.e4a15c5e.js"><link rel="prefetch" href="/assets/js/285.a41c4903.js"><link rel="prefetch" href="/assets/js/286.47dacdd2.js"><link rel="prefetch" href="/assets/js/287.536a305c.js"><link rel="prefetch" href="/assets/js/288.f19b56ab.js"><link rel="prefetch" href="/assets/js/289.4e0cc2d2.js"><link rel="prefetch" href="/assets/js/29.d1872a01.js"><link rel="prefetch" href="/assets/js/290.e9e20e40.js"><link rel="prefetch" href="/assets/js/291.bf1e07ba.js"><link rel="prefetch" href="/assets/js/292.8a37d1e6.js"><link rel="prefetch" href="/assets/js/293.d1c02d5d.js"><link rel="prefetch" href="/assets/js/294.1664aff5.js"><link rel="prefetch" href="/assets/js/295.fca3cf6e.js"><link rel="prefetch" href="/assets/js/296.d9a883f2.js"><link rel="prefetch" href="/assets/js/297.90e6f738.js"><link rel="prefetch" href="/assets/js/298.995bff3e.js"><link rel="prefetch" href="/assets/js/299.f72c813f.js"><link rel="prefetch" href="/assets/js/3.efd8e852.js"><link rel="prefetch" href="/assets/js/30.8b48f629.js"><link rel="prefetch" href="/assets/js/300.6b4f4f49.js"><link rel="prefetch" href="/assets/js/301.c4ee1ba3.js"><link rel="prefetch" href="/assets/js/302.c32c2e25.js"><link rel="prefetch" href="/assets/js/303.f20e55e7.js"><link rel="prefetch" href="/assets/js/304.0f9030f1.js"><link rel="prefetch" href="/assets/js/305.f8d3f5a1.js"><link rel="prefetch" href="/assets/js/306.5ae5433c.js"><link rel="prefetch" href="/assets/js/307.e29f887b.js"><link rel="prefetch" href="/assets/js/308.ba79885f.js"><link rel="prefetch" href="/assets/js/309.d76940b3.js"><link rel="prefetch" href="/assets/js/31.8f05e884.js"><link rel="prefetch" href="/assets/js/310.6aee19b1.js"><link rel="prefetch" href="/assets/js/311.f8f528bb.js"><link rel="prefetch" href="/assets/js/312.8283e153.js"><link rel="prefetch" href="/assets/js/313.b134c5fa.js"><link rel="prefetch" href="/assets/js/314.83fa3a97.js"><link rel="prefetch" href="/assets/js/315.545c7c96.js"><link rel="prefetch" href="/assets/js/316.3f9d2c0f.js"><link rel="prefetch" href="/assets/js/317.052007d1.js"><link rel="prefetch" href="/assets/js/318.abff6602.js"><link rel="prefetch" href="/assets/js/319.2dfe9543.js"><link rel="prefetch" href="/assets/js/32.c2b066ce.js"><link rel="prefetch" href="/assets/js/320.f3344836.js"><link rel="prefetch" href="/assets/js/321.3e73dd3e.js"><link rel="prefetch" href="/assets/js/322.80fd4272.js"><link rel="prefetch" href="/assets/js/323.4e6b715d.js"><link rel="prefetch" href="/assets/js/324.7562d396.js"><link rel="prefetch" href="/assets/js/325.e29f5acf.js"><link rel="prefetch" href="/assets/js/326.12442153.js"><link rel="prefetch" href="/assets/js/327.50e6afe3.js"><link rel="prefetch" href="/assets/js/328.6e84d633.js"><link rel="prefetch" href="/assets/js/329.4b019023.js"><link rel="prefetch" href="/assets/js/33.36504ab2.js"><link rel="prefetch" href="/assets/js/330.8afa5607.js"><link rel="prefetch" href="/assets/js/331.28d6f658.js"><link rel="prefetch" href="/assets/js/332.45e511c5.js"><link rel="prefetch" href="/assets/js/333.7d72f967.js"><link rel="prefetch" href="/assets/js/334.2493909b.js"><link rel="prefetch" href="/assets/js/335.04fe0eae.js"><link rel="prefetch" href="/assets/js/336.83873782.js"><link rel="prefetch" href="/assets/js/337.b8d6b45a.js"><link rel="prefetch" href="/assets/js/338.be888db5.js"><link rel="prefetch" href="/assets/js/339.678be8ef.js"><link rel="prefetch" href="/assets/js/34.31ed38fb.js"><link rel="prefetch" href="/assets/js/340.91a24d14.js"><link rel="prefetch" href="/assets/js/341.c85167b6.js"><link rel="prefetch" href="/assets/js/342.5c73b057.js"><link rel="prefetch" href="/assets/js/343.944e118a.js"><link rel="prefetch" href="/assets/js/344.c6cf7955.js"><link rel="prefetch" href="/assets/js/345.cbe8fa57.js"><link rel="prefetch" href="/assets/js/346.01a7f453.js"><link rel="prefetch" href="/assets/js/347.b5fd7eab.js"><link rel="prefetch" href="/assets/js/348.a8fb306c.js"><link rel="prefetch" href="/assets/js/349.d740cc66.js"><link rel="prefetch" href="/assets/js/35.4d182949.js"><link rel="prefetch" href="/assets/js/350.cb001bf0.js"><link rel="prefetch" href="/assets/js/351.cb8ce63d.js"><link rel="prefetch" href="/assets/js/352.c924d966.js"><link rel="prefetch" href="/assets/js/353.10e1a372.js"><link rel="prefetch" href="/assets/js/354.9617f352.js"><link rel="prefetch" href="/assets/js/355.912ffeaf.js"><link rel="prefetch" href="/assets/js/356.aee233a9.js"><link rel="prefetch" href="/assets/js/357.fdebd608.js"><link rel="prefetch" href="/assets/js/358.9d4c4be4.js"><link rel="prefetch" href="/assets/js/36.169e7b98.js"><link rel="prefetch" href="/assets/js/37.88a95f17.js"><link rel="prefetch" href="/assets/js/38.ce7722fa.js"><link rel="prefetch" href="/assets/js/39.a1d78dea.js"><link rel="prefetch" href="/assets/js/4.7e9a5cbb.js"><link rel="prefetch" href="/assets/js/40.13193577.js"><link rel="prefetch" href="/assets/js/41.37e7d880.js"><link rel="prefetch" href="/assets/js/42.6cf419b9.js"><link rel="prefetch" href="/assets/js/43.81e8d48e.js"><link rel="prefetch" href="/assets/js/44.95f84833.js"><link rel="prefetch" href="/assets/js/45.ac2027aa.js"><link rel="prefetch" href="/assets/js/46.f36ea9f0.js"><link rel="prefetch" href="/assets/js/47.bfbb0827.js"><link rel="prefetch" href="/assets/js/48.915b0c7d.js"><link rel="prefetch" href="/assets/js/49.a9182af1.js"><link rel="prefetch" href="/assets/js/5.39b15057.js"><link rel="prefetch" href="/assets/js/50.7f70ffc4.js"><link rel="prefetch" href="/assets/js/51.13cd7da9.js"><link rel="prefetch" href="/assets/js/52.07df8bb0.js"><link rel="prefetch" href="/assets/js/53.66c974ba.js"><link rel="prefetch" href="/assets/js/54.6041dfb5.js"><link rel="prefetch" href="/assets/js/55.30ceb459.js"><link rel="prefetch" href="/assets/js/56.349cc4cc.js"><link rel="prefetch" href="/assets/js/57.50a96511.js"><link rel="prefetch" href="/assets/js/58.9b5a1bd1.js"><link rel="prefetch" href="/assets/js/59.98f1dc47.js"><link rel="prefetch" href="/assets/js/60.4b01ef06.js"><link rel="prefetch" href="/assets/js/61.0a09c615.js"><link rel="prefetch" href="/assets/js/62.f1ac0c53.js"><link rel="prefetch" href="/assets/js/63.6640191e.js"><link rel="prefetch" href="/assets/js/64.8dafafd3.js"><link rel="prefetch" href="/assets/js/65.7978a40a.js"><link rel="prefetch" href="/assets/js/66.fa9e25c8.js"><link rel="prefetch" href="/assets/js/67.846910ad.js"><link rel="prefetch" href="/assets/js/68.f958c68f.js"><link rel="prefetch" href="/assets/js/69.75a320ac.js"><link rel="prefetch" href="/assets/js/7.f293a555.js"><link rel="prefetch" href="/assets/js/70.6626f7f4.js"><link rel="prefetch" href="/assets/js/71.5b3bdb3c.js"><link rel="prefetch" href="/assets/js/72.d362f18f.js"><link rel="prefetch" href="/assets/js/73.469b71b5.js"><link rel="prefetch" href="/assets/js/74.4bd6fb02.js"><link rel="prefetch" href="/assets/js/75.531f5e37.js"><link rel="prefetch" href="/assets/js/76.3ed0405d.js"><link rel="prefetch" href="/assets/js/77.a932cfd9.js"><link rel="prefetch" href="/assets/js/78.a556044d.js"><link rel="prefetch" href="/assets/js/79.82118ff1.js"><link rel="prefetch" href="/assets/js/8.32a6fd2f.js"><link rel="prefetch" href="/assets/js/80.844a3cd5.js"><link rel="prefetch" href="/assets/js/81.7417e493.js"><link rel="prefetch" href="/assets/js/82.4cdc1dbe.js"><link rel="prefetch" href="/assets/js/83.1b974ca3.js"><link rel="prefetch" href="/assets/js/84.a1c06c63.js"><link rel="prefetch" href="/assets/js/85.f9c7a36f.js"><link rel="prefetch" href="/assets/js/86.3380ff20.js"><link rel="prefetch" href="/assets/js/87.40472bfc.js"><link rel="prefetch" href="/assets/js/88.7c4940d4.js"><link rel="prefetch" href="/assets/js/89.2161bf0b.js"><link rel="prefetch" href="/assets/js/9.d2d52554.js"><link rel="prefetch" href="/assets/js/90.d279dd26.js"><link rel="prefetch" href="/assets/js/91.01aa608f.js"><link rel="prefetch" href="/assets/js/92.36ed49e2.js"><link rel="prefetch" href="/assets/js/93.df0240ce.js"><link rel="prefetch" href="/assets/js/94.d3c7e282.js"><link rel="prefetch" href="/assets/js/95.7295a0b2.js"><link rel="prefetch" href="/assets/js/96.d9def7e3.js"><link rel="prefetch" href="/assets/js/97.544b8f2e.js"><link rel="prefetch" href="/assets/js/98.dfcd89c8.js"><link rel="prefetch" href="/assets/js/99.24ea0e37.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.d632f7cd.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.89e32c3d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/zh/" class="home-link router-link-active"><!----> <span class="site-name">狸猫小僧</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/zh/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/zh/guide/" class="nav-link">
+  指南
+</a></div><div class="nav-item"><a href="/zh/interview/" class="nav-link">
+  面试
+</a></div><div class="nav-item"><a href="/zh/DevBasic/" class="nav-link">
+  基础
+</a></div><div class="nav-item"><a href="/zh/DevAdvance/" class="nav-link">
+  高级
+</a></div><div class="nav-item"><a href="/zh/CloudNative/" class="nav-link router-link-active">
+  云原生
+</a></div><div class="nav-item"><a href="/zh/Frontend/" class="nav-link">
+  前端
+</a></div><div class="nav-item"><a href="/zh/Media/" class="nav-link">
+  多媒体
+</a></div><div class="nav-item"><a href="/zh/DevOthers/" class="nav-link">
+  杂谈
+</a></div><div class="nav-item"><a href="/zh/article/" class="nav-link">
+  文章
+</a></div><div class="nav-item"><a href="/zh/about/" class="nav-link">
+  关于
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">选择语言</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">选择语言</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/" class="nav-link">
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html" class="nav-link">
+  简体中文
+</a></li></ul></div></div> <a href="https://github.com/zhengxiaochuan" target="_blank" rel="noopener noreferrer" class="repo-link">
+    官网
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/zh/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/zh/guide/" class="nav-link">
+  指南
+</a></div><div class="nav-item"><a href="/zh/interview/" class="nav-link">
+  面试
+</a></div><div class="nav-item"><a href="/zh/DevBasic/" class="nav-link">
+  基础
+</a></div><div class="nav-item"><a href="/zh/DevAdvance/" class="nav-link">
+  高级
+</a></div><div class="nav-item"><a href="/zh/CloudNative/" class="nav-link router-link-active">
+  云原生
+</a></div><div class="nav-item"><a href="/zh/Frontend/" class="nav-link">
+  前端
+</a></div><div class="nav-item"><a href="/zh/Media/" class="nav-link">
+  多媒体
+</a></div><div class="nav-item"><a href="/zh/DevOthers/" class="nav-link">
+  杂谈
+</a></div><div class="nav-item"><a href="/zh/article/" class="nav-link">
+  文章
+</a></div><div class="nav-item"><a href="/zh/about/" class="nav-link">
+  关于
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">选择语言</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">选择语言</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/" class="nav-link">
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html" class="nav-link">
+  简体中文
+</a></li></ul></div></div> <a href="https://github.com/zhengxiaochuan" target="_blank" rel="noopener noreferrer" class="repo-link">
+    官网
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>云平台核心</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Docker基础</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Kubernetes实战入门</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>KubeSphere平台安装</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html" class="active sidebar-link">Kubernetes上安装KubeSphere</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_1、基本环境" class="sidebar-link">1、基本环境</a></li><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_2、安装kubelet、kubeadm、kubectl" class="sidebar-link">2、安装kubelet、kubeadm、kubectl</a></li><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_3、初始化master节点" class="sidebar-link">3、初始化master节点</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_1、初始化" class="sidebar-link">1、初始化</a></li><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_2、记录关键信息" class="sidebar-link">2、记录关键信息</a></li><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_3、安装calico网络插件" class="sidebar-link">3、安装Calico网络插件</a></li></ul></li><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_4、加入worker节点" class="sidebar-link">4、加入worker节点</a></li><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_1、nfs文件系统" class="sidebar-link">1、nfs文件系统</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_1、安装nfs-server" class="sidebar-link">1、安装nfs-server</a></li><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_2、配置nfs-client-选做" class="sidebar-link">2、配置nfs-client（选做）</a></li><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_3、配置默认存储" class="sidebar-link">3、配置默认存储</a></li></ul></li><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_2、metrics-server" class="sidebar-link">2、metrics-server</a></li><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_1、下载核心文件" class="sidebar-link">1、下载核心文件</a></li><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_2、修改cluster-configuration" class="sidebar-link">2、修改cluster-configuration</a></li><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_3、执行安装" class="sidebar-link">3、执行安装</a></li><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_4、查看安装进度" class="sidebar-link">4、查看安装进度</a></li><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#附录" class="sidebar-link">附录</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_1、kubesphere-installer-yaml" class="sidebar-link">1、kubesphere-installer.yaml</a></li><li class="sidebar-sub-header"><a href="/zh/CloudNative/KubeSphere平台安装/Kubernetes上安装KubeSphere.html#_2、cluster-configuration-yaml" class="sidebar-link">2、cluster-configuration.yaml</a></li></ul></li></ul></li><li><a href="/zh/CloudNative/KubeSphere平台安装/Linux单节点部署KubeSphere.html" class="sidebar-link">Linux单节点部署KubeSphere</a></li><li><a href="/zh/CloudNative/KubeSphere平台安装/Linux多节点部署KubeSphere.html" class="sidebar-link">Linux多节点部署KubeSphere</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>KubeSphere实战</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>云原生DevOps基础与实战</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>微服务基础与实战</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="kubernetes上安装kubesphere"><a href="#kubernetes上安装kubesphere" class="header-anchor">#</a> Kubernetes上安装KubeSphere</h1> <h1 id="安装步骤"><a href="#安装步骤" class="header-anchor">#</a> 安装步骤</h1> <ul><li><p>🔲选择4核8G（master）、8核16G（node1）、8核16G（node2） 三台机器，按量付费进行实验，CentOS7.9</p></li> <li><p>🔲安装Docker</p></li> <li><p>🔲安装Kubernetes</p></li> <li><p>🔲安装KubeSphere前置环境</p></li> <li><p>🔲安装KubeSphere</p></li></ul> <h1 id="_1、安装docker"><a href="#_1、安装docker" class="header-anchor">#</a> 1、安装Docker</h1> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token function">sudo</span> yum remove docker*
+<span class="token function">sudo</span> yum <span class="token function">install</span> -y yum-utils
+
+<span class="token comment">#配置docker的yum地址</span>
+<span class="token function">sudo</span> yum-config-manager <span class="token punctuation">\</span>
+--add-repo <span class="token punctuation">\</span>
+http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+
+
+<span class="token comment">#安装指定版本</span>
+<span class="token function">sudo</span> yum <span class="token function">install</span> -y docker-ce-20.10.7 docker-ce-cli-20.10.7 containerd.io-1.4.6
+
+<span class="token comment">#	启动&amp;开机启动docker</span>
+systemctl <span class="token builtin class-name">enable</span> docker --now
+
+<span class="token comment"># docker加速配置</span>
+<span class="token function">sudo</span> <span class="token function">mkdir</span> -p /etc/docker
+<span class="token function">sudo</span> <span class="token function">tee</span> /etc/docker/daemon.json <span class="token operator">&lt;&lt;-</span><span class="token string">'EOF'
+{
+  &quot;registry-mirrors&quot;: [&quot;https://82m9ar63.mirror.aliyuncs.com&quot;],
+  &quot;exec-opts&quot;: [&quot;native.cgroupdriver=systemd&quot;],
+  &quot;log-driver&quot;: &quot;json-file&quot;,
+  &quot;log-opts&quot;: {
+    &quot;max-size&quot;: &quot;100m&quot;
+  },
+  &quot;storage-driver&quot;: &quot;overlay2&quot;
+}
+EOF</span>
+<span class="token function">sudo</span> systemctl daemon-reload
+<span class="token function">sudo</span> systemctl restart docker
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br></div></div><h1 id="_2、安装kubernetes"><a href="#_2、安装kubernetes" class="header-anchor">#</a> 2、安装Kubernetes</h1> <h2 id="_1、基本环境"><a href="#_1、基本环境" class="header-anchor">#</a> 1、基本环境</h2> <p>每个机器使用内网ip互通</p> <p>每个机器配置自己的hostname，不能用localhost</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment">#设置每个机器自己的hostname</span>
+hostnamectl set-hostname xxx
+
+<span class="token comment"># 将 SELinux 设置为 permissive 模式（相当于将其禁用）</span>
+<span class="token function">sudo</span> setenforce <span class="token number">0</span>
+<span class="token function">sudo</span> <span class="token function">sed</span> -i <span class="token string">'s/^SELINUX=enforcing$/SELINUX=permissive/'</span> /etc/selinux/config
+
+<span class="token comment">#关闭swap</span>
+swapoff -a  
+<span class="token function">sed</span> -ri <span class="token string">'s/.*swap.*/#&amp;/'</span> /etc/fstab
+
+<span class="token comment">#允许 iptables 检查桥接流量</span>
+<span class="token function">cat</span> <span class="token operator">&lt;&lt;</span><span class="token string">EOF<span class="token bash punctuation"> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/modules-load.d/k8s.conf</span>
+br_netfilter
+EOF</span>
+
+<span class="token function">cat</span> <span class="token operator">&lt;&lt;</span><span class="token string">EOF<span class="token bash punctuation"> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/sysctl.d/k8s.conf</span>
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF</span>
+<span class="token function">sudo</span> sysctl --system
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><h2 id="_2、安装kubelet、kubeadm、kubectl"><a href="#_2、安装kubelet、kubeadm、kubectl" class="header-anchor">#</a> 2、安装kubelet、kubeadm、kubectl</h2> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment">#配置k8s的yum源地址</span>
+<span class="token function">cat</span> <span class="token operator">&lt;&lt;</span><span class="token string">EOF<span class="token bash punctuation"> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/yum.repos.d/kubernetes.repo</span>
+[kubernetes]
+name=Kubernetes
+baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=0
+repo_gpgcheck=0
+gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
+   http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF</span>
+
+
+<span class="token comment">#安装 kubelet，kubeadm，kubectl</span>
+<span class="token function">sudo</span> yum <span class="token function">install</span> -y kubelet-1.20.9 kubeadm-1.20.9 kubectl-1.20.9
+
+<span class="token comment">#启动kubelet</span>
+<span class="token function">sudo</span> systemctl <span class="token builtin class-name">enable</span> --now kubelet
+
+<span class="token comment">#所有机器配置master域名</span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;172.31.0.4  k8s-master&quot;</span> <span class="token operator">&gt;&gt;</span> /etc/hosts
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br></div></div><h2 id="_3、初始化master节点"><a href="#_3、初始化master节点" class="header-anchor">#</a> 3、初始化master节点</h2> <h3 id="_1、初始化"><a href="#_1、初始化" class="header-anchor">#</a> 1、初始化</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubeadm init <span class="token punctuation">\</span>
+--apiserver-advertise-address<span class="token operator">=</span><span class="token number">172.31</span>.0.4 <span class="token punctuation">\</span>
+--control-plane-endpoint<span class="token operator">=</span>k8s-master <span class="token punctuation">\</span>
+--image-repository registry.cn-hangzhou.aliyuncs.com/lfy_k8s_images <span class="token punctuation">\</span>
+--kubernetes-version v1.20.9 <span class="token punctuation">\</span>
+--service-cidr<span class="token operator">=</span><span class="token number">10.96</span>.0.0/16 <span class="token punctuation">\</span>
+--pod-network-cidr<span class="token operator">=</span><span class="token number">192.168</span>.0.0/16
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br></div></div><h3 id="_2、记录关键信息"><a href="#_2、记录关键信息" class="header-anchor">#</a> 2、记录关键信息</h3> <p>记录master执行完成后的日志</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>Your Kubernetes control-plane has initialized successfully<span class="token operator">!</span>
+
+To start using your cluster, you need to run the following as a regular user:
+
+  <span class="token function">mkdir</span> -p <span class="token environment constant">$HOME</span>/.kube
+  <span class="token function">sudo</span> <span class="token function">cp</span> -i /etc/kubernetes/admin.conf <span class="token environment constant">$HOME</span>/.kube/config
+  <span class="token function">sudo</span> <span class="token function">chown</span> <span class="token variable"><span class="token variable">$(</span><span class="token function">id</span> -u<span class="token variable">)</span></span><span class="token builtin class-name">:</span><span class="token variable"><span class="token variable">$(</span><span class="token function">id</span> -g<span class="token variable">)</span></span> <span class="token environment constant">$HOME</span>/.kube/config
+
+Alternatively, <span class="token keyword">if</span> you are the root user, you can run:
+
+  <span class="token builtin class-name">export</span> <span class="token assign-left variable">KUBECONFIG</span><span class="token operator">=</span>/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run <span class="token string">&quot;kubectl apply -f [podnetwork].yaml&quot;</span> with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+You can now <span class="token function">join</span> any number of control-plane nodes by copying certificate authorities
+and <span class="token function">service</span> account keys on each node and <span class="token keyword">then</span> running the following as root:
+
+  kubeadm <span class="token function">join</span> k8s-master:6443 --token 3vckmv.lvrl05xpyftbs177 <span class="token punctuation">\</span>
+    --discovery-token-ca-cert-hash sha256:1dc274fed24778f5c284229d9fcba44a5df11efba018f9664cf5e8ff77907240 <span class="token punctuation">\</span>
+    --control-plane 
+
+Then you can <span class="token function">join</span> any number of worker nodes by running the following on each as root:
+
+kubeadm <span class="token function">join</span> k8s-master:6443 --token 3vckmv.lvrl05xpyftbs177 <span class="token punctuation">\</span>
+    --discovery-token-ca-cert-hash sha256:1dc274fed24778f5c284229d9fcba44a5df11efba018f9664cf5e8ff77907240
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br></div></div><h3 id="_3、安装calico网络插件"><a href="#_3、安装calico网络插件" class="header-anchor">#</a> 3、安装Calico网络插件</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token function">curl</span> https://docs.projectcalico.org/manifests/calico.yaml -O
+
+kubectl apply -f calico.yaml
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h2 id="_4、加入worker节点"><a href="#_4、加入worker节点" class="header-anchor">#</a> 4、加入worker节点</h2> <h1 id="_3、安装kubesphere前置环境"><a href="#_3、安装kubesphere前置环境" class="header-anchor">#</a> 3、安装KubeSphere前置环境</h1> <h2 id="_1、nfs文件系统"><a href="#_1、nfs文件系统" class="header-anchor">#</a> 1、nfs文件系统</h2> <h3 id="_1、安装nfs-server"><a href="#_1、安装nfs-server" class="header-anchor">#</a> 1、安装nfs-server</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment"># 在每个机器。</span>
+yum <span class="token function">install</span> -y nfs-utils
+
+
+<span class="token comment"># 在master 执行以下命令 </span>
+<span class="token builtin class-name">echo</span> <span class="token string">&quot;/nfs/data/ *(insecure,rw,sync,no_root_squash)&quot;</span> <span class="token operator">&gt;</span> /etc/exports
+
+
+<span class="token comment"># 执行以下命令，启动 nfs 服务;创建共享目录</span>
+<span class="token function">mkdir</span> -p /nfs/data
+
+
+<span class="token comment"># 在master执行</span>
+systemctl <span class="token builtin class-name">enable</span> rpcbind
+systemctl <span class="token builtin class-name">enable</span> nfs-server
+systemctl start rpcbind
+systemctl start nfs-server
+
+<span class="token comment"># 使配置生效</span>
+exportfs -r
+
+
+<span class="token comment">#检查配置是否生效</span>
+exportfs
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br></div></div><h3 id="_2、配置nfs-client-选做"><a href="#_2、配置nfs-client-选做" class="header-anchor">#</a> 2、配置nfs-client（选做）</h3> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>showmount -e <span class="token number">172.31</span>.0.4
+
+<span class="token function">mkdir</span> -p /nfs/data
+
+<span class="token function">mount</span> -t nfs <span class="token number">172.31</span>.0.4:/nfs/data /nfs/data
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br></div></div><h3 id="_3、配置默认存储"><a href="#_3、配置默认存储" class="header-anchor">#</a> 3、配置默认存储</h3> <p>配置动态供应的默认存储类</p> <div class="language-yaml line-numbers-mode"><pre class="language-yaml"><code><span class="token comment">## 创建了一个存储类</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> storage.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> StorageClass
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>storage
+  <span class="token key atrule">annotations</span><span class="token punctuation">:</span>
+    <span class="token key atrule">storageclass.kubernetes.io/is-default-class</span><span class="token punctuation">:</span> <span class="token string">&quot;true&quot;</span>
+<span class="token key atrule">provisioner</span><span class="token punctuation">:</span> k8s<span class="token punctuation">-</span>sigs.io/nfs<span class="token punctuation">-</span>subdir<span class="token punctuation">-</span>external<span class="token punctuation">-</span>provisioner
+<span class="token key atrule">parameters</span><span class="token punctuation">:</span>
+  <span class="token key atrule">archiveOnDelete</span><span class="token punctuation">:</span> <span class="token string">&quot;true&quot;</span>  <span class="token comment">## 删除pv的时候，pv的内容是否要备份</span>
+
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>provisioner
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>provisioner
+  <span class="token comment"># replace with namespace where provisioner is deployed</span>
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> default
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">1</span>
+  <span class="token key atrule">strategy</span><span class="token punctuation">:</span>
+    <span class="token key atrule">type</span><span class="token punctuation">:</span> Recreate
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">app</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>provisioner
+  <span class="token key atrule">template</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>provisioner
+    <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token key atrule">serviceAccountName</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>provisioner
+      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>provisioner
+          <span class="token key atrule">image</span><span class="token punctuation">:</span> registry.cn<span class="token punctuation">-</span>hangzhou.aliyuncs.com/lfy_k8s_images/nfs<span class="token punctuation">-</span>subdir<span class="token punctuation">-</span>external<span class="token punctuation">-</span>provisioner<span class="token punctuation">:</span>v4.0.2
+          <span class="token comment"># resources:</span>
+          <span class="token comment">#    limits:</span>
+          <span class="token comment">#      cpu: 10m</span>
+          <span class="token comment">#    requests:</span>
+          <span class="token comment">#      cpu: 10m</span>
+          <span class="token key atrule">volumeMounts</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>root
+              <span class="token key atrule">mountPath</span><span class="token punctuation">:</span> /persistentvolumes
+          <span class="token key atrule">env</span><span class="token punctuation">:</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> PROVISIONER_NAME
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> k8s<span class="token punctuation">-</span>sigs.io/nfs<span class="token punctuation">-</span>subdir<span class="token punctuation">-</span>external<span class="token punctuation">-</span>provisioner
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> NFS_SERVER
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> 172.31.0.4 <span class="token comment">## 指定自己nfs服务器地址</span>
+            <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> NFS_PATH  
+              <span class="token key atrule">value</span><span class="token punctuation">:</span> /nfs/data  <span class="token comment">## nfs服务器共享的目录</span>
+      <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>root
+          <span class="token key atrule">nfs</span><span class="token punctuation">:</span>
+            <span class="token key atrule">server</span><span class="token punctuation">:</span> 172.31.0.4
+            <span class="token key atrule">path</span><span class="token punctuation">:</span> /nfs/data
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>provisioner
+  <span class="token comment"># replace with namespace where provisioner is deployed</span>
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> default
+<span class="token punctuation">---</span>
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>provisioner<span class="token punctuation">-</span>runner
+<span class="token key atrule">rules</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;&quot;</span><span class="token punctuation">]</span>
+    <span class="token key atrule">resources</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;nodes&quot;</span><span class="token punctuation">]</span>
+    <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;get&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;list&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;watch&quot;</span><span class="token punctuation">]</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;&quot;</span><span class="token punctuation">]</span>
+    <span class="token key atrule">resources</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;persistentvolumes&quot;</span><span class="token punctuation">]</span>
+    <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;get&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;list&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;watch&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;create&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;delete&quot;</span><span class="token punctuation">]</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;&quot;</span><span class="token punctuation">]</span>
+    <span class="token key atrule">resources</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;persistentvolumeclaims&quot;</span><span class="token punctuation">]</span>
+    <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;get&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;list&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;watch&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;update&quot;</span><span class="token punctuation">]</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;storage.k8s.io&quot;</span><span class="token punctuation">]</span>
+    <span class="token key atrule">resources</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;storageclasses&quot;</span><span class="token punctuation">]</span>
+    <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;get&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;list&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;watch&quot;</span><span class="token punctuation">]</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;&quot;</span><span class="token punctuation">]</span>
+    <span class="token key atrule">resources</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;events&quot;</span><span class="token punctuation">]</span>
+    <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;create&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;update&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;patch&quot;</span><span class="token punctuation">]</span>
+<span class="token punctuation">---</span>
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRoleBinding
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> run<span class="token punctuation">-</span>nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>provisioner
+<span class="token key atrule">subjects</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>provisioner
+    <span class="token comment"># replace with namespace where provisioner is deployed</span>
+    <span class="token key atrule">namespace</span><span class="token punctuation">:</span> default
+<span class="token key atrule">roleRef</span><span class="token punctuation">:</span>
+  <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>provisioner<span class="token punctuation">-</span>runner
+  <span class="token key atrule">apiGroup</span><span class="token punctuation">:</span> rbac.authorization.k8s.io
+<span class="token punctuation">---</span>
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Role
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> leader<span class="token punctuation">-</span>locking<span class="token punctuation">-</span>nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>provisioner
+  <span class="token comment"># replace with namespace where provisioner is deployed</span>
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> default
+<span class="token key atrule">rules</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;&quot;</span><span class="token punctuation">]</span>
+    <span class="token key atrule">resources</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;endpoints&quot;</span><span class="token punctuation">]</span>
+    <span class="token key atrule">verbs</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">&quot;get&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;list&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;watch&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;create&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;update&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;patch&quot;</span><span class="token punctuation">]</span>
+<span class="token punctuation">---</span>
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> RoleBinding
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> leader<span class="token punctuation">-</span>locking<span class="token punctuation">-</span>nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>provisioner
+  <span class="token comment"># replace with namespace where provisioner is deployed</span>
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> default
+<span class="token key atrule">subjects</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>provisioner
+    <span class="token comment"># replace with namespace where provisioner is deployed</span>
+    <span class="token key atrule">namespace</span><span class="token punctuation">:</span> default
+<span class="token key atrule">roleRef</span><span class="token punctuation">:</span>
+  <span class="token key atrule">kind</span><span class="token punctuation">:</span> Role
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> leader<span class="token punctuation">-</span>locking<span class="token punctuation">-</span>nfs<span class="token punctuation">-</span>client<span class="token punctuation">-</span>provisioner
+  <span class="token key atrule">apiGroup</span><span class="token punctuation">:</span> rbac.authorization.k8s.io
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br></div></div><div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token comment">#确认配置是否生效</span>
+kubectl get sc
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h2 id="_2、metrics-server"><a href="#_2、metrics-server" class="header-anchor">#</a> 2、metrics-server</h2> <p>集群指标监控组件</p> <div class="language-yaml line-numbers-mode"><pre class="language-yaml"><code><span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">k8s-app</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">k8s-app</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+    <span class="token key atrule">rbac.authorization.k8s.io/aggregate-to-admin</span><span class="token punctuation">:</span> <span class="token string">&quot;true&quot;</span>
+    <span class="token key atrule">rbac.authorization.k8s.io/aggregate-to-edit</span><span class="token punctuation">:</span> <span class="token string">&quot;true&quot;</span>
+    <span class="token key atrule">rbac.authorization.k8s.io/aggregate-to-view</span><span class="token punctuation">:</span> <span class="token string">&quot;true&quot;</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> system<span class="token punctuation">:</span>aggregated<span class="token punctuation">-</span>metrics<span class="token punctuation">-</span>reader
+<span class="token key atrule">rules</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> metrics.k8s.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> pods
+  <span class="token punctuation">-</span> nodes
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> get
+  <span class="token punctuation">-</span> list
+  <span class="token punctuation">-</span> watch
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">k8s-app</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> system<span class="token punctuation">:</span>metrics<span class="token punctuation">-</span>server
+<span class="token key atrule">rules</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">&quot;&quot;</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> pods
+  <span class="token punctuation">-</span> nodes
+  <span class="token punctuation">-</span> nodes/stats
+  <span class="token punctuation">-</span> namespaces
+  <span class="token punctuation">-</span> configmaps
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> get
+  <span class="token punctuation">-</span> list
+  <span class="token punctuation">-</span> watch
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> RoleBinding
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">k8s-app</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server<span class="token punctuation">-</span>auth<span class="token punctuation">-</span>reader
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system
+<span class="token key atrule">roleRef</span><span class="token punctuation">:</span>
+  <span class="token key atrule">apiGroup</span><span class="token punctuation">:</span> rbac.authorization.k8s.io
+  <span class="token key atrule">kind</span><span class="token punctuation">:</span> Role
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> extension<span class="token punctuation">-</span>apiserver<span class="token punctuation">-</span>authentication<span class="token punctuation">-</span>reader
+<span class="token key atrule">subjects</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRoleBinding
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">k8s-app</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server<span class="token punctuation">:</span>system<span class="token punctuation">:</span>auth<span class="token punctuation">-</span>delegator
+<span class="token key atrule">roleRef</span><span class="token punctuation">:</span>
+  <span class="token key atrule">apiGroup</span><span class="token punctuation">:</span> rbac.authorization.k8s.io
+  <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> system<span class="token punctuation">:</span>auth<span class="token punctuation">-</span>delegator
+<span class="token key atrule">subjects</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRoleBinding
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">k8s-app</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> system<span class="token punctuation">:</span>metrics<span class="token punctuation">-</span>server
+<span class="token key atrule">roleRef</span><span class="token punctuation">:</span>
+  <span class="token key atrule">apiGroup</span><span class="token punctuation">:</span> rbac.authorization.k8s.io
+  <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> system<span class="token punctuation">:</span>metrics<span class="token punctuation">-</span>server
+<span class="token key atrule">subjects</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Service
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">k8s-app</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> https
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">443</span>
+    <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
+    <span class="token key atrule">targetPort</span><span class="token punctuation">:</span> https
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">k8s-app</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">k8s-app</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">k8s-app</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+  <span class="token key atrule">strategy</span><span class="token punctuation">:</span>
+    <span class="token key atrule">rollingUpdate</span><span class="token punctuation">:</span>
+      <span class="token key atrule">maxUnavailable</span><span class="token punctuation">:</span> <span class="token number">0</span>
+  <span class="token key atrule">template</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">k8s-app</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+    <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">args</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>cert<span class="token punctuation">-</span>dir=/tmp
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>kubelet<span class="token punctuation">-</span>insecure<span class="token punctuation">-</span>tls
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>secure<span class="token punctuation">-</span>port=4443
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>kubelet<span class="token punctuation">-</span>preferred<span class="token punctuation">-</span>address<span class="token punctuation">-</span>types=InternalIP<span class="token punctuation">,</span>ExternalIP<span class="token punctuation">,</span>Hostname
+        <span class="token punctuation">-</span> <span class="token punctuation">-</span><span class="token punctuation">-</span>kubelet<span class="token punctuation">-</span>use<span class="token punctuation">-</span>node<span class="token punctuation">-</span>status<span class="token punctuation">-</span>port
+        <span class="token key atrule">image</span><span class="token punctuation">:</span> registry.cn<span class="token punctuation">-</span>hangzhou.aliyuncs.com/lfy_k8s_images/metrics<span class="token punctuation">-</span>server<span class="token punctuation">:</span>v0.4.3
+        <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> IfNotPresent
+        <span class="token key atrule">livenessProbe</span><span class="token punctuation">:</span>
+          <span class="token key atrule">failureThreshold</span><span class="token punctuation">:</span> <span class="token number">3</span>
+          <span class="token key atrule">httpGet</span><span class="token punctuation">:</span>
+            <span class="token key atrule">path</span><span class="token punctuation">:</span> /livez
+            <span class="token key atrule">port</span><span class="token punctuation">:</span> https
+            <span class="token key atrule">scheme</span><span class="token punctuation">:</span> HTTPS
+          <span class="token key atrule">periodSeconds</span><span class="token punctuation">:</span> <span class="token number">10</span>
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+        <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">containerPort</span><span class="token punctuation">:</span> <span class="token number">4443</span>
+          <span class="token key atrule">name</span><span class="token punctuation">:</span> https
+          <span class="token key atrule">protocol</span><span class="token punctuation">:</span> TCP
+        <span class="token key atrule">readinessProbe</span><span class="token punctuation">:</span>
+          <span class="token key atrule">failureThreshold</span><span class="token punctuation">:</span> <span class="token number">3</span>
+          <span class="token key atrule">httpGet</span><span class="token punctuation">:</span>
+            <span class="token key atrule">path</span><span class="token punctuation">:</span> /readyz
+            <span class="token key atrule">port</span><span class="token punctuation">:</span> https
+            <span class="token key atrule">scheme</span><span class="token punctuation">:</span> HTTPS
+          <span class="token key atrule">periodSeconds</span><span class="token punctuation">:</span> <span class="token number">10</span>
+        <span class="token key atrule">securityContext</span><span class="token punctuation">:</span>
+          <span class="token key atrule">readOnlyRootFilesystem</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+          <span class="token key atrule">runAsNonRoot</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+          <span class="token key atrule">runAsUser</span><span class="token punctuation">:</span> <span class="token number">1000</span>
+        <span class="token key atrule">volumeMounts</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">mountPath</span><span class="token punctuation">:</span> /tmp
+          <span class="token key atrule">name</span><span class="token punctuation">:</span> tmp<span class="token punctuation">-</span>dir
+      <span class="token key atrule">nodeSelector</span><span class="token punctuation">:</span>
+        <span class="token key atrule">kubernetes.io/os</span><span class="token punctuation">:</span> linux
+      <span class="token key atrule">priorityClassName</span><span class="token punctuation">:</span> system<span class="token punctuation">-</span>cluster<span class="token punctuation">-</span>critical
+      <span class="token key atrule">serviceAccountName</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+      <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">emptyDir</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> tmp<span class="token punctuation">-</span>dir
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apiregistration.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> APIService
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">k8s-app</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> v1beta1.metrics.k8s.io
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">group</span><span class="token punctuation">:</span> metrics.k8s.io
+  <span class="token key atrule">groupPriorityMinimum</span><span class="token punctuation">:</span> <span class="token number">100</span>
+  <span class="token key atrule">insecureSkipTLSVerify</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">service</span><span class="token punctuation">:</span>
+    <span class="token key atrule">name</span><span class="token punctuation">:</span> metrics<span class="token punctuation">-</span>server
+    <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kube<span class="token punctuation">-</span>system
+  <span class="token key atrule">version</span><span class="token punctuation">:</span> v1beta1
+  <span class="token key atrule">versionPriority</span><span class="token punctuation">:</span> <span class="token number">100</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br><span class="line-number">157</span><br><span class="line-number">158</span><br><span class="line-number">159</span><br><span class="line-number">160</span><br><span class="line-number">161</span><br><span class="line-number">162</span><br><span class="line-number">163</span><br><span class="line-number">164</span><br><span class="line-number">165</span><br><span class="line-number">166</span><br><span class="line-number">167</span><br><span class="line-number">168</span><br><span class="line-number">169</span><br><span class="line-number">170</span><br><span class="line-number">171</span><br><span class="line-number">172</span><br><span class="line-number">173</span><br><span class="line-number">174</span><br><span class="line-number">175</span><br><span class="line-number">176</span><br><span class="line-number">177</span><br><span class="line-number">178</span><br><span class="line-number">179</span><br><span class="line-number">180</span><br><span class="line-number">181</span><br><span class="line-number">182</span><br><span class="line-number">183</span><br><span class="line-number">184</span><br><span class="line-number">185</span><br><span class="line-number">186</span><br><span class="line-number">187</span><br></div></div><h1 id="_4、安装kubesphere"><a href="#_4、安装kubesphere" class="header-anchor">#</a> 4、安装KubeSphere</h1> <p>https://kubesphere.com.cn/</p> <h2 id="_1、下载核心文件"><a href="#_1、下载核心文件" class="header-anchor">#</a> 1、下载核心文件</h2> <p>如果下载不到，请复制附录的内容</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code><span class="token function">wget</span> https://github.com/kubesphere/ks-installer/releases/download/v3.1.1/kubesphere-installer.yaml
+
+<span class="token function">wget</span> https://github.com/kubesphere/ks-installer/releases/download/v3.1.1/cluster-configuration.yaml
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h2 id="_2、修改cluster-configuration"><a href="#_2、修改cluster-configuration" class="header-anchor">#</a> 2、修改cluster-configuration</h2> <p>在 cluster-configuration.yaml中指定我们需要开启的功能</p> <p>参照官网“启用可插拔组件”</p> <p>https://kubesphere.com.cn/docs/pluggable-components/overview/</p> <h2 id="_3、执行安装"><a href="#_3、执行安装" class="header-anchor">#</a> 3、执行安装</h2> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl apply -f kubesphere-installer.yaml
+
+kubectl apply -f cluster-configuration.yaml
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br></div></div><h2 id="_4、查看安装进度"><a href="#_4、查看安装进度" class="header-anchor">#</a> 4、查看安装进度</h2> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl logs -n kubesphere-system <span class="token variable"><span class="token variable">$(</span>kubectl get pod -n kubesphere-system -l <span class="token assign-left variable">app</span><span class="token operator">=</span>ks-install -o <span class="token assign-left variable">jsonpath</span><span class="token operator">=</span><span class="token string">'{.items[0].metadata.name}'</span><span class="token variable">)</span></span> -f
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><p>访问任意机器的 30880端口</p> <p>账号 ： admin</p> <p>密码 ： P@88w0rd</p> <p>解决etcd监控证书找不到问题</p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>kubectl -n kubesphere-monitoring-system create secret generic kube-etcd-client-certs  --from-file<span class="token operator">=</span>etcd-client-ca.crt<span class="token operator">=</span>/etc/kubernetes/pki/etcd/ca.crt  --from-file<span class="token operator">=</span>etcd-client.crt<span class="token operator">=</span>/etc/kubernetes/pki/apiserver-etcd-client.crt  --from-file<span class="token operator">=</span>etcd-client.key<span class="token operator">=</span>/etc/kubernetes/pki/apiserver-etcd-client.key
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br></div></div><h2 id="附录"><a href="#附录" class="header-anchor">#</a> 附录</h2> <h3 id="_1、kubesphere-installer-yaml"><a href="#_1、kubesphere-installer-yaml" class="header-anchor">#</a> 1、kubesphere-installer.yaml</h3> <div class="language-yaml line-numbers-mode"><pre class="language-yaml"><code><span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apiextensions.k8s.io/v1beta1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> CustomResourceDefinition
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> clusterconfigurations.installer.kubesphere.io
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">group</span><span class="token punctuation">:</span> installer.kubesphere.io
+  <span class="token key atrule">versions</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> v1alpha1
+    <span class="token key atrule">served</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+    <span class="token key atrule">storage</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">scope</span><span class="token punctuation">:</span> Namespaced
+  <span class="token key atrule">names</span><span class="token punctuation">:</span>
+    <span class="token key atrule">plural</span><span class="token punctuation">:</span> clusterconfigurations
+    <span class="token key atrule">singular</span><span class="token punctuation">:</span> clusterconfiguration
+    <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterConfiguration
+    <span class="token key atrule">shortNames</span><span class="token punctuation">:</span>
+    <span class="token punctuation">-</span> cc
+
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Namespace
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> kubesphere<span class="token punctuation">-</span>system
+
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ks<span class="token punctuation">-</span>installer
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kubesphere<span class="token punctuation">-</span>system
+
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ks<span class="token punctuation">-</span>installer
+<span class="token key atrule">rules</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">&quot;&quot;</span>
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> apps
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> extensions
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> batch
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> rbac.authorization.k8s.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> apiregistration.k8s.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> apiextensions.k8s.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> tenant.kubesphere.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> certificates.k8s.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> devops.kubesphere.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> monitoring.coreos.com
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> logging.kubesphere.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> jaegertracing.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> storage.k8s.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> admissionregistration.k8s.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> policy
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> autoscaling
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> networking.istio.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> config.istio.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> iam.kubesphere.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> notification.kubesphere.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> auditing.kubesphere.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> events.kubesphere.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> core.kubefed.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> installer.kubesphere.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> storage.kubesphere.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> security.istio.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> monitoring.kiali.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> kiali.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> networking.k8s.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> kubeedge.kubesphere.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+<span class="token punctuation">-</span> <span class="token key atrule">apiGroups</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> types.kubefed.io
+  <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+  <span class="token key atrule">verbs</span><span class="token punctuation">:</span>
+  <span class="token punctuation">-</span> <span class="token string">'*'</span>
+
+<span class="token punctuation">---</span>
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRoleBinding
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> rbac.authorization.k8s.io/v1
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ks<span class="token punctuation">-</span>installer
+<span class="token key atrule">subjects</span><span class="token punctuation">:</span>
+<span class="token punctuation">-</span> <span class="token key atrule">kind</span><span class="token punctuation">:</span> ServiceAccount
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ks<span class="token punctuation">-</span>installer
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kubesphere<span class="token punctuation">-</span>system
+<span class="token key atrule">roleRef</span><span class="token punctuation">:</span>
+  <span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterRole
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ks<span class="token punctuation">-</span>installer
+  <span class="token key atrule">apiGroup</span><span class="token punctuation">:</span> rbac.authorization.k8s.io
+
+<span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> apps/v1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> Deployment
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ks<span class="token punctuation">-</span>installer
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kubesphere<span class="token punctuation">-</span>system
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">app</span><span class="token punctuation">:</span> ks<span class="token punctuation">-</span>install
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">1</span>
+  <span class="token key atrule">selector</span><span class="token punctuation">:</span>
+    <span class="token key atrule">matchLabels</span><span class="token punctuation">:</span>
+      <span class="token key atrule">app</span><span class="token punctuation">:</span> ks<span class="token punctuation">-</span>install
+  <span class="token key atrule">template</span><span class="token punctuation">:</span>
+    <span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+      <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+        <span class="token key atrule">app</span><span class="token punctuation">:</span> ks<span class="token punctuation">-</span>install
+    <span class="token key atrule">spec</span><span class="token punctuation">:</span>
+      <span class="token key atrule">serviceAccountName</span><span class="token punctuation">:</span> ks<span class="token punctuation">-</span>installer
+      <span class="token key atrule">containers</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> installer
+        <span class="token key atrule">image</span><span class="token punctuation">:</span> kubesphere/ks<span class="token punctuation">-</span>installer<span class="token punctuation">:</span>v3.1.1
+        <span class="token key atrule">imagePullPolicy</span><span class="token punctuation">:</span> <span class="token string">&quot;Always&quot;</span>
+        <span class="token key atrule">resources</span><span class="token punctuation">:</span>
+          <span class="token key atrule">limits</span><span class="token punctuation">:</span>
+            <span class="token key atrule">cpu</span><span class="token punctuation">:</span> <span class="token string">&quot;1&quot;</span>
+            <span class="token key atrule">memory</span><span class="token punctuation">:</span> 1Gi
+          <span class="token key atrule">requests</span><span class="token punctuation">:</span>
+            <span class="token key atrule">cpu</span><span class="token punctuation">:</span> 20m
+            <span class="token key atrule">memory</span><span class="token punctuation">:</span> 100Mi
+        <span class="token key atrule">volumeMounts</span><span class="token punctuation">:</span>
+        <span class="token punctuation">-</span> <span class="token key atrule">mountPath</span><span class="token punctuation">:</span> /etc/localtime
+          <span class="token key atrule">name</span><span class="token punctuation">:</span> host<span class="token punctuation">-</span>time
+      <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">hostPath</span><span class="token punctuation">:</span>
+          <span class="token key atrule">path</span><span class="token punctuation">:</span> /etc/localtime
+          <span class="token key atrule">type</span><span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span>
+        <span class="token key atrule">name</span><span class="token punctuation">:</span> host<span class="token punctuation">-</span>time
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br><span class="line-number">121</span><br><span class="line-number">122</span><br><span class="line-number">123</span><br><span class="line-number">124</span><br><span class="line-number">125</span><br><span class="line-number">126</span><br><span class="line-number">127</span><br><span class="line-number">128</span><br><span class="line-number">129</span><br><span class="line-number">130</span><br><span class="line-number">131</span><br><span class="line-number">132</span><br><span class="line-number">133</span><br><span class="line-number">134</span><br><span class="line-number">135</span><br><span class="line-number">136</span><br><span class="line-number">137</span><br><span class="line-number">138</span><br><span class="line-number">139</span><br><span class="line-number">140</span><br><span class="line-number">141</span><br><span class="line-number">142</span><br><span class="line-number">143</span><br><span class="line-number">144</span><br><span class="line-number">145</span><br><span class="line-number">146</span><br><span class="line-number">147</span><br><span class="line-number">148</span><br><span class="line-number">149</span><br><span class="line-number">150</span><br><span class="line-number">151</span><br><span class="line-number">152</span><br><span class="line-number">153</span><br><span class="line-number">154</span><br><span class="line-number">155</span><br><span class="line-number">156</span><br><span class="line-number">157</span><br><span class="line-number">158</span><br><span class="line-number">159</span><br><span class="line-number">160</span><br><span class="line-number">161</span><br><span class="line-number">162</span><br><span class="line-number">163</span><br><span class="line-number">164</span><br><span class="line-number">165</span><br><span class="line-number">166</span><br><span class="line-number">167</span><br><span class="line-number">168</span><br><span class="line-number">169</span><br><span class="line-number">170</span><br><span class="line-number">171</span><br><span class="line-number">172</span><br><span class="line-number">173</span><br><span class="line-number">174</span><br><span class="line-number">175</span><br><span class="line-number">176</span><br><span class="line-number">177</span><br><span class="line-number">178</span><br><span class="line-number">179</span><br><span class="line-number">180</span><br><span class="line-number">181</span><br><span class="line-number">182</span><br><span class="line-number">183</span><br><span class="line-number">184</span><br><span class="line-number">185</span><br><span class="line-number">186</span><br><span class="line-number">187</span><br><span class="line-number">188</span><br><span class="line-number">189</span><br><span class="line-number">190</span><br><span class="line-number">191</span><br><span class="line-number">192</span><br><span class="line-number">193</span><br><span class="line-number">194</span><br><span class="line-number">195</span><br><span class="line-number">196</span><br><span class="line-number">197</span><br><span class="line-number">198</span><br><span class="line-number">199</span><br><span class="line-number">200</span><br><span class="line-number">201</span><br><span class="line-number">202</span><br><span class="line-number">203</span><br><span class="line-number">204</span><br><span class="line-number">205</span><br><span class="line-number">206</span><br><span class="line-number">207</span><br><span class="line-number">208</span><br><span class="line-number">209</span><br><span class="line-number">210</span><br><span class="line-number">211</span><br><span class="line-number">212</span><br><span class="line-number">213</span><br><span class="line-number">214</span><br><span class="line-number">215</span><br><span class="line-number">216</span><br><span class="line-number">217</span><br><span class="line-number">218</span><br><span class="line-number">219</span><br><span class="line-number">220</span><br><span class="line-number">221</span><br><span class="line-number">222</span><br><span class="line-number">223</span><br><span class="line-number">224</span><br><span class="line-number">225</span><br><span class="line-number">226</span><br><span class="line-number">227</span><br><span class="line-number">228</span><br><span class="line-number">229</span><br><span class="line-number">230</span><br><span class="line-number">231</span><br><span class="line-number">232</span><br><span class="line-number">233</span><br><span class="line-number">234</span><br><span class="line-number">235</span><br><span class="line-number">236</span><br><span class="line-number">237</span><br><span class="line-number">238</span><br><span class="line-number">239</span><br><span class="line-number">240</span><br><span class="line-number">241</span><br><span class="line-number">242</span><br><span class="line-number">243</span><br><span class="line-number">244</span><br><span class="line-number">245</span><br><span class="line-number">246</span><br><span class="line-number">247</span><br><span class="line-number">248</span><br><span class="line-number">249</span><br><span class="line-number">250</span><br><span class="line-number">251</span><br><span class="line-number">252</span><br><span class="line-number">253</span><br><span class="line-number">254</span><br><span class="line-number">255</span><br><span class="line-number">256</span><br><span class="line-number">257</span><br><span class="line-number">258</span><br><span class="line-number">259</span><br><span class="line-number">260</span><br><span class="line-number">261</span><br><span class="line-number">262</span><br><span class="line-number">263</span><br><span class="line-number">264</span><br><span class="line-number">265</span><br><span class="line-number">266</span><br><span class="line-number">267</span><br><span class="line-number">268</span><br><span class="line-number">269</span><br><span class="line-number">270</span><br><span class="line-number">271</span><br><span class="line-number">272</span><br><span class="line-number">273</span><br><span class="line-number">274</span><br><span class="line-number">275</span><br><span class="line-number">276</span><br><span class="line-number">277</span><br><span class="line-number">278</span><br><span class="line-number">279</span><br><span class="line-number">280</span><br><span class="line-number">281</span><br><span class="line-number">282</span><br><span class="line-number">283</span><br></div></div><h3 id="_2、cluster-configuration-yaml"><a href="#_2、cluster-configuration-yaml" class="header-anchor">#</a> 2、cluster-configuration.yaml</h3> <div class="language-yaml line-numbers-mode"><pre class="language-yaml"><code><span class="token punctuation">---</span>
+<span class="token key atrule">apiVersion</span><span class="token punctuation">:</span> installer.kubesphere.io/v1alpha1
+<span class="token key atrule">kind</span><span class="token punctuation">:</span> ClusterConfiguration
+<span class="token key atrule">metadata</span><span class="token punctuation">:</span>
+  <span class="token key atrule">name</span><span class="token punctuation">:</span> ks<span class="token punctuation">-</span>installer
+  <span class="token key atrule">namespace</span><span class="token punctuation">:</span> kubesphere<span class="token punctuation">-</span>system
+  <span class="token key atrule">labels</span><span class="token punctuation">:</span>
+    <span class="token key atrule">version</span><span class="token punctuation">:</span> v3.1.1
+<span class="token key atrule">spec</span><span class="token punctuation">:</span>
+  <span class="token key atrule">persistence</span><span class="token punctuation">:</span>
+    <span class="token key atrule">storageClass</span><span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span>        <span class="token comment"># If there is no default StorageClass in your cluster, you need to specify an existing StorageClass here.</span>
+  <span class="token key atrule">authentication</span><span class="token punctuation">:</span>
+    <span class="token key atrule">jwtSecret</span><span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span>           <span class="token comment"># Keep the jwtSecret consistent with the Host Cluster. Retrieve the jwtSecret by executing &quot;kubectl -n kubesphere-system get cm kubesphere-config -o yaml | grep -v &quot;apiVersion&quot; | grep jwtSecret&quot; on the Host Cluster.</span>
+  <span class="token key atrule">local_registry</span><span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span>        <span class="token comment"># Add your private registry address if it is needed.</span>
+  <span class="token key atrule">etcd</span><span class="token punctuation">:</span>
+    <span class="token key atrule">monitoring</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>       <span class="token comment"># Enable or disable etcd monitoring dashboard installation. You have to create a Secret for etcd before you enable it.</span>
+    <span class="token key atrule">endpointIps</span><span class="token punctuation">:</span> 172.31.0.4  <span class="token comment"># etcd cluster EndpointIps. It can be a bunch of IPs here.</span>
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">2379</span>              <span class="token comment"># etcd port.</span>
+    <span class="token key atrule">tlsEnable</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+  <span class="token key atrule">common</span><span class="token punctuation">:</span>
+    <span class="token key atrule">redis</span><span class="token punctuation">:</span>
+      <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+    <span class="token key atrule">openldap</span><span class="token punctuation">:</span>
+      <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+    <span class="token key atrule">minioVolumeSize</span><span class="token punctuation">:</span> 20Gi <span class="token comment"># Minio PVC size.</span>
+    <span class="token key atrule">openldapVolumeSize</span><span class="token punctuation">:</span> 2Gi   <span class="token comment"># openldap PVC size.</span>
+    <span class="token key atrule">redisVolumSize</span><span class="token punctuation">:</span> 2Gi <span class="token comment"># Redis PVC size.</span>
+    <span class="token key atrule">monitoring</span><span class="token punctuation">:</span>
+      <span class="token comment"># type: external   # Whether to specify the external prometheus stack, and need to modify the endpoint at the next line.</span>
+      <span class="token key atrule">endpoint</span><span class="token punctuation">:</span> http<span class="token punctuation">:</span>//prometheus<span class="token punctuation">-</span>operated.kubesphere<span class="token punctuation">-</span>monitoring<span class="token punctuation">-</span>system.svc<span class="token punctuation">:</span><span class="token number">9090</span> <span class="token comment"># Prometheus endpoint to get metrics data.</span>
+    <span class="token key atrule">es</span><span class="token punctuation">:</span>   <span class="token comment"># Storage backend for logging, events and auditing.</span>
+      <span class="token comment"># elasticsearchMasterReplicas: 1   # The total number of master nodes. Even numbers are not allowed.</span>
+      <span class="token comment"># elasticsearchDataReplicas: 1     # The total number of data nodes.</span>
+      <span class="token key atrule">elasticsearchMasterVolumeSize</span><span class="token punctuation">:</span> 4Gi   <span class="token comment"># The volume size of Elasticsearch master nodes.</span>
+      <span class="token key atrule">elasticsearchDataVolumeSize</span><span class="token punctuation">:</span> 20Gi    <span class="token comment"># The volume size of Elasticsearch data nodes.</span>
+      <span class="token key atrule">logMaxAge</span><span class="token punctuation">:</span> <span class="token number">7</span>                     <span class="token comment"># Log retention time in built-in Elasticsearch. It is 7 days by default.</span>
+      <span class="token key atrule">elkPrefix</span><span class="token punctuation">:</span> logstash              <span class="token comment"># The string making up index names. The index name will be formatted as ks-&lt;elk_prefix&gt;-log.</span>
+      <span class="token key atrule">basicAuth</span><span class="token punctuation">:</span>
+        <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>
+        <span class="token key atrule">username</span><span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span>
+        <span class="token key atrule">password</span><span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span>
+      <span class="token key atrule">externalElasticsearchUrl</span><span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span>
+      <span class="token key atrule">externalElasticsearchPort</span><span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span>
+  <span class="token key atrule">console</span><span class="token punctuation">:</span>
+    <span class="token key atrule">enableMultiLogin</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>  <span class="token comment"># Enable or disable simultaneous logins. It allows different users to log in with the same account at the same time.</span>
+    <span class="token key atrule">port</span><span class="token punctuation">:</span> <span class="token number">30880</span>
+  <span class="token key atrule">alerting</span><span class="token punctuation">:</span>                <span class="token comment"># (CPU: 0.1 Core, Memory: 100 MiB) It enables users to customize alerting policies to send messages to receivers in time with different time intervals and alerting levels to choose from.</span>
+    <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>         <span class="token comment"># Enable or disable the KubeSphere Alerting System.</span>
+    <span class="token comment"># thanosruler:</span>
+    <span class="token comment">#   replicas: 1</span>
+    <span class="token comment">#   resources: {}</span>
+  <span class="token key atrule">auditing</span><span class="token punctuation">:</span>                <span class="token comment"># Provide a security-relevant chronological set of records，recording the sequence of activities happening on the platform, initiated by different tenants.</span>
+    <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>         <span class="token comment"># Enable or disable the KubeSphere Auditing Log System. </span>
+  <span class="token key atrule">devops</span><span class="token punctuation">:</span>                  <span class="token comment"># (CPU: 0.47 Core, Memory: 8.6 G) Provide an out-of-the-box CI/CD system based on Jenkins, and automated workflow tools including Source-to-Image &amp; Binary-to-Image.</span>
+    <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>             <span class="token comment"># Enable or disable the KubeSphere DevOps System.</span>
+    <span class="token key atrule">jenkinsMemoryLim</span><span class="token punctuation">:</span> 2Gi      <span class="token comment"># Jenkins memory limit.</span>
+    <span class="token key atrule">jenkinsMemoryReq</span><span class="token punctuation">:</span> 1500Mi   <span class="token comment"># Jenkins memory request.</span>
+    <span class="token key atrule">jenkinsVolumeSize</span><span class="token punctuation">:</span> 8Gi     <span class="token comment"># Jenkins volume size.</span>
+    <span class="token key atrule">jenkinsJavaOpts_Xms</span><span class="token punctuation">:</span> 512m  <span class="token comment"># The following three fields are JVM parameters.</span>
+    <span class="token key atrule">jenkinsJavaOpts_Xmx</span><span class="token punctuation">:</span> 512m
+    <span class="token key atrule">jenkinsJavaOpts_MaxRAM</span><span class="token punctuation">:</span> 2g
+  <span class="token key atrule">events</span><span class="token punctuation">:</span>                  <span class="token comment"># Provide a graphical web console for Kubernetes Events exporting, filtering and alerting in multi-tenant Kubernetes clusters.</span>
+    <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>         <span class="token comment"># Enable or disable the KubeSphere Events System.</span>
+    <span class="token key atrule">ruler</span><span class="token punctuation">:</span>
+      <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+      <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">2</span>
+  <span class="token key atrule">logging</span><span class="token punctuation">:</span>                 <span class="token comment"># (CPU: 57 m, Memory: 2.76 G) Flexible logging functions are provided for log query, collection and management in a unified console. Additional log collectors can be added, such as Elasticsearch, Kafka and Fluentd.</span>
+    <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>         <span class="token comment"># Enable or disable the KubeSphere Logging System.</span>
+    <span class="token key atrule">logsidecar</span><span class="token punctuation">:</span>
+      <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+      <span class="token key atrule">replicas</span><span class="token punctuation">:</span> <span class="token number">2</span>
+  <span class="token key atrule">metrics_server</span><span class="token punctuation">:</span>                    <span class="token comment"># (CPU: 56 m, Memory: 44.35 MiB) It enables HPA (Horizontal Pod Autoscaler).</span>
+    <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">false</span>                   <span class="token comment"># Enable or disable metrics-server.</span>
+  <span class="token key atrule">monitoring</span><span class="token punctuation">:</span>
+    <span class="token key atrule">storageClass</span><span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span>                 <span class="token comment"># If there is an independent StorageClass you need for Prometheus, you can specify it here. The default StorageClass is used by default.</span>
+    <span class="token comment"># prometheusReplicas: 1          # Prometheus replicas are responsible for monitoring different segments of data source and providing high availability.</span>
+    <span class="token key atrule">prometheusMemoryRequest</span><span class="token punctuation">:</span> 400Mi   <span class="token comment"># Prometheus request memory.</span>
+    <span class="token key atrule">prometheusVolumeSize</span><span class="token punctuation">:</span> 20Gi       <span class="token comment"># Prometheus PVC size.</span>
+    <span class="token comment"># alertmanagerReplicas: 1          # AlertManager Replicas.</span>
+  <span class="token key atrule">multicluster</span><span class="token punctuation">:</span>
+    <span class="token key atrule">clusterRole</span><span class="token punctuation">:</span> none  <span class="token comment"># host | member | none  # You can install a solo cluster, or specify it as the Host or Member Cluster.</span>
+  <span class="token key atrule">network</span><span class="token punctuation">:</span>
+    <span class="token key atrule">networkpolicy</span><span class="token punctuation">:</span> <span class="token comment"># Network policies allow network isolation within the same cluster, which means firewalls can be set up between certain instances (Pods).</span>
+      <span class="token comment"># Make sure that the CNI network plugin used by the cluster supports NetworkPolicy. There are a number of CNI network plugins that support NetworkPolicy, including Calico, Cilium, Kube-router, Romana and Weave Net.</span>
+      <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span> <span class="token comment"># Enable or disable network policies.</span>
+    <span class="token key atrule">ippool</span><span class="token punctuation">:</span> <span class="token comment"># Use Pod IP Pools to manage the Pod network address space. Pods to be created can be assigned IP addresses from a Pod IP Pool.</span>
+      <span class="token key atrule">type</span><span class="token punctuation">:</span> calico <span class="token comment"># Specify &quot;calico&quot; for this field if Calico is used as your CNI plugin. &quot;none&quot; means that Pod IP Pools are disabled.</span>
+    <span class="token key atrule">topology</span><span class="token punctuation">:</span> <span class="token comment"># Use Service Topology to view Service-to-Service communication based on Weave Scope.</span>
+      <span class="token key atrule">type</span><span class="token punctuation">:</span> none <span class="token comment"># Specify &quot;weave-scope&quot; for this field to enable Service Topology. &quot;none&quot; means that Service Topology is disabled.</span>
+  <span class="token key atrule">openpitrix</span><span class="token punctuation">:</span> <span class="token comment"># An App Store that is accessible to all platform tenants. You can use it to manage apps across their entire lifecycle.</span>
+    <span class="token key atrule">store</span><span class="token punctuation">:</span>
+      <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span> <span class="token comment"># Enable or disable the KubeSphere App Store.</span>
+  <span class="token key atrule">servicemesh</span><span class="token punctuation">:</span>         <span class="token comment"># (0.3 Core, 300 MiB) Provide fine-grained traffic management, observability and tracing, and visualized traffic topology.</span>
+    <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>     <span class="token comment"># Base component (pilot). Enable or disable KubeSphere Service Mesh (Istio-based).</span>
+  <span class="token key atrule">kubeedge</span><span class="token punctuation">:</span>          <span class="token comment"># Add edge nodes to your cluster and deploy workloads on edge nodes.</span>
+    <span class="token key atrule">enabled</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>   <span class="token comment"># Enable or disable KubeEdge.</span>
+    <span class="token key atrule">cloudCore</span><span class="token punctuation">:</span>
+      <span class="token key atrule">nodeSelector</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token key atrule">&quot;node-role.kubernetes.io/worker&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">}</span>
+      <span class="token key atrule">tolerations</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+      <span class="token key atrule">cloudhubPort</span><span class="token punctuation">:</span> <span class="token string">&quot;10000&quot;</span>
+      <span class="token key atrule">cloudhubQuicPort</span><span class="token punctuation">:</span> <span class="token string">&quot;10001&quot;</span>
+      <span class="token key atrule">cloudhubHttpsPort</span><span class="token punctuation">:</span> <span class="token string">&quot;10002&quot;</span>
+      <span class="token key atrule">cloudstreamPort</span><span class="token punctuation">:</span> <span class="token string">&quot;10003&quot;</span>
+      <span class="token key atrule">tunnelPort</span><span class="token punctuation">:</span> <span class="token string">&quot;10004&quot;</span>
+      <span class="token key atrule">cloudHub</span><span class="token punctuation">:</span>
+        <span class="token key atrule">advertiseAddress</span><span class="token punctuation">:</span> <span class="token comment"># At least a public IP address or an IP address which can be accessed by edge nodes must be provided.</span>
+          <span class="token punctuation">-</span> <span class="token string">&quot;&quot;</span>            <span class="token comment"># Note that once KubeEdge is enabled, CloudCore will malfunction if the address is not provided.</span>
+        <span class="token key atrule">nodeLimit</span><span class="token punctuation">:</span> <span class="token string">&quot;100&quot;</span>
+      <span class="token key atrule">service</span><span class="token punctuation">:</span>
+        <span class="token key atrule">cloudhubNodePort</span><span class="token punctuation">:</span> <span class="token string">&quot;30000&quot;</span>
+        <span class="token key atrule">cloudhubQuicNodePort</span><span class="token punctuation">:</span> <span class="token string">&quot;30001&quot;</span>
+        <span class="token key atrule">cloudhubHttpsNodePort</span><span class="token punctuation">:</span> <span class="token string">&quot;30002&quot;</span>
+        <span class="token key atrule">cloudstreamNodePort</span><span class="token punctuation">:</span> <span class="token string">&quot;30003&quot;</span>
+        <span class="token key atrule">tunnelNodePort</span><span class="token punctuation">:</span> <span class="token string">&quot;30004&quot;</span>
+    <span class="token key atrule">edgeWatcher</span><span class="token punctuation">:</span>
+      <span class="token key atrule">nodeSelector</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token key atrule">&quot;node-role.kubernetes.io/worker&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">}</span>
+      <span class="token key atrule">tolerations</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+      <span class="token key atrule">edgeWatcherAgent</span><span class="token punctuation">:</span>
+        <span class="token key atrule">nodeSelector</span><span class="token punctuation">:</span> <span class="token punctuation">{</span><span class="token key atrule">&quot;node-role.kubernetes.io/worker&quot;</span><span class="token punctuation">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">}</span>
+        <span class="token key atrule">tolerations</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br><span class="line-number">65</span><br><span class="line-number">66</span><br><span class="line-number">67</span><br><span class="line-number">68</span><br><span class="line-number">69</span><br><span class="line-number">70</span><br><span class="line-number">71</span><br><span class="line-number">72</span><br><span class="line-number">73</span><br><span class="line-number">74</span><br><span class="line-number">75</span><br><span class="line-number">76</span><br><span class="line-number">77</span><br><span class="line-number">78</span><br><span class="line-number">79</span><br><span class="line-number">80</span><br><span class="line-number">81</span><br><span class="line-number">82</span><br><span class="line-number">83</span><br><span class="line-number">84</span><br><span class="line-number">85</span><br><span class="line-number">86</span><br><span class="line-number">87</span><br><span class="line-number">88</span><br><span class="line-number">89</span><br><span class="line-number">90</span><br><span class="line-number">91</span><br><span class="line-number">92</span><br><span class="line-number">93</span><br><span class="line-number">94</span><br><span class="line-number">95</span><br><span class="line-number">96</span><br><span class="line-number">97</span><br><span class="line-number">98</span><br><span class="line-number">99</span><br><span class="line-number">100</span><br><span class="line-number">101</span><br><span class="line-number">102</span><br><span class="line-number">103</span><br><span class="line-number">104</span><br><span class="line-number">105</span><br><span class="line-number">106</span><br><span class="line-number">107</span><br><span class="line-number">108</span><br><span class="line-number">109</span><br><span class="line-number">110</span><br><span class="line-number">111</span><br><span class="line-number">112</span><br><span class="line-number">113</span><br><span class="line-number">114</span><br><span class="line-number">115</span><br><span class="line-number">116</span><br><span class="line-number">117</span><br><span class="line-number">118</span><br><span class="line-number">119</span><br><span class="line-number">120</span><br></div></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2021/10/27 下午12:19:23</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/zh/CloudNative/Kubernetes实战入门/Kubernetes核心实战.html" class="prev">
+        Kubernetes核心实战
+      </a></span> <span class="next"><a href="/zh/CloudNative/KubeSphere平台安装/Linux单节点部署KubeSphere.html">
+        Linux单节点部署KubeSphere
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.2686c948.js" defer></script><script src="/assets/js/6.f28aab75.js" defer></script><script src="/assets/js/131.d745c2e4.js" defer></script>
+  </body>
+</html>
