@@ -12,7 +12,7 @@ hostnamectl set-hostname node1
 
 ## 2、安装
 
-### 1、准备KubeKey
+**1、准备KubeKey**
 
 ```bash
 export KKZONE=cn
@@ -23,9 +23,7 @@ curl -sfL https://get-kk.kubesphere.io | VERSION=v1.1.1 sh -
 chmod +x kk
 ```
 
-
-
-### 2、使用KubeKey引导安装集群
+**2、使用KubeKey引导安装集群**
 
 ```bash
 #可能需要下面命令

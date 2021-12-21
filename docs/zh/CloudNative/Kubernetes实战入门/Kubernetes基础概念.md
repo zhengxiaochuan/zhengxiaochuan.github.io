@@ -160,14 +160,14 @@ kube-proxy 维护节点上的网络规则。这些网络规则允许从集群内
 
 ```bash
 #各个机器设置自己的域名
-hostnamectl set-hostname xxxx
+sudo hostnamectl set-hostname xxxx
 
 
-# 将 SELinux 设置为 permissive 模式（相当于将其禁用）
+# 将 SELinux 设置为 permissive 模式（相当于将其禁用）。第一条命令是临时禁用，第二条命令是永久禁用
 sudo setenforce 0
 sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
 
-#关闭swap
+#关闭swap(第一条命令是临时关闭，第二条命令是永久关闭)
 swapoff -a  
 sed -ri 's/.*swap.*/#&/' /etc/fstab
 
@@ -180,6 +180,7 @@ cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
 net.bridge.bridge-nf-call-iptables = 1
 EOF
+
 sudo sysctl --system
 ```
 
@@ -192,6 +193,7 @@ sudo sysctl --system
 ### 2、安装kubelet、kubeadm、kubectl
 
 ```bash
+#配置k8s的下载地址
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
@@ -204,9 +206,10 @@ gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
 exclude=kubelet kubeadm kubectl
 EOF
 
-
+#安装三大件
 sudo yum install -y kubelet-1.20.9 kubeadm-1.20.9 kubectl-1.20.9 --disableexcludes=kubernetes
 
+#设置开机启动
 sudo systemctl enable --now kubelet
 ```
 
@@ -219,6 +222,8 @@ kubelet 现在每隔几秒就会重启，因为它陷入了一个等待 kubeadm 
 
 
 ### 1、下载各个机器需要的镜像
+
+下面脚本中代码的意思是通过一个循环，下载kube组件镜像。集群中的每台机器上都执行该脚本。
 
 ```bash
 sudo tee ./images.sh <<-'EOF'
@@ -236,7 +241,8 @@ for imageName in ${images[@]} ; do
 docker pull registry.cn-hangzhou.aliyuncs.com/lfy_k8s_images/$imageName
 done
 EOF
-   
+
+#给脚本文件设置可执行权限，然后执行脚本
 chmod +x ./images.sh && ./images.sh
 ```
 
@@ -245,14 +251,14 @@ chmod +x ./images.sh && ./images.sh
 ### 2、初始化主节点
 
 ```bash
-#所有机器添加master域名映射，以下需要修改为自己的
-echo "172.31.0.4  cluster-endpoint" >> /etc/hosts
+#为集群中的所有机器添加master域名映射，以下需要修改为自己的(172.31.0.2这个IP修改为自己机器的内网IP)
+echo "172.31.0.2  cluster-endpoint" >> /etc/hosts
+#执行完上面这条命令之后，在所有机器上ping这个域名，就都可以ping通这个主节点，才是正确的
 
 
-
-#主节点初始化
+#主节点初始化(注意下面修改为自己主节点的IP地址，以及control-plane-endpoint设置为上面设置的主节点域名)
 kubeadm init \
---apiserver-advertise-address=172.31.0.4 \
+--apiserver-advertise-address=172.31.0.2 \
 --control-plane-endpoint=cluster-endpoint \
 --image-repository registry.cn-hangzhou.aliyuncs.com/lfy_k8s_images \
 --kubernetes-version v1.20.9 \
@@ -263,6 +269,8 @@ kubeadm init \
 ```
 
 
+
+执行完以上命令后，出现以下信息，就表示主节点初始化成功了。以下信息中包含了一下重要信息，我们直接复制保存下来。
 
 ```bash
 Your Kubernetes control-plane has initialized successfully!
@@ -284,14 +292,14 @@ Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
 You can now join any number of control-plane nodes by copying certificate authorities
 and service account keys on each node and then running the following as root:
 
-  kubeadm join cluster-endpoint:6443 --token hums8f.vyx71prsg74ofce7 \
-    --discovery-token-ca-cert-hash sha256:a394d059dd51d68bb007a532a037d0a477131480ae95f75840c461e85e2c6ae3 \
+  kubeadm join cluster-endpoint:6443 --token fbep16.vv5bca67ftdtczqm \
+    --discovery-token-ca-cert-hash sha256:131a946d99371e137dbf32f2a3658afad8e62686e2c30619157e3e30b98f3010 \
     --control-plane 
 
 Then you can join any number of worker nodes by running the following on each as root:
 
-kubeadm join cluster-endpoint:6443 --token hums8f.vyx71prsg74ofce7 \
-    --discovery-token-ca-cert-hash sha256:a394d059dd51d68bb007a532a037d0a477131480ae95f75840c461e85e2c6ae3
+kubeadm join cluster-endpoint:6443 --token fbep16.vv5bca67ftdtczqm \
+    --discovery-token-ca-cert-hash sha256:131a946d99371e137dbf32f2a3658afad8e62686e2c30619157e3e30b98f3010
 ```
 
 
@@ -315,21 +323,44 @@ kubectl get pods -A
 
 master成功后提示如下：
 
-![img](https://cdn.nlark.com/yuque/0/2021/png/1613913/1625467146849-06edb92b-9e09-4118-a5eb-8296c23d0c7c.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_37%2Ctext_YXRndWlndS5jb20gIOWwmuehheiwtw%3D%3D%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![img](./assets/20211101062105.png)
 
 
 
 #### 1、设置.kube/config
 
-复制上面命令
+复制以下命令，然后在主节点上执行
+
+```bash
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+
+然后提示我们需要部署一个网络插件，网络插件有很多，这里给出了一个列表地址。我们安装calico这个网络插件，具体安装方法，看下面的具体步骤。
+
+```bash
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+```
 
 
 
 #### 2、安装网络组件
 
+然后提示我们需要部署一个网络插件，网络插件有很多，这里给出了一个列表地址。我们安装calico这个网络插件，具体安装方法，看下面的具体步骤。
+
+```bash
+You should now deploy a pod network to the cluster.
+Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+```
+
 [calico官网](https://docs.projectcalico.org/getting-started/kubernetes/self-managed-onprem/onpremises#install-calico-with-kubernetes-api-datastore-more-than-50-nodes)
 
 ```bash
+#在主节点依次运行以下两条命令
 curl https://docs.projectcalico.org/manifests/calico.yaml -O
 
 kubectl apply -f calico.yaml
@@ -339,9 +370,11 @@ kubectl apply -f calico.yaml
 
 ### 4、加入node节点
 
+需要注意的是，下面这个命令是24小时有效的，运行就可以将worker节点加入到集群中。过去之后就使用命令获取新令牌token即可。
+
 ```bash
-kubeadm join cluster-endpoint:6443 --token x5g4uy.wpjjdbgra92s25pp \
-	--discovery-token-ca-cert-hash sha256:6255797916eaee52bf9dda9429db616fcd828436708345a308f4b917d3457a22
+kubeadm join cluster-endpoint:6443 --token fbep16.vv5bca67ftdtczqm \
+    --discovery-token-ca-cert-hash sha256:131a946d99371e137dbf32f2a3658afad8e62686e2c30619157e3e30b98f3010
 ```
 
 新令牌
@@ -380,7 +413,7 @@ https://github.com/kubernetes/dashboard
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.3.1/aio/deploy/recommended.yaml
 ```
 
-
+如果联网下载不下来，也可以使用以下内容。其实`recommended.yaml`的内容就是下面这些。
 
 ```yaml
 # Copyright 2017 The Kubernetes Authors.
@@ -695,25 +728,33 @@ spec:
 kubectl edit svc kubernetes-dashboard -n kubernetes-dashboard
 ```
 
-type: ClusterIP 改为 type: NodePort
+将type: ClusterIP 改为 type: NodePort
 
 
+
+然后执行以下命令
 
 ```bash
 kubectl get svc -A |grep kubernetes-dashboard
-## 找到端口，在安全组放行
 ```
 
+运行命令后，会在控制台得到以下信息。我们找到其中的`31318`端口，这个就是我们访问dashboard时的端口。然后我们需要在云服务器的安全组中放行该端口。
 
+```bash
+[root@k8s-master ~]# kubectl get svc -A |grep kubernetes-dashboard
+kubernetes-dashboard   dashboard-metrics-scraper   ClusterIP   10.96.115.70   <none>        8000/TCP                 5m40s
+kubernetes-dashboard   kubernetes-dashboard        NodePort    10.96.154.52   <none>        443:31318/TCP            5m40s
+```
 
-访问： https://集群任意IP:端口      https://139.198.165.238:32759
+接下来我们就可以访问： https://集群任意公网IP:端口     例如： https://139.198.34.135:31318
 
 
 
 #### 3、创建访问账号
 
+创建访问账号，准备一个yaml文件`vi dashboard-usr.yaml`，文件内容如下：
+
 ```yaml
-#创建访问账号，准备一个yaml文件； vi dash.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -732,8 +773,15 @@ subjects:
 - kind: ServiceAccount
   name: admin-user
   namespace: kubernetes-dashboard
-kubectl apply -f dash.yaml
 ```
+
+然后应用一下
+
+```bash
+kubectl apply -f dashboard-usr.yaml
+```
+
+
 
 #### 4、令牌访问
 
@@ -745,7 +793,7 @@ kubectl -n kubernetes-dashboard get secret $(kubectl -n kubernetes-dashboard get
 
 
 ```json
-eyJhbGciOiJSUzI1NiIsImtpZCI6InpXSkU0TjhCUmVKQzBJaC03Nk9ES2NMZ1daRTRmQ1FMZU9rRUJ3VXRnM3MifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLXgyczhmIiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiIzOTZmYjdlNS0wMjA2LTQxMjctOGQzYS0xMzRlODVmYjU0MDAiLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZXJuZXRlcy1kYXNoYm9hcmQ6YWRtaW4tdXNlciJ9.Hf5mhl35_R0iBfBW7fF198h_klEnN6pRKfk_roAzOtAN-Aq21E4804PUhe9Rr9e_uFzLfoFDXacjJrHCuhiML8lpHIfJLK_vSD2pZNaYc2NWZq2Mso-BMGpObxGA23hW0nLQ5gCxlnxIAcyE76aYTAB6U8PxpvtVdgUknBVrwXG8UC_D8kHm9PTwa9jgbZfSYAfhOHWmZxNYo7CF2sHH-AT_WmIE8xLmB7J11vDzaunv92xoUoI0ju7OBA2WRr61bOmSd8WJgLCDcyBblxz4Wa-3zghfKlp0Rgb8l56AAI7ML_snF59X6JqaCuAcCJjIu0FUTS5DuyIObEeXY-z-Rw
+eyJhbGciOiJSUzI1NiIsImtpZCI6IldHLTVEbDNlVUNscmR3TXNORnJZMldNNWx3R2txcG43UlU3VU5SSjdweXcifQ.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VjcmV0Lm5hbWUiOiJhZG1pbi11c2VyLXRva2VuLWwybTI3Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImFkbWluLXVzZXIiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlcnZpY2UtYWNjb3VudC51aWQiOiIwMDI5MGRkNi1jNjc3LTQ4YWMtODFmZi05MDk1NTExMmMyODciLCJzdWIiOiJzeXN0ZW06c2VydmljZWFjY291bnQ6a3ViZXJuZXRlcy1kYXNoYm9hcmQ6YWRtaW4tdXNlciJ9.mxkHDlmSuGpdakfhEK27vApHnQekKOm6UtAOGfzIbMPRBjn1XcecHIWzx38cCBh5Qn8JYG_cmmXeAfSRre2ZoKvPrSNCc0V2KleMDEJ23oYkVtkrOzkfk-3Vs65jyYm3cgZ1YRVsvCezwUj9zY3e2ZS03WjQa0VL9dWdS42XvnelLfok-CB_xFJUv2lxVAWhcdh3YhZ79xlie3Y-3nZje8jSUUUzGChCv0_Bxw2NwXE547HorTPH3A9VyyjAMPFVYZJJQ4VKrsl-kvzMijyWucYYzkbdpR7n5QAX06lp_BaBC0LCQJgjGtsAQTFluA7Y1pMSetNW8GNwdI6R_ihZfA
 ```
 
 #### 5、界面

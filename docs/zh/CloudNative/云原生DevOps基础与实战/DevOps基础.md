@@ -6,7 +6,7 @@ DevOps **是一系列做法和工具**，可以使 IT 和软件开发团队之�
 
  
 
-![img](https://cdn.nlark.com/yuque/0/2021/png/1613913/1632308791299-29ecf126-98a4-474e-9140-5b9ec101cf45.png?x-oss-process=image%2Fwatermark%2Ctype_d3F5LW1pY3JvaGVp%2Csize_39%2Ctext_YXRndWlndS5jb20gIOWwmuehheiwtw%3D%3D%2Ccolor_FFFFFF%2Cshadow_50%2Ct_80%2Cg_se%2Cx_10%2Cy_10)
+![img](./assets/1632308791299-29ecf126-98a4-474e-9140-5b9ec101cf45.png)
 
 
 

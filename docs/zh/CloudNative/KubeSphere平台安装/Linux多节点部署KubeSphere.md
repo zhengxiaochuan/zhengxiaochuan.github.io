@@ -25,17 +25,15 @@
 export KKZONE=cn
 
 
-curl -sfL https://get-kk.kubesphere.io | VERSION=v1.1.1 sh -
+curl -sfL https://get-kk.kubesphere.io | VERSION=v1.2.0 sh -
 
 chmod +x kk
 ```
 
-
-
 ## 2、创建集群配置文件
 
 ```bash
-./kk create config --with-kubernetes v1.20.4 --with-kubesphere v3.1.1
+./kk create cluster --with-kubernetes v1.21.5 --with-kubesphere v3.2.0
 ```
 
 ## 3、创建集群
@@ -49,6 +47,10 @@ chmod +x kk
 ```bash
 kubectl logs -n kubesphere-system $(kubectl get pod -n kubesphere-system -l app=ks-install -o jsonpath='{.items[0].metadata.name}') -f
 ```
+
+
+
+
 
 # 附录
 

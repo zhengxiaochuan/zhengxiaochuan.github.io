@@ -232,6 +232,8 @@ mount -t nfs 172.31.0.4:/nfs/data /nfs/data
 
 配置动态供应的默认存储类
 
+`sc.yaml`
+
 ```yaml
 ## 创建了一个存储类
 apiVersion: storage.k8s.io/v1
@@ -369,7 +371,9 @@ kubectl get sc
 
 ## 2、metrics-server
 
-集群指标监控组件
+集群指标监控组件【其实安装KubeSphere时会默认安装该组件，但是会从官方下载，速度太慢，所以我们这里先自行安装】
+
+`metrics.yaml`
 
 ```yaml
 apiVersion: v1
@@ -561,7 +565,7 @@ spec:
   versionPriority: 100
 ```
 
-
+安装完之后，我们可以运行`kubectl top nodes`来查看K8s集群中各节点的CPU、内存的使用量、使用率的数据。也可以使用`kubectl top pods -A`来查看所有Pod的CPU、内存占用多少。
 
 
 
@@ -622,6 +626,8 @@ kubectl logs -n kubesphere-system $(kubectl get pod -n kubesphere-system -l app=
 ```bash
 kubectl -n kubesphere-monitoring-system create secret generic kube-etcd-client-certs  --from-file=etcd-client-ca.crt=/etc/kubernetes/pki/etcd/ca.crt  --from-file=etcd-client.crt=/etc/kubernetes/pki/apiserver-etcd-client.crt  --from-file=etcd-client.key=/etc/kubernetes/pki/apiserver-etcd-client.key
 ```
+
+
 
 ## 附录
 

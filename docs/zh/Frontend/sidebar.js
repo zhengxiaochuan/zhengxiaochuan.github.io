@@ -7,10 +7,13 @@ module.exports = [
         '/zh/Frontend/Vue/02-了解前后分离的演变史',
         '/zh/Frontend/Vue/03-了解前端 MVVM 模式',
         '/zh/Frontend/Vue/04-Vue 简介',
-        '/zh/Frontend/Vue/05-第一个 Vue 应用程序',
-        '/zh/Frontend/Vue/06-Vue 实例的生命周期',
-        '/zh/Frontend/Vue/07-Vue 语法',
-        '/zh/Frontend/Vue/08-Vue 事件',
+        '/zh/Frontend/Vue/05-Vue 核心',
+      ]
+  },
+  {
+    title: '微信开发',
+    children: [
+        '/zh/Frontend/wechat/微信小程序入门学习教程',
       ]
   }
 ];

@@ -1,12 +1,23 @@
-# 04-Vue 简介
-
-
+# Vue 简介
 
 ## 概述
 
+Vue官网：[https://vuejs.org/](https://vuejs.org/)
+
 Vue (读音 /vjuː/，类似于 view) 是一套用于构建用户界面的**渐进式框架**，发布于 2014 年 2 月。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。**Vue 的核心库只关注视图层**，不仅易于上手，还便于与第三方库（如：`vue-router`，~~`vue-resource`~~，`vuex`）或既有项目整合。
 
-[官方网站](http://www.qfdmy.com/wp-content/themes/quanbaike/go.php?url=aHR0cHM6Ly9jbi52dWVqcy5vcmcv)
+## Vue的特点
+
+1. 遵循 **MVVM** 模式
+
+2. 编码简洁，体积小，运行效率高，适合移动/PC端开发
+
+3. 它本身只关注UI，也可以引入其它第三方库开发项目
+
+##  与其它 JS 框架的关联
+
+1. 借鉴Angular的 **模板** 和 **数据绑定** 技术
+2. 借鉴React的 **组件化** 和 **虚拟DOM** 技术
 
 ## MVVM 模式的实现者
 
@@ -23,13 +34,13 @@ Vue (读音 /vjuː/，类似于 view) 是一套用于构建用户界面的**渐�
 - ViewModel 能够观察到数据的变化，并对视图对应的内容进行更新
 - ViewModel 能够监听到视图的变化，并能够通知数据发生改变
 
-至此，我们就明白了，Vue.js 就是一个 MVVM 的实现者，他的核心就是实现了 `DOM 监听` 与 `数据绑定`
+至此，我们就明白了，Vue.js 就是一个 MVVM 的实现者，他的核心就是实现了 `DOM监听` 与 `数据绑定`。
 
-### 其它 MVVM 实现者
-
-- AngularJS
-- ReactJS
-- 微信小程序
+> **其它 MVVM 实现者**
+>
+> - AngularJS
+> - ReactJS
+> - 微信小程序
 
 ## 为什么要使用 Vue.js
 
@@ -39,7 +50,7 @@ Vue (读音 /vjuː/，类似于 view) 是一套用于构建用户界面的**渐�
 - 吸取了 Angular（`模块化`）和 React（`虚拟 DOM`）的长处，并拥有自己独特的功能，如：`计算属性`
 - 开源，社区活跃度高
 
-## Vue.js 的两大核心要素
+## Vue的两大核心要素
 
 ### 数据驱动
 
@@ -56,3 +67,15 @@ Vue (读音 /vjuː/，类似于 view) 是一套用于构建用户界面的**渐�
 - 页面上每个独立的可交互的区域视为一个组件
 - 每个组件对应一个工程目录，组件所需的各种资源在这个目录下就近维护
 - 页面不过是组件的容器，组件可以嵌套自由组合（复用）形成完整的页面
+
+
+
+## Vue周边库
+
+1. vue-cli：vue脚手架
+2. vue-resource
+3. axios：一个基于 promise 的 HTTP 库
+4. vue-router：路由
+5. vuex：状态管理
+6. element-ui：基于vue的UI组件库(PC端)
+......

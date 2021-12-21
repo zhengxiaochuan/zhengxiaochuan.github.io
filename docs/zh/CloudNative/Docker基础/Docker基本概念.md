@@ -113,7 +113,9 @@ sudo yum remove docker \
 ### 2、配置yum源
 
 ```bash
+#安装yum-utils工具类
 sudo yum install -y yum-utils
+#配置docker下载的yum源
 sudo yum-config-manager \
 --add-repo \
 http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
@@ -136,6 +138,7 @@ yum install -y docker-ce-20.10.7 docker-ce-cli-20.10.7  containerd.io-1.4.6
 ### 4、启动
 
 ```bash
+#既要现在启动，也要开机启动
 systemctl enable docker --now
 ```
 
