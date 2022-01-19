@@ -926,11 +926,791 @@ Object.defineProperty(person,'age',{
 
 
 
-## 计算属性与监视
+## 计算属性
+
+### 姓名案例
+
+![案例效果图](./assets/2021-12-29_15-10-03.jpg)
+
+
+
+### 插值语法实现
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>姓名案例_插值语法实现</title>
+		<!-- 引入Vue -->
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>
+		<!-- 准备好一个容器-->
+		<div id="root">
+			姓：<input type="text" v-model="firstName"> <br/><br/>
+			名：<input type="text" v-model="lastName"> <br/><br/>
+			全名：<span>{{firstName}}-{{lastName}}</span>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+
+		new Vue({
+			el:'#root',
+			data:{
+				firstName:'张',
+				lastName:'三'
+			}
+		})
+	</script>
+</html>
+```
+
+### methods实现
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>姓名案例_methods实现</title>
+		<!-- 引入Vue -->
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>
+		<!-- 准备好一个容器-->
+		<div id="root">
+			姓：<input type="text" v-model="firstName"> <br/><br/>
+			名：<input type="text" v-model="lastName"> <br/><br/>
+			全名：<span>{{fullName()}}</span>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+
+		new Vue({
+			el:'#root',
+			data:{
+				firstName:'张',
+				lastName:'三'
+			},
+			methods: {
+				fullName(){
+					console.log('@---fullName')
+					return this.firstName + '-' + this.lastName
+				}
+			},
+		})
+	</script>
+</html>
+```
+
+> 只要data中的数据发生改变，Vue就会重新解析模板。而在重新解析模板时，只要遇到了插值语法里边写方法，这个方法就一定会被重新调用。
+>
+> 这种方式，效率就会比较差。
+
+### 计算属性实现
+
+模板内的表达式非常便利，但是设计它们的初衷是用于简单运算的。在模板中放入太多的逻辑会让模板过重且难以维护。例如：
+
+```html
+<div id="example">
+  {{ message.split('').reverse().join('') }}
+</div>
+```
+
+在这个地方，模板不再是简单的声明式逻辑。你必须看一段时间才能意识到，这里是想要显示变量 `message` 的翻转字符串。当你想要在模板中的多处包含此翻转字符串时，就会更加难以处理。
+
+所以，对于任何复杂逻辑，你都应当使用**计算属性**。
+
+
+
+示例代码
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>姓名案例_计算属性实现</title>
+		<!-- 引入Vue -->
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>		
+		<!-- 准备好一个容器-->
+		<div id="root">
+			姓：<input type="text" v-model="firstName"> <br/><br/>
+			名：<input type="text" v-model="lastName"> <br/><br/>
+			测试：<input type="text" v-model="x"> <br/><br/>
+			全名：<span>{{fullName}}</span> <br/><br/>
+			<!-- 全名：<span>{{fullName}}</span> <br/><br/>
+			全名：<span>{{fullName}}</span> <br/><br/>
+			全名：<span>{{fullName}}</span> -->
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+
+		const vm = new Vue({
+			el:'#root',
+			data:{
+				firstName:'张',
+				lastName:'三',
+				x:'你好'
+			},
+			methods: {
+				demo(){
+					
+				}
+			},
+			computed:{
+				fullName:{
+					//get有什么作用？当有人读取fullName时，get就会被调用，且返回值就作为fullName的值
+					//get什么时候调用？1.初次读取fullName时。2.所依赖的数据发生变化时。
+					get(){
+						console.log('get被调用了')
+						// console.log(this) //此处的this是vm
+						return this.firstName + '-' + this.lastName
+					},
+					//set什么时候调用? 当fullName被修改时。
+					set(value){
+						console.log('set',value)
+						const arr = value.split('-')
+						this.firstName = arr[0]
+						this.lastName = arr[1]
+					}
+				}
+			}
+		})
+	</script>
+</html>
+```
+
+小结：
+
+> 计算属性：
+>
+> ​          1.定义：要用的属性不存在，要通过已有属性计算得来。
+>
+> ​          2.原理：底层借助了Objcet.defineproperty方法提供的getter和setter。
+>
+> ​          3.get函数什么时候执行？
+>
+> ​                (1).初次读取时会执行一次。
+>
+> ​                (2).当依赖的数据发生改变时会被再次调用。
+>
+> ​          4.优势：与methods实现相比，内部有缓存机制（复用），效率更高，调试方便。
+>
+> ​          5.备注：
+>
+> ​              1.计算属性最终会出现在vm上，直接读取使用即可。
+>
+> ​              2.如果计算属性要被修改，那必须写set函数去响应修改，且set中要引起计算时依赖的数据发生改变。
+
+### 计算属性简写
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>姓名案例_计算属性简写</title>
+	<!-- 引入Vue -->
+	<script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+	<!-- 准备好一个容器-->
+	<div id="root">
+		姓：<input type="text" v-model="firstName"> <br /><br />
+		名：<input type="text" v-model="lastName"> <br /><br />
+		全名：<span>{{fullName}}</span> <br /><br />
+	</div>
+</body>
+
+<script type="text/javascript">
+	Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+
+	const vm = new Vue({
+		el: '#root',
+		data: {
+			firstName: '张',
+			lastName: '三',
+		},
+		computed: {
+			//完整写法
+			/* fullName:{
+				get(){
+					console.log('get被调用了')
+					return this.firstName + '-' + this.lastName
+				},
+				set(value){
+					console.log('set',value)
+					const arr = value.split('-')
+					this.firstName = arr[0]
+					this.lastName = arr[1]
+				}
+			} */
+			//简写
+			fullName() {
+				console.log('get被调用了')
+				return this.firstName + '-' + this.lastName
+			}
+		}
+	})
+</script>
+
+</html>
+```
+
+
+
+## 监视属性(侦听器)
+
+虽然计算属性在大多数情况下更合适，但有时也需要一个自定义的侦听器。这就是为什么 Vue 通过 `watch` 选项提供了一个更通用的方法，来响应数据的变化。当需要在数据变化时执行异步或开销较大的操作时，这个方式是最有用的。
+
+
+
+### 天气案例
+
+实现效果如下：
+
+![天气案例](./assets/Snipaste_2022-01-18_07-23-26.jpg)
+
+
+
+使用【计算属性】实现代码如下：
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>天气案例</title>
+		<!-- 引入Vue -->
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>
+		<!-- 准备好一个容器-->
+		<div id="root">
+			<h2>今天天气很{{info}}</h2>
+			<!-- 绑定事件的时候：@xxx="yyy" yyy可以写一些简单的语句 -->
+			<!-- <button @click="isHot = !isHot">切换天气</button> -->
+			<button @click="changeWeather">切换天气</button>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+		
+		const vm = new Vue({
+			el:'#root',
+			data:{
+				isHot:true,
+			},
+			computed:{
+				info(){
+					return this.isHot ? '炎热' : '凉爽'
+				}
+			},
+			methods: {
+				changeWeather(){
+					this.isHot = !this.isHot
+				}
+			},
+		})
+	</script>
+</html>
+```
+
+### 监视属性
+
+
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>天气案例_监视属性</title>
+		<!-- 引入Vue -->
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>
+		<!-- 准备好一个容器-->
+		<div id="root">
+			<h2>今天天气很{{info}}</h2>
+			<button @click="changeWeather">切换天气</button>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+		
+		const vm = new Vue({
+			el:'#root',
+			data:{
+				isHot:true,
+			},
+			computed:{
+				info(){
+					return this.isHot ? '炎热' : '凉爽'
+				}
+			},
+			methods: {
+				changeWeather(){
+					this.isHot = !this.isHot
+				}
+			},
+            //监视的第一种写法
+			/* watch:{
+				isHot:{
+					immediate:true, //初始化时让handler调用一下
+					//handler什么时候调用？当isHot发生改变时。
+					handler(newValue,oldValue){
+						console.log('isHot被修改了',newValue,oldValue)
+					}
+				}
+			} */
+		})
+
+        //监视的第二种写法
+		vm.$watch('isHot',{
+			immediate:true, //初始化时让handler调用一下
+			//handler什么时候调用？当isHot发生改变时。
+			handler(newValue,oldValue){
+				console.log('isHot被修改了',newValue,oldValue)
+			}
+		})
+	</script>
+</html>
+```
+
+> 监视属性watch：
+> 					1.当被监视的属性变化时, 回调函数自动调用, 进行相关操作
+> 					2.监视的属性必须存在，才能进行监视！！
+> 					3.监视的两种写法：
+> 							(1).new Vue时传入watch配置
+> 							(2).通过vm.$watch监视
+
+
+
+### 深度监视
+
+示例代码：
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>天气案例_深度监视</title>
+		<!-- 引入Vue -->
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>		
+		<!-- 准备好一个容器-->
+		<div id="root">
+			<h2>今天天气很{{info}}</h2>
+			<button @click="changeWeather">切换天气</button>
+			<hr/>
+			<h3>a的值是:{{numbers.a}}</h3>
+			<button @click="numbers.a++">点我让a+1</button>
+			<h3>b的值是:{{numbers.b}}</h3>
+			<button @click="numbers.b++">点我让b+1</button>
+			<button @click="numbers = {a:666,b:888}">彻底替换掉numbers</button>
+			{{numbers.c.d.e}}
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+		
+		const vm = new Vue({
+			el:'#root',
+			data:{
+				isHot:true,
+				numbers:{
+					a:1,
+					b:1,
+					c:{
+						d:{
+							e:100
+						}
+					}
+				}
+			},
+			computed:{
+				info(){
+					return this.isHot ? '炎热' : '凉爽'
+				}
+			},
+			methods: {
+				changeWeather(){
+					this.isHot = !this.isHot
+				}
+			},
+			watch:{
+				isHot:{
+					// immediate:true, //初始化时让handler调用一下
+					//handler什么时候调用？当isHot发生改变时。
+					handler(newValue,oldValue){
+						console.log('isHot被修改了',newValue,oldValue)
+					}
+				},
+				//监视多级结构中某个属性的变化
+				/* 'numbers.a':{
+					handler(){
+						console.log('a被改变了')
+					}
+				} */
+				//监视多级结构中所有属性的变化
+				numbers:{
+					deep:true,
+					handler(){
+						console.log('numbers改变了')
+					}
+				}
+			}
+		})
+
+	</script>
+</html>
+```
+
+> 深度监视：
+> 						(1).Vue中的watch默认不监测对象内部值的改变（一层）。
+> 						(2).配置deep:true可以监测对象内部值改变（多层）。
+> 				备注：
+> 						(1).Vue自身可以监测对象内部值的改变，但Vue提供的watch默认不可以！
+> 						(2).使用watch时根据数据的具体结构，决定是否采用深度监视。
 
 ## Class 与 Style 绑定
 
+操作元素的 class 列表和内联样式是数据绑定的一个常见需求。因为它们都是 attribute，所以我们可以用 `v-bind` 处理它们：只需要通过表达式计算出字符串结果即可。不过，字符串拼接麻烦且易错。因此，在将 `v-bind` 用于 `class` 和 `style` 时，Vue.js 做了专门的增强。表达式结果的类型除了字符串之外，还可以是对象或数组。
+
+
+
+示例代码：
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>绑定样式</title>
+		<style>
+			.basic{
+				width: 400px;
+				height: 100px;
+				border: 1px solid black;
+			}
+			
+			.happy{
+				border: 4px solid red;;
+				background-color: rgba(255, 255, 0, 0.644);
+				background: linear-gradient(30deg,yellow,pink,orange,yellow);
+			}
+			.sad{
+				border: 4px dashed rgb(2, 197, 2);
+				background-color: gray;
+			}
+			.normal{
+				background-color: skyblue;
+			}
+
+			.atguigu1{
+				background-color: yellowgreen;
+			}
+			.atguigu2{
+				font-size: 30px;
+				text-shadow:2px 2px 10px red;
+			}
+			.atguigu3{
+				border-radius: 20px;
+			}
+		</style>
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>		
+		<!-- 准备好一个容器-->
+		<div id="root">
+			<!-- 绑定class样式--字符串写法，适用于：样式的类名不确定，需要动态指定 -->
+			<div class="basic" :class="mood" @click="changeMood">{{name}}</div> <br/><br/>
+
+			<!-- 绑定class样式--数组写法，适用于：要绑定的样式个数不确定、名字也不确定 -->
+			<div class="basic" :class="classArr">{{name}}</div> <br/><br/>
+
+			<!-- 绑定class样式--对象写法，适用于：要绑定的样式个数确定、名字也确定，但要动态决定用不用 -->
+			<div class="basic" :class="classObj">{{name}}</div> <br/><br/>
+
+			<!-- 绑定style样式--对象写法 -->
+			<div class="basic" :style="styleObj">{{name}}</div> <br/><br/>
+			<!-- 绑定style样式--数组写法 -->
+			<div class="basic" :style="styleArr">{{name}}</div>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		Vue.config.productionTip = false
+		
+		const vm = new Vue({
+			el:'#root',
+			data:{
+				name:'尚硅谷',
+				mood:'normal',
+				classArr:['atguigu1','atguigu2','atguigu3'],
+				classObj:{
+					atguigu1:false,
+					atguigu2:false,
+				},
+				styleObj:{
+					fontSize: '40px',
+					color:'red',
+				},
+				styleObj2:{
+					backgroundColor:'orange'
+				},
+				styleArr:[
+					{
+						fontSize: '40px',
+						color:'blue',
+					},
+					{
+						backgroundColor:'gray'
+					}
+				]
+			},
+			methods: {
+				changeMood(){
+					const arr = ['happy','sad','normal']
+					const index = Math.floor(Math.random()*3)
+					this.mood = arr[index]
+				}
+			},
+		})
+	</script>
+	
+</html>
+```
+
+小结：
+
+> 1. class样式
+>
+> ​                写法:class="xxx" xxx可以是字符串、对象、数组。
+>
+> ​                    字符串写法适用于：类名不确定，要动态获取。
+>
+> ​                    对象写法适用于：要绑定多个样式，个数不确定，名字也不确定。
+>
+> ​                    数组写法适用于：要绑定多个样式，个数确定，名字也确定，但不确定用不用。
+>
+> ​     2.  style样式
+>
+> ​                :style="{fontSize: xxx}"其中xxx是动态值。
+>
+> ​                :style="[a,b]"其中a、b是样式对象。
+
+
+
+
+
 ## 条件渲染
+
+### `v-if`
+
+`v-if` 指令用于条件性地渲染一块内容。这块内容只会在指令的表达式返回 truthy 值的时候被渲染。
+
+```html
+<h1 v-if="awesome">Vue is awesome!</h1>
+```
+
+也可以用 `v-else` 添加一个“else 块”：
+
+```html
+<h1 v-if="awesome">Vue is awesome!</h1>
+<h1 v-else>Oh no 😢</h1>
+```
+
+
+
+**在 `<template>` 元素上使用 `v-if` 条件渲染分组**
+
+因为 `v-if` 是一个指令，所以必须将它添加到一个元素上。但是如果想切换多个元素呢？此时可以把一个 `<template>` 元素当做不可见的包裹元素，并在上面使用 `v-if`。最终的渲染结果将不包含 `<template>` 元素。
+
+```html
+<template v-if="ok">
+  <h1>Title</h1>
+  <p>Paragraph 1</p>
+  <p>Paragraph 2</p>
+</template>
+```
+
+
+
+### `v-else`
+
+你可以使用 `v-else` 指令来表示 `v-if` 的“else 块”：
+
+```html
+<div v-if="Math.random() > 0.5">
+  Now you see me
+</div>
+<div v-else>
+  Now you don't
+</div>
+```
+
+`v-else` 元素必须紧跟在带 `v-if` 或者 `v-else-if` 的元素的后面，否则它将不会被识别。
+
+
+
+### `v-else-if`
+
+`v-else-if`，顾名思义，充当 `v-if` 的“else-if 块”，并且可以连续使用：
+
+```html
+<div v-if="type === 'A'">
+  A
+</div>
+<div v-else-if="type === 'B'">
+  B
+</div>
+<div v-else-if="type === 'C'">
+  C
+</div>
+<div v-else>
+  Not A/B/C
+</div>
+```
+
+与 `v-else` 的用法类似，`v-else-if` 也必须紧跟在带 `v-if` 或者 `v-else-if` 的元素之后。
+
+
+
+### `v-show`
+
+另一个用于条件性展示元素的选项是 `v-show` 指令。用法大致一样：
+
+```html
+<h1 v-show="ok">Hello!</h1>
+```
+
+不同的是带有 `v-show` 的元素始终会被渲染并保留在 DOM 中。`v-show` 只是简单地切换元素的 `display` CSS property。
+
+注意，`v-show` 不支持 `<template>` 元素，也不支持 `v-else`。
+
+
+
+### `v-if` vs `v-show`
+
+`v-if` 是“真正”的条件渲染，因为它会确保在切换过程中，条件块内的事件监听器和子组件适当地被销毁和重建。
+
+`v-if` 也是**惰性的**：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
+
+相比之下，`v-show` 就简单得多——不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
+
+一般来说，`v-if` 有更高的切换开销，而 `v-show` 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 `v-show` 较好；如果在运行时条件很少改变，则使用 `v-if` 较好。
+
+
+
+### 示例小结
+
+示例代码：
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>条件渲染</title>
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>		
+		<!-- 准备好一个容器-->
+		<div id="root">
+			<h2>当前的n值是:{{n}}</h2>
+			<button @click="n++">点我n+1</button>
+			<!-- 使用v-show做条件渲染 -->
+			<!-- <h2 v-show="false">欢迎来到{{name}}</h2> -->
+			<!-- <h2 v-show="1 === 1">欢迎来到{{name}}</h2> -->
+
+			<!-- 使用v-if做条件渲染 -->
+			<!-- <h2 v-if="false">欢迎来到{{name}}</h2> -->
+			<!-- <h2 v-if="1 === 1">欢迎来到{{name}}</h2> -->
+
+			<!-- v-else和v-else-if -->
+			<!-- <div v-if="n === 1">Angular</div>
+			<div v-else-if="n === 2">React</div>
+			<div v-else-if="n === 3">Vue</div>
+			<div v-else>哈哈</div> -->
+
+			<!-- v-if与template的配合使用 -->
+			<template v-if="n === 1">
+				<h2>你好</h2>
+				<h2>尚硅谷</h2>
+				<h2>北京</h2>
+			</template>
+
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		Vue.config.productionTip = false
+
+		const vm = new Vue({
+			el:'#root',
+			data:{
+				name:'尚硅谷',
+				n:0
+			}
+		})
+	</script>
+</html>
+```
+
+小结：
+
+> 条件渲染：
+>
+> ​              1.v-if
+>
+> ​                    写法：
+>
+> ​                        (1).v-if="表达式" 
+>
+> ​                        (2).v-else-if="表达式"
+>
+> ​                        (3).v-else="表达式"
+>
+> ​                    适用于：切换频率较低的场景。
+>
+> ​                    特点：不展示的DOM元素直接被移除。
+>
+> ​                    注意：v-if可以和:v-else-if、v-else一起使用，但要求结构不能被“打断”。
+>
+> 
+>
+> ​              2.v-show
+>
+> ​                    写法：v-show="表达式"
+>
+> ​                    适用于：切换频率较高的场景。
+>
+> ​                    特点：不展示的DOM元素未被移除，仅仅是使用样式隐藏掉
+>
+> ​                
+>
+> ​              3.备注：使用v-if的时，元素可能无法获取到，而使用v-show一定可以获取到。
+
+
 
 ## 列表渲染
 
