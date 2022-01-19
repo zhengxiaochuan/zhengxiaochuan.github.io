@@ -6,7 +6,7 @@
 
 ### [Auto Close Tag插件](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag)
 
-![Auto Close Tag](../assets/vscodePlugins/Auto Close Tag.jpg)
+![Auto-Close-Tag](../assets/vscodePlugins/AutoCloseTag.jpg)
 
 自动添加HTML / XML关闭标记，与Visual Studio IDE或Sublime Text相同。
 
@@ -14,7 +14,7 @@
 
 ### [Auto Rename Tag插件](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)
 
-![Auto Rename Tag](../assets/vscodePlugins/Auto Rename Tag.jpg)
+![Auto-Rename-Tag](../assets/vscodePlugins/AutoRenameTag.jpg)
 
 这是一个修改标签对的插件。
 
@@ -38,7 +38,7 @@
 
 ### [open in browser插件](https://marketplace.visualstudio.com/items?itemName=techer.open-in-browser)
 
-![open in browser](../assets/vscodePlugins/open in browser.jpg)
+![open-in-browser](../assets/vscodePlugins/open-in-browser.jpg)
 
 把编辑的HTML文件等用浏览器打开，查看效果。
 
@@ -50,7 +50,7 @@
 
 ### [Live Server插件](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer)
 
-![Live Server](../assets/vscodePlugins/Live Server.jpg)
+![Live-Server](../assets/vscodePlugins/LiveServer.jpg)
 
 这是一个为静态和动态页面启动具有实时重新加载功能的开发本地服务器。
 
@@ -141,7 +141,7 @@ ctrl+alt+i
 
 ### [Turbo Console Log插件](https://marketplace.visualstudio.com/items?itemName=ChakrounAnas.turbo-console-log)
 
-![Turbo Console Log](../assets/vscodePlugins/Turbo Console Log.jpg)
+![Turbo-Console-Log](../assets/vscodePlugins/TurboConsoleLog.jpg)
 
 这个扩展通过自动插入有意义的日志消息，使调试更容易。
 
@@ -161,7 +161,7 @@ VsCode的图标插件，可以控制vscode中的文件管理的树目录显示�
 
 ### [Vue 3 Snippets插件](https://marketplace.visualstudio.com/items?itemName=hollowtree.vue-snippets)
 
-![Vue 3 Snippets](../assets/vscodePlugins/Vue 3 Snippets.jpg)
+![Vue-3-Snippets](../assets/vscodePlugins/Vue3Snippets.jpg)
 
 这个插件基于最新的 Vue 2 及 Vue 3 的 API 添加了 Code Snippets。
 
