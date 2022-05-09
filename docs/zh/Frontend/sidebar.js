@@ -11,6 +11,12 @@ module.exports = [
       ]
   },
   {
+    title: 'Vue3开发',
+    children: [
+        '/zh/Frontend/Vue3/Pinia',
+      ]
+  },
+  {
     title: '微信开发',
     children: [
         '/zh/Frontend/wechat/微信小程序入门学习教程',

@@ -3,7 +3,7 @@ home: true
 heroImage: /hero.png
 heroText: 狸猫小僧
 tagline: 记录学习点滴, 留住美好时光
-actionText: 进来吧 →
+actionText: 让我们开始吧 →
 actionLink: /zh/guide/
 features:
   - title: 简洁至上

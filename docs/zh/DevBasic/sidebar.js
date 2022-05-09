@@ -14,6 +14,7 @@ module.exports = [
       '/zh/DevBasic/Java/other/日志规范',
       '/zh/DevBasic/Java/other/浅析VO DTO DO PO',
       '/zh/DevBasic/Java/other/使用MapStruct完成对象之间的转换',
+      '/zh/DevBasic/Java/other/Jackson的正确使用方式',      
     ]
   },
   {

@@ -1389,7 +1389,144 @@ Object.defineProperty(person,'age',{
 > 						(2).配置deep:true可以监测对象内部值改变（多层）。
 > 				备注：
 > 						(1).Vue自身可以监测对象内部值的改变，但Vue提供的watch默认不可以！
-> 						(2).使用watch时根据数据的具体结构，决定是否采用深度监视。
+> 						(2).使用watch时根据数据的具体结构，决定是否采用深度监视（默认不开启，是因为效率问题）。
+
+
+
+### 简写形式
+
+当你不需要`immediate`、`deep`  这些配置项时，就可以使用`watch`的简写形式了。
+
+
+
+`html`示例代码：
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>天气案例_监视属性_简写</title>
+		<!-- 引入Vue -->
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>
+		<!-- 准备好一个容器-->
+		<div id="root">
+			<h2>今天天气很{{info}}</h2>
+			<button @click="changeWeather">切换天气</button>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+		
+		const vm = new Vue({
+			el:'#root',
+			data:{
+				isHot:true,
+			},
+			computed:{
+				info(){
+					return this.isHot ? '炎热' : '凉爽'
+				}
+			},
+			methods: {
+				changeWeather(){
+					this.isHot = !this.isHot
+				}
+			},
+			watch:{
+				//正常写法
+				/* isHot:{
+					// immediate:true, //初始化时让handler调用一下
+					// deep:true,//深度监视
+					handler(newValue,oldValue){
+						console.log('isHot被修改了',newValue,oldValue)
+					}
+				}, */
+				//简写
+				/* isHot(newValue,oldValue){
+					console.log('isHot被修改了',newValue,oldValue,this)
+				} */
+			}
+		})
+
+		//正常写法
+		/* vm.$watch('isHot',{
+			immediate:true, //初始化时让handler调用一下
+			deep:true,//深度监视
+			handler(newValue,oldValue){
+				console.log('isHot被修改了',newValue,oldValue)
+			}
+		}) */
+
+		//简写
+		/* vm.$watch('isHot',(newValue,oldValue)=>{
+			console.log('isHot被修改了',newValue,oldValue,this)
+		}) */
+
+	</script>
+</html>
+```
+
+
+
+### 姓名案例的watch实现
+
+`html`示例代码：
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>姓名案例_watch实现</title>
+		<!-- 引入Vue -->
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>
+		<!-- 准备好一个容器-->
+		<div id="root">
+			姓：<input type="text" v-model="firstName"> <br/><br/>
+			名：<input type="text" v-model="lastName"> <br/><br/>
+			全名：<span>{{fullName}}</span> <br/><br/>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+
+		const vm = new Vue({
+			el:'#root',
+			data:{
+				firstName:'张',
+				lastName:'三',
+				fullName:'张-三'
+			},
+			watch:{
+				firstName(val){
+					setTimeout(()=>{
+						console.log(this)
+						this.fullName = val + '-' + this.lastName
+					},1000);
+				},
+				lastName(val){
+					this.fullName = this.firstName + '-' + val
+				}
+			}
+		})
+	</script>
+</html>
+```
+
+> computed 和 watch 之间的区别：
+> 						1.computed能完成的功能，watch都可以完成。
+> 						2.watch能完成的功能，computed不一定能完成，例如：watch可以进行异步操作。
+> 				两个重要的小原则：
+> 							1.所有被Vue管理的函数，最好写成普通函数，这样this的指向才是vm 或 组件实例对象。
+> 							2.所有不被Vue所管理的函数（定时器的回调函数、ajax的回调函数等、Promise的回调函数），最好写成箭头函数，
+> 								这样this的指向才是vm 或 组件实例对象。
 
 ## Class 与 Style 绑定
 
@@ -1713,6 +1850,545 @@ Object.defineProperty(person,'age',{
 
 
 ## 列表渲染
+
+
+
+### 基本列表
+
+示例代码：
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>基本列表</title>
+	<script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+	<!-- 准备好一个容器-->
+	<div id="root">
+		<!-- 遍历数组 -->
+		<h2>人员列表（遍历数组）</h2>
+		<ul>
+			<li v-for="(p,index) of persons" :key="index">
+				{{p.name}}-{{p.age}}
+			</li>
+		</ul>
+
+		<!-- 遍历对象 -->
+		<h2>汽车信息（遍历对象）</h2>
+		<ul>
+			<li v-for="(value,k) of car" :key="k">
+				{{k}}-{{value}}
+			</li>
+		</ul>
+
+		<!-- 遍历字符串 -->
+		<h2>测试遍历字符串（用得少）</h2>
+		<ul>
+			<li v-for="(char,index) of str" :key="index">
+				{{char}}-{{index}}
+			</li>
+		</ul>
+
+		<!-- 遍历指定次数 -->
+		<h2>测试遍历指定次数（用得少）</h2>
+		<ul>
+			<li v-for="(number,index) of 5" :key="index">
+				{{index}}-{{number}}
+			</li>
+		</ul>
+	</div>
+</body>
+
+<script type="text/javascript">
+	Vue.config.productionTip = false
+
+	new Vue({
+		el: '#root',
+		data: {
+			persons: [
+				{ id: '001', name: '张三', age: 18 },
+				{ id: '002', name: '李四', age: 19 },
+				{ id: '003', name: '王五', age: 20 }
+			],
+			car: {
+				name: '奥迪A8',
+				price: '70万',
+				color: '黑色'
+			},
+			str: 'hello'
+		}
+	})
+</script>
+
+</html>
+```
+
+> v-for指令:
+> 						1.用于展示列表数据
+> 						2.语法：v-for="(item, index) in xxx" :key="yyy"
+> 						3.可遍历：数组、对象、字符串（用的很少）、指定次数（用的很少）
+
+
+
+### key的原理
+
+先看一下案例
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>key的原理</title>
+	<script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+	<!-- 准备好一个容器-->
+	<div id="root">
+		<!-- 遍历数组 -->
+		<h2>人员列表（遍历数组）</h2>
+		<button @click.once="add">添加一个老刘</button>
+		<ul>
+			<li v-for="(p,index) of persons" :key="index">
+				{{p.name}}-{{p.age}}
+				<input type="text">
+			</li>
+		</ul>
+	</div>
+</body>
+
+<script type="text/javascript">
+	Vue.config.productionTip = false
+
+	new Vue({
+		el: '#root',
+		data: {
+			persons: [
+				{ id: '001', name: '张三', age: 18 },
+				{ id: '002', name: '李四', age: 19 },
+				{ id: '003', name: '王五', age: 20 }
+			]
+		},
+		methods: {
+			add() {
+				const p = { id: '004', name: '老刘', age: 40 }
+				this.persons.unshift(p)
+			}
+		},
+	})
+</script>
+</html>
+```
+
+在这个案例中，我们使用for循环来遍历数组，这里有个需要特殊注意的地方，就是我们在遍历时，`:key`这里我们是使用的索引(index)。
+
+点击页面上的按钮后，向数组前添加（unshift）了一个老刘，效果如下图所示：
+
+![案例运行效果](./assets/Snipaste_2022-02-11_07-11-23.png)
+
+从表面效果来看，似乎也没有什么问题。接下来，我们在名字后面的输入框中输入对应行的名字后，再点击按钮，看看结果。结果如下图所示：
+
+
+
+![案例效果图](./assets/Snipaste_2022-02-11_07-14-14.png)
+
+此时，我们就发现有问题了吧，输入框中的内容与姓名完全不对应了。造成这个的原因，就是我们在循环遍历时使用index作为key。更深层的原因，就涉及到了Vue中的虚拟DOM对比算法了。为了把这个问题说透，我这里用一张图来帮助大家理解。
+
+![虚拟DOM对比算法](./assets/Snipaste_2022-02-11_07-26-59.png)
+
+并不是说在遍历时使用index作为key就一定是错误的，我这里是为了演示问题才这样设计的（否则我也不会把新数据添加到数组前头了）。如果你对数据进行了破坏顺序的操作，就一定不要用index作为key了。
+
+而最为稳妥的，就是使用唯一标识作为key。下面依然用一张图来帮助大家理解。
+
+
+
+![虚拟DOM对比算法](./assets/Snipaste_2022-02-11_07-46-15.png)
+
+**总结一下：**
+
+> 面试题：react、vue中的key有什么作用？（key的内部原理）
+>
+> 1. 虚拟DOM中key的作用：
+>
+> ​                    key是虚拟DOM对象的标识，当数据发生变化时，Vue会根据【新数据】生成【新的虚拟DOM】, 
+>
+> ​                    随后Vue进行【新虚拟DOM】与【旧虚拟DOM】的差异比较，比较规则如下：
+>
+> 2. 对比规则：
+>
+> ​                  (1).旧虚拟DOM中找到了与新虚拟DOM相同的key：
+>
+> ​                        ①.若虚拟DOM中内容没变, 直接使用之前的真实DOM！
+>
+> ​                        ②.若虚拟DOM中内容变了, 则生成新的真实DOM，随后替换掉页面中之前的真实DOM。
+>
+> ​                  (2).旧虚拟DOM中未找到与新虚拟DOM相同的key
+>
+> ​                        创建新的真实DOM，随后渲染到到页面。
+>
+> 3. 用index作为key可能会引发的问题：
+>
+> ​                      1. 若对数据进行：逆序添加、逆序删除等破坏顺序操作:
+>
+> ​                              会产生没有必要的真实DOM更新 ==> 界面效果没问题, 但效率低。
+>
+> 
+>
+> ​                      2. 如果结构中还包含输入类的DOM：
+>
+> ​                              会产生错误DOM更新 ==> 界面有问题。
+>
+> 4. 开发中如何选择key?:
+>
+> ​                      1.最好使用每条数据的唯一标识作为key, 比如id、手机号、身份证号、学号等唯一值。
+>
+> ​                      2.如果不存在对数据的逆序添加、逆序删除等破坏顺序操作，仅用于渲染列表用于展示，
+>
+> ​                        使用index作为key是没有问题的。
+
+
+
+### 列表过滤
+
+接下来我们实现一个人员列表过滤的功能，效果如下图所示。在输入框中输入关键字后，筛选出列表中符合的人员信息。
+
+![列表过滤](./assets/Snipaste_2022-02-12_06-21-04.png)
+
+实现该功能，用`watch`是可以实现的，用计算属性`computed`也是可以实现的。下面我们就用这两种方式都实现一下。
+
+
+
+html代码如下：
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>列表过滤</title>
+	<script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+	<!-- 准备好一个容器-->
+	<div id="root">
+		<h2>人员列表</h2>
+		<input type="text" placeholder="请输入名字" v-model="keyWord">
+		<ul>
+			<li v-for="(p,index) of filPerons" :key="index">
+				{{p.name}}-{{p.age}}-{{p.sex}}
+			</li>
+		</ul>
+	</div>
+</body>
+
+
+<script type="text/javascript">
+	Vue.config.productionTip = false
+
+	//用watch实现
+	//#region 
+	/* new Vue({
+		el:'#root',
+		data:{
+			keyWord:'',
+			persons:[
+				{id:'001',name:'马冬梅',age:19,sex:'女'},
+				{id:'002',name:'周冬雨',age:20,sex:'女'},
+				{id:'003',name:'周杰伦',age:21,sex:'男'},
+				{id:'004',name:'温兆伦',age:22,sex:'男'}
+			],
+			filPerons:[]
+		},
+		watch:{
+			keyWord:{
+				immediate:true,
+				handler(val){
+					this.filPerons = this.persons.filter((p)=>{
+						return p.name.indexOf(val) !== -1
+					})
+				}
+			}
+		}
+	}) */
+	//#endregion
+
+	//用computed实现
+	new Vue({
+		el: '#root',
+		data: {
+			keyWord: '',
+			persons: [
+				{ id: '001', name: '马冬梅', age: 19, sex: '女' },
+				{ id: '002', name: '周冬雨', age: 20, sex: '女' },
+				{ id: '003', name: '周杰伦', age: 21, sex: '男' },
+				{ id: '004', name: '温兆伦', age: 22, sex: '男' }
+			]
+		},
+		computed: {
+			filPerons() {
+				return this.persons.filter((p) => {
+					return p.name.indexOf(this.keyWord) !== -1
+				})
+			}
+		}
+	}) 
+</script>
+
+</html>
+```
+
+
+
+### 列表排序
+
+接下来，我们将上一个案例升级一下，加入排序功能，效果如下图所示：
+
+![列表排序](./assets/Snipaste_2022-02-12_06-34-05.png)
+
+
+
+html代码如下：
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>列表排序</title>
+	<script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+	<!-- 准备好一个容器-->
+	<div id="root">
+		<h2>人员列表</h2>
+		<input type="text" placeholder="请输入名字" v-model="keyWord">
+		<button @click="sortType = 2">年龄升序</button>
+		<button @click="sortType = 1">年龄降序</button>
+		<button @click="sortType = 0">原顺序</button>
+		<ul>
+			<li v-for="(p,index) of filPerons" :key="p.id">
+				{{p.name}}-{{p.age}}-{{p.sex}}
+				<input type="text">
+			</li>
+		</ul>
+	</div>
+</body>
+
+<script type="text/javascript">
+	Vue.config.productionTip = false
+
+	new Vue({
+		el: '#root',
+		data: {
+			keyWord: '',
+			sortType: 0, //0原顺序 1降序 2升序
+			persons: [
+				{ id: '001', name: '马冬梅', age: 30, sex: '女' },
+				{ id: '002', name: '周冬雨', age: 31, sex: '女' },
+				{ id: '003', name: '周杰伦', age: 18, sex: '男' },
+				{ id: '004', name: '温兆伦', age: 19, sex: '男' }
+			]
+		},
+		computed: {
+			filPerons() {
+				const arr = this.persons.filter((p) => {
+					return p.name.indexOf(this.keyWord) !== -1
+				})
+				//判断一下是否需要排序
+				if (this.sortType) {
+					arr.sort((p1, p2) => {
+						return this.sortType === 1 ? p2.age - p1.age : p1.age - p2.age
+					})
+				}
+				return arr
+			}
+		}
+	})
+
+</script>
+
+</html>
+```
+
+
+
+### Vue监测数据改变的原理
+
+在之前的案例中都讲到过，我们的数据都是配置在`data`里的，然后在模板中使用插值语法`{{name}}`来读取数据。一旦`data`里的数据发生变化，那么使用到相应数据的地方就会自动更新。那Vue是怎么知道数据被修改了呢？接下来我们就好好探讨下这个问题：`Vue到底是如何监视数据改变的`。
+
+
+
+#### 引子
+
+我们为什么一定要去了解这个Vue监测数据改变的原理呢，我如果不去深究，是不是也不影响我正常的写代码啊？其实我们这里讲一下这个原理，就是为了让大家能够知其所以然，避免以后出现这种：我们写了一个自己认为很正常的修改数据的代码，但Vue就是不认、就是监测不到数据更改了的尴尬情况。
+
+真的有这种情况吗？真的有。接下来我就来演示一下。上代码：
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>更新时的一个问题</title>
+	<script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+	<!-- 准备好一个容器-->
+	<div id="root">
+		<h2>人员列表</h2>
+		<button @click="updateMei">更新马冬梅的信息</button>
+		<ul>
+			<li v-for="(p,index) of persons" :key="p.id">
+				{{p.name}}-{{p.age}}-{{p.sex}}
+			</li>
+		</ul>
+	</div>
+</body>
+
+<script type="text/javascript">
+	Vue.config.productionTip = false
+
+	const vm = new Vue({
+		el: '#root',
+		data: {
+			persons: [
+				{ id: '001', name: '马冬梅', age: 30, sex: '女' },
+				{ id: '002', name: '周冬雨', age: 31, sex: '女' },
+				{ id: '003', name: '周杰伦', age: 18, sex: '男' },
+				{ id: '004', name: '温兆伦', age: 19, sex: '男' }
+			]
+		},
+		methods: {
+			updateMei() {
+				//更新马冬梅的信息
+			}
+		}
+	})
+
+</script>
+
+</html>
+```
+
+点击`更新马冬梅的信息`按钮时，调用`updateMei()`方法来修改这个人的信息。
+
+
+
+首先我们采用`第一种写法`：
+
+```javascript
+updateMei() {
+    this.persons[0].name = '马老师'
+    this.persons[0].age = 50 
+    this.persons[0].sex = '男'
+}
+```
+
+运行之后，我们发现数据确实发生变化了。也就是说，这种方法是奏效的，Vue也是认可并且是能够监测到数据改变的。
+
+
+
+然后我们采用`第二种写法`：
+
+```javascript
+updateMei() {
+    this.persons[0] = {id:'001',name:'马老师',age:50,sex:'男'}
+}
+```
+
+执行之后，效果如下图所示：
+
+![](./assets/Snipaste_2022-02-15_12-31-53.png)
+
+从Vue开发者工具中，我们发现数据并没有发生改变。但实际上，数据是发生改变了，但是Vue并没有监测到，所以页面上以及Vue开发者工具中都没有发生变化。怎么验证数据确实已经改变了呢？很简单，我们打印下vm上的数据就知道了，如下图所示：
+
+![](./assets/Snipaste_2022-02-15_12-34-07.png)
+
+这就让我们很迷惑了呀，到底是怎么回事啊？明明数据改变了，怎么Vue没有监测到呢？
+
+
+
+所以我们就很有必要了解下Vue监测数据改变的原理了。
+
+#### 原理
+
+我们先准备好一个案例，代码如下：
+
+```html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Vue监测数据改变的原理</title>
+		<!-- 引入Vue -->
+		<script type="text/javascript" src="../js/vue.js"></script>
+	</head>
+	<body>
+		<!-- 准备好一个容器-->
+		<div id="root">
+			<h2>学校名称：{{name}}</h2>
+			<h2>学校地址：{{address}}</h2>
+		</div>
+	</body>
+
+	<script type="text/javascript">
+		Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+
+		const vm = new Vue({
+			el:'#root',
+			data:{
+				name:'尚硅谷',
+				address:'北京'
+			}
+		})
+	</script>
+</html>
+```
+
+之前我们在讲数据代理的时候说过（看下图），我们将数据放到`data`中，Vue其实是做了一个类似于`vm._data = data`这样收集数据的事。但是在做这个收集数据之前，Vue其实还做了一个加工data的事情。
+
+![Vue数据代理示意图](./assets/2021-12-23_06-45-45.jpg)
+
+我们怎么证明Vue先对data做了一些加工呢？
+
+首先我们看下图，左侧蓝色部分就是我们写的data中的数据，右侧红色部分，就是Vue收集到的数据_data。
+
+![data与_data数据对比](./assets/Snipaste_2022-02-15_12-51-13.png)
+
+如果Vue只是做了一个`vm._data = data`这样收集数据的事，那`vm._data`中的数据是不是应该与data中的数据一模一样。通过上图的对比，很显然是不一样的。
+
+通过观察Vue收集到的数据_data，我们发现`vm._data`除了把原来data中的数据收集到了，还多了一些setter和getter方法，Vue应该确实对数据做了一些加工。而且通过对比，你没有觉得，**其实所谓的加工，就是把你data里所写的每一组key-value，都形成了getter、setter的写法。**
+
+接下来，我们将整个流程补充完整，加上第三步，也就是在前两步之后，**当data中有数据发生改变时，Vue就会监测到，然后重新解析模板，重新解析模板就会生成新的虚拟DOM，然后新旧虚拟DOM对比，然后就是更新页面啊，一整套流程是不是就通了。**整个流程可以参考下图：
+
+![](./assets/Snipaste_2022-02-15_12-55-13.png)
+
+
+
+在上面的案例中，Vue之所以能够监测到name和address的改变，就是靠getter和setter的。
+
+从以上的分析中我们知道，我们原始的data数据中仅仅只有数据name和address，而经过Vue加工后的`vm._data`中name和address都有了对应的getter和setter，所以说Vue`加工data`这步是非常关键的。
+
+那么Vue到底是做了什么加工呢？我们通过观察开发者工具中的name的getter和setter方法，发现其后面写着reactiveGetter和reactiveSetter。其实Vue是将这些数据做了响应式的。
+
+
+
+
+
+
 
 ## 收集表单数据
 
