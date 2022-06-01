@@ -682,8 +682,12 @@ import ShoppingCart from "./components/ShoppingCart.vue";
 </script>
 
 <style lang="scss" scoped></style>
-复制代码
-<!-- src/ProductList.vue -->
+```
+
+
+
+```vue
+<!-- src/components/ProductList.vue -->
 <template>
   <ul>
     <li>商品名称 - 商品价格<br /><button>添加到购物车</button></li>
@@ -695,8 +699,12 @@ import ShoppingCart from "./components/ShoppingCart.vue";
 <script setup lang="ts"></script>
 
 <style lang="scss" scoped></style>
-复制代码
-<!-- src/ShoppingCart.vue -->
+```
+
+
+
+```vue
+<!-- src/components/ShoppingCart.vue -->
 <template>
   <div class="cart">
     <h2>你的购物车</h2>
@@ -717,10 +725,15 @@ import ShoppingCart from "./components/ShoppingCart.vue";
 <style lang="scss" scoped></style>
 ```
 
+
+
 ### 4.数据接口
 
 ```typescript
-// src/api/shop.ts
+/** 
+* src/api/shop.ts
+* Mocking client-server processing
+*/
 export interface IProduct {
   id: number;
   title: string;
@@ -757,6 +770,7 @@ async function wait(delay: number) {
 // src/store/products.ts
 import { defineStore } from "pinia";
 import { getProducts, IProduct } from "../api/shop";
+
 export const useProductsStore = defineStore("products", {
   state: () => {
     return {
@@ -787,11 +801,11 @@ export const useProductsStore = defineStore("products", {
 </template>
 
 <script setup lang="ts">
-import { useProductsStore } from "../store/products";
-const productsStore = useProductsStore();
+    import { useProductsStore } from "../store/products";
+    const productsStore = useProductsStore();
 
-// 加载所有数据
-productsStore.loadAllProducts();
+    // 加载所有数据
+    productsStore.loadAllProducts();
 </script>
 
 <style lang="scss" scoped></style>
@@ -813,11 +827,12 @@ type CartProduct = {
 export const useCartStore = defineStore("cart", {
   state: () => {
     return {
-      cartProducts: [] as CartProduct[], // 购物车列表
+      cartProducts: [] as CartProduct[], // 购物车商品列表
     };
   },
   getters: {},
   actions: {
+    //添加商品到购物车中
     addProductToCart(product: IProduct) {
       console.log("addProductToCart", product);
       // 检查商品是否有库存
@@ -839,8 +854,9 @@ export const useCartStore = defineStore("cart", {
           quantity: 1, // 第一次添加到购物车数量就是 1
         });
       }
+        
       // 更新商品库存 引入另一个store
-      // product.inventory--; 不建议这么做，不要相信函数参数，建议找到源数据修改
+      // product.inventory--; 这种方式我们不建议这么做，因为product不是响应式数据。不要相信函数参数，建议找到源数据修改
       const productsStore = useProductsStore();
       productsStore.decrementProduct(product);
     },
@@ -881,14 +897,14 @@ actions: {
 </template>
 
 <script setup lang="ts">
-import { useProductsStore } from "../store/products";
-import { useCartStore } from "../store/cart";
+    import { useProductsStore } from "../store/products";
+    import { useCartStore } from "../store/cart";
 
-const productsStore = useProductsStore();
-const cartStore = useCartStore();
+    const productsStore = useProductsStore();
+    const cartStore = useCartStore();
 
-// 加载所有数据
-productsStore.loadAllProducts();
+    // 加载所有数据
+    productsStore.loadAllProducts();
 </script>
 
 <style lang="scss" scoped></style>
@@ -898,6 +914,7 @@ productsStore.loadAllProducts();
 
 ```vue
 <!-- ShoppingCart.vue -->
+<!-- 展示购物车中的数据 -->
 <template>
   <div class="cart">
     <h2>你的购物车</h2>
@@ -995,6 +1012,8 @@ export const useCartStore = defineStore("cart", {
       const productsStore = useProductsStore();
       productsStore.decrementProduct(product);
     },
+    
+    //结算
     async checkout() {
       const result = await buyProducts();
       this.checkutStatus = result ? "成功" : "失败";
@@ -1017,4 +1036,6 @@ export const useCartStore = defineStore("cart", {
 
 
 
-谢谢观看，本文部分引自：[新一代状态管理工具，Pinia.js 上手指南 - 掘金 (juejin.cn)](https://juejin.cn/post/7049196967770980389)
+## Pinia视频教程
+
+看文字版教程不习惯的话，可以移步B站观看视频教程：[抛弃 Vuex，使用 Pinia](https://www.bilibili.com/video/BV11Y411b7nb)
