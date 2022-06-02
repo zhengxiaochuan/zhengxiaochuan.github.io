@@ -16,6 +16,7 @@ module.exports = [
         '/zh/DevOthers/Chapter1/文档写作利器：Markdown',
         '/zh/DevOthers/Chapter1/靠开源项目弄到 IntelliJ IDEA 激活码',
         '/zh/DevOthers/Chapter1/Linux上kdevtmpfsi挖矿木马清除处理',
+        '/zh/DevOthers/Chapter1/开发框架收集',
       ]
   },
   {
