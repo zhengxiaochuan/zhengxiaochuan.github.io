@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>最通俗易懂的JavaScript入门教程 | 狸猫小僧</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="description" content="记录点滴足迹  保留美好时光">
+    
+    <link rel="preload" href="/assets/css/0.styles.89e32c3d.css" as="style"><link rel="preload" href="/assets/js/app.921b27ea.js" as="script"><link rel="preload" href="/assets/js/5.68730461.js" as="script"><link rel="preload" href="/assets/js/79.912a9200.js" as="script"><link rel="prefetch" href="/assets/js/10.ff518541.js"><link rel="prefetch" href="/assets/js/100.ea1fd34c.js"><link rel="prefetch" href="/assets/js/101.3161d3ea.js"><link rel="prefetch" href="/assets/js/102.e7f68cef.js"><link rel="prefetch" href="/assets/js/103.691c1d73.js"><link rel="prefetch" href="/assets/js/104.98673acb.js"><link rel="prefetch" href="/assets/js/105.80b795ac.js"><link rel="prefetch" href="/assets/js/106.3fe0b020.js"><link rel="prefetch" href="/assets/js/107.358d3a5c.js"><link rel="prefetch" href="/assets/js/108.ae7702dc.js"><link rel="prefetch" href="/assets/js/109.ccb0f9ea.js"><link rel="prefetch" href="/assets/js/11.71a3d7e9.js"><link rel="prefetch" href="/assets/js/110.65ec26c0.js"><link rel="prefetch" href="/assets/js/111.5decf803.js"><link rel="prefetch" href="/assets/js/112.1b0eabfc.js"><link rel="prefetch" href="/assets/js/113.4943bc49.js"><link rel="prefetch" href="/assets/js/114.3fded40c.js"><link rel="prefetch" href="/assets/js/115.475393e6.js"><link rel="prefetch" href="/assets/js/116.5982863d.js"><link rel="prefetch" href="/assets/js/117.50c63494.js"><link rel="prefetch" href="/assets/js/118.ca4c9568.js"><link rel="prefetch" href="/assets/js/119.c9c98bf7.js"><link rel="prefetch" href="/assets/js/12.5569237e.js"><link rel="prefetch" href="/assets/js/120.1053e0d1.js"><link rel="prefetch" href="/assets/js/121.6914c440.js"><link rel="prefetch" href="/assets/js/122.4e32ebde.js"><link rel="prefetch" href="/assets/js/123.28e75df8.js"><link rel="prefetch" href="/assets/js/124.8ecc6f6a.js"><link rel="prefetch" href="/assets/js/125.5452ab93.js"><link rel="prefetch" href="/assets/js/126.d5d0305c.js"><link rel="prefetch" href="/assets/js/127.6830cb9b.js"><link rel="prefetch" href="/assets/js/128.5bb23ad0.js"><link rel="prefetch" href="/assets/js/129.2bc2eb69.js"><link rel="prefetch" href="/assets/js/13.504ddde8.js"><link rel="prefetch" href="/assets/js/130.3016ecb5.js"><link rel="prefetch" href="/assets/js/131.47afed53.js"><link rel="prefetch" href="/assets/js/132.4a42f3bd.js"><link rel="prefetch" href="/assets/js/133.3ec0222b.js"><link rel="prefetch" href="/assets/js/134.712868e3.js"><link rel="prefetch" href="/assets/js/135.b212c657.js"><link rel="prefetch" href="/assets/js/136.ef0445cd.js"><link rel="prefetch" href="/assets/js/137.7de2f3c0.js"><link rel="prefetch" href="/assets/js/138.39459fbc.js"><link rel="prefetch" href="/assets/js/139.d102af44.js"><link rel="prefetch" href="/assets/js/14.b2b510e1.js"><link rel="prefetch" href="/assets/js/140.be7b598e.js"><link rel="prefetch" href="/assets/js/141.e2860eeb.js"><link rel="prefetch" href="/assets/js/142.2069458d.js"><link rel="prefetch" href="/assets/js/143.f9233f76.js"><link rel="prefetch" href="/assets/js/144.92bff8d7.js"><link rel="prefetch" href="/assets/js/145.03f30d25.js"><link rel="prefetch" href="/assets/js/146.7f885974.js"><link rel="prefetch" href="/assets/js/147.571b4830.js"><link rel="prefetch" href="/assets/js/148.0cf1faac.js"><link rel="prefetch" href="/assets/js/149.760b5ec0.js"><link rel="prefetch" href="/assets/js/15.9ed2bbd7.js"><link rel="prefetch" href="/assets/js/150.f6011b95.js"><link rel="prefetch" href="/assets/js/151.d113309b.js"><link rel="prefetch" href="/assets/js/152.1d9d61f8.js"><link rel="prefetch" href="/assets/js/153.d23a18a4.js"><link rel="prefetch" href="/assets/js/154.d1c6b043.js"><link rel="prefetch" href="/assets/js/155.a33600c4.js"><link rel="prefetch" href="/assets/js/156.14c38ade.js"><link rel="prefetch" href="/assets/js/157.5cf30ac1.js"><link rel="prefetch" href="/assets/js/158.0ecf8cd7.js"><link rel="prefetch" href="/assets/js/159.979200fc.js"><link rel="prefetch" href="/assets/js/16.2e91c4f3.js"><link rel="prefetch" href="/assets/js/160.4b96b020.js"><link rel="prefetch" href="/assets/js/161.25c45b78.js"><link rel="prefetch" href="/assets/js/162.ec7e639b.js"><link rel="prefetch" href="/assets/js/163.01d98137.js"><link rel="prefetch" href="/assets/js/164.7b43dace.js"><link rel="prefetch" href="/assets/js/165.39e4a232.js"><link rel="prefetch" href="/assets/js/166.bb32f1dc.js"><link rel="prefetch" href="/assets/js/167.5374ba48.js"><link rel="prefetch" href="/assets/js/168.c76c7db0.js"><link rel="prefetch" href="/assets/js/169.8ed6fc05.js"><link rel="prefetch" href="/assets/js/17.a1c13a42.js"><link rel="prefetch" href="/assets/js/170.c8189138.js"><link rel="prefetch" href="/assets/js/171.bd74d15d.js"><link rel="prefetch" href="/assets/js/172.03aa0107.js"><link rel="prefetch" href="/assets/js/173.6bbeefe4.js"><link rel="prefetch" href="/assets/js/174.639e4cad.js"><link rel="prefetch" href="/assets/js/175.a91b4a93.js"><link rel="prefetch" href="/assets/js/176.c1da0d56.js"><link rel="prefetch" href="/assets/js/177.4346adfb.js"><link rel="prefetch" href="/assets/js/178.0ec9f179.js"><link rel="prefetch" href="/assets/js/179.74c18ea0.js"><link rel="prefetch" href="/assets/js/18.d29b4938.js"><link rel="prefetch" href="/assets/js/180.8fb298bf.js"><link rel="prefetch" href="/assets/js/181.ac2e2389.js"><link rel="prefetch" href="/assets/js/182.a42a6b01.js"><link rel="prefetch" href="/assets/js/183.2ec8adbc.js"><link rel="prefetch" href="/assets/js/184.bd4a5528.js"><link rel="prefetch" href="/assets/js/185.3a30e77d.js"><link rel="prefetch" href="/assets/js/186.ba609116.js"><link rel="prefetch" href="/assets/js/187.d61a7e24.js"><link rel="prefetch" href="/assets/js/188.fc401a40.js"><link rel="prefetch" href="/assets/js/189.4970526b.js"><link rel="prefetch" href="/assets/js/19.dabd6152.js"><link rel="prefetch" href="/assets/js/190.9a19294e.js"><link rel="prefetch" href="/assets/js/191.d30f2d3a.js"><link rel="prefetch" href="/assets/js/192.16956c98.js"><link rel="prefetch" href="/assets/js/193.b19c217e.js"><link rel="prefetch" href="/assets/js/194.6ed730f0.js"><link rel="prefetch" href="/assets/js/195.6cb5cc98.js"><link rel="prefetch" href="/assets/js/196.2c997f7f.js"><link rel="prefetch" href="/assets/js/197.2887629f.js"><link rel="prefetch" href="/assets/js/198.ff7cacb4.js"><link rel="prefetch" href="/assets/js/199.fe03ddb5.js"><link rel="prefetch" href="/assets/js/20.c0ccf2d2.js"><link rel="prefetch" href="/assets/js/200.c28e0bd9.js"><link rel="prefetch" href="/assets/js/201.81f2e88e.js"><link rel="prefetch" href="/assets/js/202.322a3f7b.js"><link rel="prefetch" href="/assets/js/203.285e1b31.js"><link rel="prefetch" href="/assets/js/204.f4696224.js"><link rel="prefetch" href="/assets/js/205.5c063fba.js"><link rel="prefetch" href="/assets/js/206.3a697e1c.js"><link rel="prefetch" href="/assets/js/207.5691d377.js"><link rel="prefetch" href="/assets/js/208.6b78f3c3.js"><link rel="prefetch" href="/assets/js/209.abb6aca9.js"><link rel="prefetch" href="/assets/js/21.1aaef16d.js"><link rel="prefetch" href="/assets/js/210.959d3593.js"><link rel="prefetch" href="/assets/js/211.3e1e92fd.js"><link rel="prefetch" href="/assets/js/212.c84b3e28.js"><link rel="prefetch" href="/assets/js/213.e71ec83f.js"><link rel="prefetch" href="/assets/js/214.7bdcbf32.js"><link rel="prefetch" href="/assets/js/215.4264329a.js"><link rel="prefetch" href="/assets/js/216.8e2fbc67.js"><link rel="prefetch" href="/assets/js/217.0b68c3bc.js"><link rel="prefetch" href="/assets/js/218.f640bc35.js"><link rel="prefetch" href="/assets/js/219.1d84b6e3.js"><link rel="prefetch" href="/assets/js/22.86f84ebe.js"><link rel="prefetch" href="/assets/js/220.7f501cbd.js"><link rel="prefetch" href="/assets/js/221.fc07ab93.js"><link rel="prefetch" href="/assets/js/222.f1802a09.js"><link rel="prefetch" href="/assets/js/223.139dddbb.js"><link rel="prefetch" href="/assets/js/224.f77afd86.js"><link rel="prefetch" href="/assets/js/225.85188d9a.js"><link rel="prefetch" href="/assets/js/226.8b46f239.js"><link rel="prefetch" href="/assets/js/227.318084cc.js"><link rel="prefetch" href="/assets/js/228.4463bc89.js"><link rel="prefetch" href="/assets/js/229.3e40b33a.js"><link rel="prefetch" href="/assets/js/23.cd2b3420.js"><link rel="prefetch" href="/assets/js/230.15dda490.js"><link rel="prefetch" href="/assets/js/231.a2f170a9.js"><link rel="prefetch" href="/assets/js/232.dc6441aa.js"><link rel="prefetch" href="/assets/js/233.33063588.js"><link rel="prefetch" href="/assets/js/234.673e33f1.js"><link rel="prefetch" href="/assets/js/235.7883e45d.js"><link rel="prefetch" href="/assets/js/236.7c1f3c8c.js"><link rel="prefetch" href="/assets/js/237.da52340f.js"><link rel="prefetch" href="/assets/js/238.cec68c7a.js"><link rel="prefetch" href="/assets/js/239.3aa53766.js"><link rel="prefetch" href="/assets/js/24.7fc51469.js"><link rel="prefetch" href="/assets/js/240.9d8ef582.js"><link rel="prefetch" href="/assets/js/241.8d443146.js"><link rel="prefetch" href="/assets/js/242.717cdacf.js"><link rel="prefetch" href="/assets/js/243.c5d49960.js"><link rel="prefetch" href="/assets/js/244.f02e33f1.js"><link rel="prefetch" href="/assets/js/245.fcbff6c5.js"><link rel="prefetch" href="/assets/js/246.7d1f1cb8.js"><link rel="prefetch" href="/assets/js/247.2e017145.js"><link rel="prefetch" href="/assets/js/248.5e2a6d39.js"><link rel="prefetch" href="/assets/js/249.af7c40c2.js"><link rel="prefetch" href="/assets/js/25.6c68abb1.js"><link rel="prefetch" href="/assets/js/250.369a513e.js"><link rel="prefetch" href="/assets/js/251.5ac3ac54.js"><link rel="prefetch" href="/assets/js/252.9b86d564.js"><link rel="prefetch" href="/assets/js/253.ec0cfadb.js"><link rel="prefetch" href="/assets/js/254.faf65384.js"><link rel="prefetch" href="/assets/js/255.4b4164f7.js"><link rel="prefetch" href="/assets/js/256.da61b611.js"><link rel="prefetch" href="/assets/js/257.762cbbcb.js"><link rel="prefetch" href="/assets/js/258.6e00fe84.js"><link rel="prefetch" href="/assets/js/259.dd8732a1.js"><link rel="prefetch" href="/assets/js/26.5d53c3c9.js"><link rel="prefetch" href="/assets/js/260.38af1b47.js"><link rel="prefetch" href="/assets/js/261.38b560f2.js"><link rel="prefetch" href="/assets/js/262.86865b1c.js"><link rel="prefetch" href="/assets/js/263.35b10efa.js"><link rel="prefetch" href="/assets/js/264.e34a0d86.js"><link rel="prefetch" href="/assets/js/265.f1d48231.js"><link rel="prefetch" href="/assets/js/266.d8ab3c4d.js"><link rel="prefetch" href="/assets/js/267.3e228b0f.js"><link rel="prefetch" href="/assets/js/268.6c5c28c2.js"><link rel="prefetch" href="/assets/js/269.2ea1bd86.js"><link rel="prefetch" href="/assets/js/27.96522f2f.js"><link rel="prefetch" href="/assets/js/270.64c52f8e.js"><link rel="prefetch" href="/assets/js/271.a60da857.js"><link rel="prefetch" href="/assets/js/272.288bc8d0.js"><link rel="prefetch" href="/assets/js/273.9a18eb93.js"><link rel="prefetch" href="/assets/js/274.f9ca1cfa.js"><link rel="prefetch" href="/assets/js/275.6569f23f.js"><link rel="prefetch" href="/assets/js/276.518a89f9.js"><link rel="prefetch" href="/assets/js/277.82165ab6.js"><link rel="prefetch" href="/assets/js/278.95052e06.js"><link rel="prefetch" href="/assets/js/279.4fc444f6.js"><link rel="prefetch" href="/assets/js/28.30709da8.js"><link rel="prefetch" href="/assets/js/280.36727964.js"><link rel="prefetch" href="/assets/js/281.6379db12.js"><link rel="prefetch" href="/assets/js/282.36e84518.js"><link rel="prefetch" href="/assets/js/283.012a1201.js"><link rel="prefetch" href="/assets/js/284.1cee0d12.js"><link rel="prefetch" href="/assets/js/285.6859b5fb.js"><link rel="prefetch" href="/assets/js/286.33b9790c.js"><link rel="prefetch" href="/assets/js/287.f90c23f7.js"><link rel="prefetch" href="/assets/js/288.c754c774.js"><link rel="prefetch" href="/assets/js/289.823e4f88.js"><link rel="prefetch" href="/assets/js/29.209763b6.js"><link rel="prefetch" href="/assets/js/290.5d10aff5.js"><link rel="prefetch" href="/assets/js/291.0332be38.js"><link rel="prefetch" href="/assets/js/292.42201ae1.js"><link rel="prefetch" href="/assets/js/293.f1427e95.js"><link rel="prefetch" href="/assets/js/294.b4138bc7.js"><link rel="prefetch" href="/assets/js/295.022f796e.js"><link rel="prefetch" href="/assets/js/296.2a7501f8.js"><link rel="prefetch" href="/assets/js/297.ccbca9c7.js"><link rel="prefetch" href="/assets/js/298.c0eeb2fb.js"><link rel="prefetch" href="/assets/js/299.6632b474.js"><link rel="prefetch" href="/assets/js/3.4674373e.js"><link rel="prefetch" href="/assets/js/30.00a1e810.js"><link rel="prefetch" href="/assets/js/300.56fba0b5.js"><link rel="prefetch" href="/assets/js/301.2519778b.js"><link rel="prefetch" href="/assets/js/302.e4f7ab7d.js"><link rel="prefetch" href="/assets/js/303.280a1d55.js"><link rel="prefetch" href="/assets/js/304.090941da.js"><link rel="prefetch" href="/assets/js/305.256a7d07.js"><link rel="prefetch" href="/assets/js/306.1bf97672.js"><link rel="prefetch" href="/assets/js/307.bb578719.js"><link rel="prefetch" href="/assets/js/308.1fe626e4.js"><link rel="prefetch" href="/assets/js/309.b2a888de.js"><link rel="prefetch" href="/assets/js/31.b985fa7a.js"><link rel="prefetch" href="/assets/js/310.70bf06e7.js"><link rel="prefetch" href="/assets/js/311.9e7ee4ef.js"><link rel="prefetch" href="/assets/js/312.634c3c95.js"><link rel="prefetch" href="/assets/js/313.4583de11.js"><link rel="prefetch" href="/assets/js/314.f5dcef8f.js"><link rel="prefetch" href="/assets/js/315.867f0564.js"><link rel="prefetch" href="/assets/js/316.a2590b68.js"><link rel="prefetch" href="/assets/js/317.fa2ce9da.js"><link rel="prefetch" href="/assets/js/318.72b112c5.js"><link rel="prefetch" href="/assets/js/319.7833f7e3.js"><link rel="prefetch" href="/assets/js/32.bb4501bc.js"><link rel="prefetch" href="/assets/js/320.3155daf5.js"><link rel="prefetch" href="/assets/js/321.804c1d9f.js"><link rel="prefetch" href="/assets/js/322.e2d5b2bc.js"><link rel="prefetch" href="/assets/js/323.8e608576.js"><link rel="prefetch" href="/assets/js/324.8bac51e0.js"><link rel="prefetch" href="/assets/js/325.4940a60a.js"><link rel="prefetch" href="/assets/js/326.8b016274.js"><link rel="prefetch" href="/assets/js/327.d3737267.js"><link rel="prefetch" href="/assets/js/328.b6ca87a2.js"><link rel="prefetch" href="/assets/js/329.140e5c48.js"><link rel="prefetch" href="/assets/js/33.b14f3e50.js"><link rel="prefetch" href="/assets/js/330.3cf83b12.js"><link rel="prefetch" href="/assets/js/331.f9f072be.js"><link rel="prefetch" href="/assets/js/332.4993529a.js"><link rel="prefetch" href="/assets/js/333.06910949.js"><link rel="prefetch" href="/assets/js/334.ddc47709.js"><link rel="prefetch" href="/assets/js/335.59104301.js"><link rel="prefetch" href="/assets/js/336.63240716.js"><link rel="prefetch" href="/assets/js/337.397f5b1d.js"><link rel="prefetch" href="/assets/js/338.e0afe810.js"><link rel="prefetch" href="/assets/js/339.6750fb31.js"><link rel="prefetch" href="/assets/js/34.c8cb2a15.js"><link rel="prefetch" href="/assets/js/340.1c1906aa.js"><link rel="prefetch" href="/assets/js/341.d4c0bcd8.js"><link rel="prefetch" href="/assets/js/342.8fd8dbe6.js"><link rel="prefetch" href="/assets/js/343.667a55ee.js"><link rel="prefetch" href="/assets/js/344.cfcfc608.js"><link rel="prefetch" href="/assets/js/345.05a8f2d7.js"><link rel="prefetch" href="/assets/js/346.b183f24e.js"><link rel="prefetch" href="/assets/js/347.061c3867.js"><link rel="prefetch" href="/assets/js/348.61df7278.js"><link rel="prefetch" href="/assets/js/349.29348c7d.js"><link rel="prefetch" href="/assets/js/35.579e0027.js"><link rel="prefetch" href="/assets/js/350.512268e8.js"><link rel="prefetch" href="/assets/js/351.768d6f10.js"><link rel="prefetch" href="/assets/js/352.82cea2d3.js"><link rel="prefetch" href="/assets/js/353.716e060c.js"><link rel="prefetch" href="/assets/js/354.52d8de93.js"><link rel="prefetch" href="/assets/js/355.c473ca7e.js"><link rel="prefetch" href="/assets/js/356.a136d884.js"><link rel="prefetch" href="/assets/js/357.d3bacca5.js"><link rel="prefetch" href="/assets/js/358.ba20c758.js"><link rel="prefetch" href="/assets/js/359.b71a4b4a.js"><link rel="prefetch" href="/assets/js/36.424d600b.js"><link rel="prefetch" href="/assets/js/360.6bcbff7c.js"><link rel="prefetch" href="/assets/js/361.be99655d.js"><link rel="prefetch" href="/assets/js/362.a2a940ad.js"><link rel="prefetch" href="/assets/js/363.ab6e9458.js"><link rel="prefetch" href="/assets/js/364.f2f48d79.js"><link rel="prefetch" href="/assets/js/365.5dc8cb53.js"><link rel="prefetch" href="/assets/js/366.01a62178.js"><link rel="prefetch" href="/assets/js/367.f23189b7.js"><link rel="prefetch" href="/assets/js/37.1c9c7185.js"><link rel="prefetch" href="/assets/js/38.b9e4b62d.js"><link rel="prefetch" href="/assets/js/39.553c0544.js"><link rel="prefetch" href="/assets/js/4.55b451ef.js"><link rel="prefetch" href="/assets/js/40.0eb25e40.js"><link rel="prefetch" href="/assets/js/41.5a19c720.js"><link rel="prefetch" href="/assets/js/42.5903e100.js"><link rel="prefetch" href="/assets/js/43.571b14af.js"><link rel="prefetch" href="/assets/js/44.ee40ce72.js"><link rel="prefetch" href="/assets/js/45.e2bf8239.js"><link rel="prefetch" href="/assets/js/46.de434fb7.js"><link rel="prefetch" href="/assets/js/47.7fc2c390.js"><link rel="prefetch" href="/assets/js/48.c8ca2bf1.js"><link rel="prefetch" href="/assets/js/49.948fbdcb.js"><link rel="prefetch" href="/assets/js/50.531652a4.js"><link rel="prefetch" href="/assets/js/51.8c865233.js"><link rel="prefetch" href="/assets/js/52.d5fdd0c4.js"><link rel="prefetch" href="/assets/js/53.05b6e69e.js"><link rel="prefetch" href="/assets/js/54.8987ca9a.js"><link rel="prefetch" href="/assets/js/55.833f2f4d.js"><link rel="prefetch" href="/assets/js/56.e41a592f.js"><link rel="prefetch" href="/assets/js/57.f6aed09c.js"><link rel="prefetch" href="/assets/js/58.14886b6a.js"><link rel="prefetch" href="/assets/js/59.44259730.js"><link rel="prefetch" href="/assets/js/6.3d0734a9.js"><link rel="prefetch" href="/assets/js/60.287c08ec.js"><link rel="prefetch" href="/assets/js/61.a5ba950d.js"><link rel="prefetch" href="/assets/js/62.eac68f5f.js"><link rel="prefetch" href="/assets/js/63.74889873.js"><link rel="prefetch" href="/assets/js/64.ded3c613.js"><link rel="prefetch" href="/assets/js/65.23449521.js"><link rel="prefetch" href="/assets/js/66.4de8da60.js"><link rel="prefetch" href="/assets/js/67.7d3d1046.js"><link rel="prefetch" href="/assets/js/68.e58ea768.js"><link rel="prefetch" href="/assets/js/69.472ff292.js"><link rel="prefetch" href="/assets/js/7.d49f99e9.js"><link rel="prefetch" href="/assets/js/70.0e17cd2b.js"><link rel="prefetch" href="/assets/js/71.d54fc955.js"><link rel="prefetch" href="/assets/js/72.fa94a3a8.js"><link rel="prefetch" href="/assets/js/73.eb2e8915.js"><link rel="prefetch" href="/assets/js/74.e34f0a17.js"><link rel="prefetch" href="/assets/js/75.583e56f0.js"><link rel="prefetch" href="/assets/js/76.0926a506.js"><link rel="prefetch" href="/assets/js/77.4a91ebfa.js"><link rel="prefetch" href="/assets/js/78.985afcff.js"><link rel="prefetch" href="/assets/js/8.263f4884.js"><link rel="prefetch" href="/assets/js/80.368472fa.js"><link rel="prefetch" href="/assets/js/81.dad6ea94.js"><link rel="prefetch" href="/assets/js/82.914f4541.js"><link rel="prefetch" href="/assets/js/83.6d8525f5.js"><link rel="prefetch" href="/assets/js/84.1f0afe4c.js"><link rel="prefetch" href="/assets/js/85.62290783.js"><link rel="prefetch" href="/assets/js/86.4bc406a2.js"><link rel="prefetch" href="/assets/js/87.11620094.js"><link rel="prefetch" href="/assets/js/88.7216eb7e.js"><link rel="prefetch" href="/assets/js/89.73b2a54e.js"><link rel="prefetch" href="/assets/js/9.0240ea79.js"><link rel="prefetch" href="/assets/js/90.6f75d13f.js"><link rel="prefetch" href="/assets/js/91.04051534.js"><link rel="prefetch" href="/assets/js/92.42fc0a12.js"><link rel="prefetch" href="/assets/js/93.f2532ff3.js"><link rel="prefetch" href="/assets/js/94.8a30a456.js"><link rel="prefetch" href="/assets/js/95.5f30b9d0.js"><link rel="prefetch" href="/assets/js/96.ee66d4c7.js"><link rel="prefetch" href="/assets/js/97.37a12155.js"><link rel="prefetch" href="/assets/js/98.3179f723.js"><link rel="prefetch" href="/assets/js/99.bce1556f.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.8fc8583d.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.89e32c3d.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/zh/" class="home-link router-link-active"><!----> <span class="site-name">狸猫小僧</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/zh/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/zh/guide/" class="nav-link">
+  指南
+</a></div><div class="nav-item"><a href="/zh/interview/" class="nav-link">
+  面试
+</a></div><div class="nav-item"><a href="/zh/DevBasic/" class="nav-link">
+  基础
+</a></div><div class="nav-item"><a href="/zh/DevAdvance/" class="nav-link">
+  高级
+</a></div><div class="nav-item"><a href="/zh/CloudNative/" class="nav-link">
+  云原生
+</a></div><div class="nav-item"><a href="/zh/Frontend/" class="nav-link router-link-active">
+  前端
+</a></div><div class="nav-item"><a href="/zh/Media/" class="nav-link">
+  多媒体
+</a></div><div class="nav-item"><a href="/zh/DevOthers/" class="nav-link">
+  杂谈
+</a></div><div class="nav-item"><a href="/zh/article/" class="nav-link">
+  文章
+</a></div><div class="nav-item"><a href="/zh/about/" class="nav-link">
+  关于
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">选择语言</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">选择语言</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/" class="nav-link">
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/zh/Frontend/JavaScript/最通俗易懂的JavaScript入门教程.html" class="nav-link">
+  简体中文
+</a></li></ul></div></div> <a href="https://github.com/zhengxiaochuan" target="_blank" rel="noopener noreferrer" class="repo-link">
+    官网
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/zh/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/zh/guide/" class="nav-link">
+  指南
+</a></div><div class="nav-item"><a href="/zh/interview/" class="nav-link">
+  面试
+</a></div><div class="nav-item"><a href="/zh/DevBasic/" class="nav-link">
+  基础
+</a></div><div class="nav-item"><a href="/zh/DevAdvance/" class="nav-link">
+  高级
+</a></div><div class="nav-item"><a href="/zh/CloudNative/" class="nav-link">
+  云原生
+</a></div><div class="nav-item"><a href="/zh/Frontend/" class="nav-link router-link-active">
+  前端
+</a></div><div class="nav-item"><a href="/zh/Media/" class="nav-link">
+  多媒体
+</a></div><div class="nav-item"><a href="/zh/DevOthers/" class="nav-link">
+  杂谈
+</a></div><div class="nav-item"><a href="/zh/article/" class="nav-link">
+  文章
+</a></div><div class="nav-item"><a href="/zh/about/" class="nav-link">
+  关于
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Select language" class="dropdown-title"><span class="title">选择语言</span> <span class="arrow down"></span></button> <button type="button" aria-label="Select language" class="mobile-dropdown-title"><span class="title">选择语言</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/" class="nav-link">
+  English
+</a></li><li class="dropdown-item"><!----> <a href="/zh/Frontend/JavaScript/最通俗易懂的JavaScript入门教程.html" class="nav-link">
+  简体中文
+</a></li></ul></div></div> <a href="https://github.com/zhengxiaochuan" target="_blank" rel="noopener noreferrer" class="repo-link">
+    官网
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>CSS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>JavaScript</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/zh/Frontend/JavaScript/最通俗易懂的JavaScript入门教程.html" class="active sidebar-link">最通俗易懂的JavaScript入门教程</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>TypeScript</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Vue开发</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Vue3开发</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>微信开发</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="最通俗易懂的javascript入门教程"><a href="#最通俗易懂的javascript入门教程" class="header-anchor">#</a> 最通俗易懂的JavaScript入门教程</h1> <p>前言：“成功没有捷径，脚踏实地一步一个脚印，该来的总会来，不好高骛远，不急功近利，付出总会有回报，不管处于哪个阶段，都要一步一个脚印，踏实的走好每一步！”
+你好，我是梦阳辰！快和我一起走进JavaScript的世界吧。</p> <p>最通俗易懂的JavaScript进阶教程</p> <p>最通俗易懂的JavaScript实用案例
+文章目录
+01.JavaScript概述
+02.HTML中嵌入JavaScript
+03.JavaScript标识符和变量
+04.函数的定义和使用
+05.JS的数据类型
+1.number数据类型
+2.boolean数据类型
+3.String数据类型
+4.Object数据类型
+06.在JS当中怎么定义类？怎么new对象？
+07.null,undefined,NaN的区别</p> <p>01.JavaScript概述
+1.什么是JavaScript?
+JavaScript是运行在浏览器上的脚本语言。简称JS。
+JavaScript是网景公司（NetScape)的 布兰登·艾奇 开发的，最初叫做LiveScript。LiveScript的出现让浏览器更加生动，使得页面更具有交互性。
+JavaScript（简称“JS”） 是一种具有函数优先的轻量级，解释型或即时编译型的编程语言。虽然它是作为开发Web页面的脚本语言而出名的，但是它也被用到了很多非浏览器环境中，JavaScript 基于原型编程、多范式的动态脚本语言，并且支持面向对象、命令式和声明式（如函数式编程）风格。</p> <p>JavaScript在1995年由Netscape公司的Brendan Eich，在网景导航者浏览器上首次设计实现而成。因为Netscape与Sun合作，Netscape管理层希望它外观看起来像Java，因此取名为JavaScript。但实际上它的语法风格与Self及Scheme较为接近。</p> <p>JavaScript和java没有任何关系，只是语法类似。JavaScript运行在浏览器中，代码由浏览器解释后执行。而Java运行在JVM中。</p> <p>JavaScript的“目标程序”以普通文本形式保存，这种语言都叫做&quot;脚本语言“。</p> <p>Java的目标程序已.class形式存在，不能使用文本编辑器打开，不是脚本语言。</p> <p>1998年网景公司由“美国在线”公司收购。</p> <p>王景公司最著名的就是“领航者浏览器”：Navigator浏览器。
+LiveScript的出现，最初的时候是为Navigator浏览器量身定制一门语言，不支持其他浏览器。</p> <p>微软一看不行，研发了只支持IE浏览器的脚本语言。JScript。
+在两者语言共存的时代，程序员需要写两套程序。这时一个叫做ECMA组织（欧洲计算机协会）根据JavaScript制定了ECMA-262标准，叫做ECMA-Script.</p> <p>JavaScript是一种属于网络的脚本语言,已经被广泛用于Web应用开发,常用来为网页添加各式各样的动态功能,为用户提供更流畅美观的浏览效果。通常JavaScript脚本是通过嵌入在HTML中来实现自身的功能的。
+2.区分JSP和JS
+JSP：JavaServer Pages（隶属Java）
+JS: JavaScript.</p> <p>02.HTML中嵌入JavaScript
+1.HTML嵌入JavaScript的第一种方式
+JS是一门事件驱动型的编程语言，依靠时间去驱动，然后执行对应的程序。在JS中有很多事件，其中一个事件叫做：鼠标单击，单词：click。并且任何事件都会对应一个事件句柄叫做：onclick。【注意：事件和事件句柄的区别是：事件句柄是在事件单词前添加一个on】，而事件是以HTML标签的属性存在的。</p> <p>οnclick=&quot;js代码“，执行原理是什么？
+页面打开的时候，js代码并不会执行，只是把这段代码注册到按钮的click事件上了。等这个按钮发生click之后，注册在onclick后面的js代码会被浏览器自动调用。</p> <p>*怎么使用JS代码弹出消息框。
+在JS中有一个内置对象叫做window,全部小写，可以直接拿来使用，window代表的是浏览器对象。</p> <p>*window对象有一个函数叫做：alert，用法是：window.alert(&quot;消息”）;这样就可以弹窗了。</p> <p>*JS的字符串可以使用双引号，也可以使用单引号。</p> <p>*JS的一条语句结束之后可以使用分号“；”,也可以不使用。</p> <p>举例：</p>
+&lt;!DOCTYPE html&gt;
+<html lang="en"><head><meta charset="UTF-8"> <title>HTML中嵌入JavaScript的第一种方式</title></head> <body><input type="button" value="Hello" onclick="window.alert('Hello JavaScript!')"> <input type="button" value="Hello" onclick="window.alert('Hello XingKong!')"> <input type="button" value="Hello" onclick="window.alert ('Hello MengYangChen');
+                                                alert('Hello MengYang')
+                                                alert('Hello Meng')"></body></html>
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+2.HTML嵌入JavaScript的第二种方式
+采用脚本块的方式：
+暴露在脚本块中的程序，在页面打开的时候执行，并且遵守自上而下的顺序依次逐行执行。（不需要事件）
+<p>JavaScript脚本块可以出现在任何位置，并且可以出现多次。
+aler函数会阻塞整个HTML页面的加载。</p> <p>注释语法跟Java一样。</p>
+&lt;!DOCTYPE html&gt;
+<html lang="en"><head><meta charset="UTF-8"> <title>HTML嵌入JavaScript的第二种方式</title></head> <body><input type="button" value="我是一个。。"> <script type="text/javascript">
+        window.alert(&quot;hello world!&quot;);
+    </script> <input type="button" value="我是一个按钮对象"></body></html>
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+3.HTML嵌入JavaScript的第三种方式（推荐）
+引入外部的js文件。
+<p>引入js脚本文件的语句：
+同一个脚本文件可以引入多次。
+脚本文件直接写语句就好了。</p> <p>1
+结束的&lt; /script&gt;标签必须有，不能用反斜杠取代，引入文件时，其中间的代码不会执行。</p>
+&lt;!DOCTYPE html&gt;
+<html lang="en"><head><meta charset="UTF-8"> <title>HTML中嵌入JavaScript的第三种方式</title></head> <body><script type="text/javascript" src="file/JS1.js"></script></body></html>
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+03.JavaScript标识符和变量
+1.标识符的命名规则跟Java相同。
+<p>2.变量：
+声明变量：
+var 变量名；</p> <p>赋值：
+变量名=值
+javascript是一种弱类型语言，没有编译阶段，一个变量可以随意给其赋值。什么类型的都可以。</p> <p>变量没有手动赋值时，默认赋值为：undefined。
+未声明变量使用会报错。</p> <p>2.局部变量和全局变量
+类似C语言：</p> <p>全局变量在函数体之外声明。浏览器关闭的时候才会销毁。</p> <p>局部变量:在函数体内部声明。在函数体执行完后才销毁。</p> <p>3.当一个变量声明的时候没有使用var关键字，那么不管这个变量是在哪里声明的，都是全局变量。</p> <p>04.函数的定义和使用
+1.JS中的函数怎么定义呢?
+语法格式：
+第一种方式：
+function 函数名（形式参数列表）{
+函数体；
+}
+第二种方式：
+函数名=function(形式参数列表）{
+函数体；
+}</p> <p>JS中的函数不需要指定返回值类型，返回什么类型的数据都没问题。</p> <p>函数的形参也不需要声明。
+如：</p> <p>1
+2
+3
+4
+5
+6
+7
+8
+9
+在调用函数的时候，如果没有传参数的值，或则传了一部分，剩下未传的参数默认赋值undefined。</p> <p>NaN是一个具体的值，该值表示不是数字。</p> <p>如果实参的数量大于形式参数的个数，默认只取前面两个数据。即没有数量限制（弱类型语言）。因此可以看出，JS不需要重载。
+2.JS的函数不能重载。
+如果出现同名函数，后面定义的函数会把前面定义的函数覆盖。
+因此JS函数不能重名。分辨函数就是根据函数名来分辨。</p> <p>05.JS的数据类型
+1.JS数据类型有:原始类型，引用类型。
+原始类型：Undefined,Number,String,Boolean,Null
+引用类型:Object以及子类。</p> <p>2.在ES6规范后，又基于以上6种类型添加了一种新的类型：Symbol。</p> <p>3.JS中有一个运算符叫做typeof,这个运算符可以在程序的运行阶段动态地获取变量的数据类型。</p> <p>typeof运算符的语法格式：
+typeof 变量名</p> <p>typeof运算符的运算结果时以下6个字符串(全小写）结果之一：
+“undefined&quot;
+“number”
+“string”
+“boolean”
+“object”
+“function”</p> <p>var d=null;
+alert(typeof d);//“object”
+比较字符串是否相等用双等号。</p> <p>4.Undefined数据类型只有一个值。这个值就是undefined，当一个变量没有手动赋值，系统默认赋值为undefined，当然也可以手动赋值为undefined。</p> <p>1.number数据类型
+如：NaN，表示Not a Number不是一个数字，但是属于Number类型。</p> <p>Infinity，表示无穷大。</p> <p>0,-1,123,…小数，复数，无穷大都是属于number类型。</p> <p>除数为0时，结果为无穷大。</p> <p>函数isNaN（数据）：结果为true表示不是一个数字。
+parseInt()函数：可以将字符串自动转换成数字。保留Int
+parseFloat()函数：将字符串转换成数字。
+Math.Ceil()函数：向上取整。2.1会变为3。</p> <p>2.boolean数据类型
+在boolean类型中有一个Boolean（）函数，会将非boolean类型，转换成boolean类型。
+当某个地方一定是boolean类型时，会自动转换成boolean类型。例如if后面的括号。
+NaN,0,&quot;&quot;,null,undefined会自动转换成false.</p> <p>3.String数据类型
+1.在JS当中字符串可以使用单引号和双引号。
+2.在JS当中，怎么创建字符串对象
+第一种：var s=“sag”;（小String，属于String类型）
+第二种：var a2= new String(“ab”);（大String，属于Object类型）
+Sting是一个内置的类，可以直接使用。</p> <p>3.无论是小String还是大Sting字符串的长度相同。其中又一个length属性求长度(x.length)</p> <p>常用函数：
+indexof: 获取指定字符串在当前字符串中第一次出现的索引
+lastIndexof
+replace
+substr
+substring
+toLowerCase
+toUpperCase
+spilt 拆分字符串</p> <p>例如:alert(“fasdf&quot;.indexof(“sdf”));</p> <p>replace只替换最前面一个子字符串
+如果想全部替换需要使用正则表达式。</p> <p>substr和substring的区别。
+substr(startIndex length)</p> <p>substring(startIndex endIndex)左闭右开。</p> <p>4.Object数据类型
+1.首先Object类型是所有类型的超类，自定义的任何类型，默认继承Object。</p> <p>2.Object的prototype属性
+作用：给类动态地扩展属性和函数。</p> <p>3.Object类的函数：</p> <p>toString()
+valueof()
+toLocalString()</p> <p>4.在JS中定义的类默认继承Object的属性和函数。</p> <p>06.在JS当中怎么定义类？怎么new对象？
+1.定义类的语法：
+第一种方式：
+function 类名（形参）{
+}
+第二种方式：
+类名 function (形参）{
+}</p> <p>小朋友你是不是有很多问号？这不是函数的定义方式么？</p> <p>注意：用了new就是把他当作类看，如果没有new则是把它当作普通的函数看待。</p> <p>创建对象的语法：
+new 构造函数名（实参）；//构造函数和类名一致</p> <p>2.JS中类的定义，同时又是一个构造函数的定义</p> <p>在JS中类的定义和构造函数的定义是放在一起来完成的。</p> <p>如：
+function User(a,b,c){
+this.sno =a;
+this.sname=b;
+this.sage=c;
+}
+//a,b,c是形参，属于局部变量
+//声明属性（this 表示当前对象）
+//User类中有三个属性：sno/sname/sage</p> <p>3.创建对象：
+var u1 = new User(111,“lisi”,30)</p> <p>4.访问对象的属性：
+alert(u1.sno)
+alert(u1.sname)
+alert(u1.sage)</p> <p>或者用另一种语法访问属性：
+alert(u1[“sno”]);
+alert(u1[“sage”]);</p> <p>定义类的另一种语法：
+Emp = function (ename ,sal)
+this.ename =ename;
+this.sal=sal;
+}</p> <p>5.在类中如何定义函数:</p> <p>Product = function(pno,pname,price){
+//属性
+this.pno=pno;
+this.pname=pname;
+this.price=price;
+//函数
+this.getPrice =function(){
+return this.price
+}
+//new对象
+var pro = new Product(111,&quot;西瓜&quot;,4.0)
+//调用函数
+var pri = pro.getPrice();
+alert(pri);//4.0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+6.通过prototype这个属性来动态扩展属性以及函数
+//给Product类扩展函数：
+Product.prototype.getPname=function(){
+return this.pname;
+}</p> <p>//给String类扩展函数
+String.prototype.getPname=function(){
+alert(“Hello”);
+}</p> <p>7.JS与Java的对比：</p> <p>07.null,undefined,NaN的区别
+1.数据类型不一致</p> <p>alert(typeof null);//Object
+alert(typeof NaN);//number
+alert(typeof undefined);//undefined</p> <p>1
+2
+3
+4
+2.null和undefined可以等同</p> <p>alert(null=NaN);//false
+alert(null=undefined);//true
+alert(underfined=NaN);false</p> <p>1
+2
+3
+4
+在JS当中有两个比较特殊的运算符：</p> <p>1.&quot;==&quot; :等同运算符：只判断值是否相等（双等号）
+2.&quot;= = =&quot;：全等运算符：既判断值是否相等，又判断数据类型是否相等。（三等号）</p> <p>alert(11 == ture);//true
+alert(11=== ture);//false
+1
+2
+对于this等内容学过Java的就应该秒懂，如果你没有学Java，建议看看梦阳辰 写的Java专栏。</p> <p>梦阳辰的Java专栏</p> <p>至此JavaScript的入门教程结束：感谢看到这里！别忘了素质三连啊！
+————————————————
+版权声明：本文为CSDN博主「轻松玩编程」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/jiahuan_/article/details/105895421</p></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2022/7/26 22:34:10</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/zh/Frontend/CSS/移动端.html" class="prev">
+        移动端
+      </a></span> <span class="next"><a href="/zh/Frontend/TypeScript/TypeScript教程.html">
+        TypeScript教程
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.921b27ea.js" defer></script><script src="/assets/js/5.68730461.js" defer></script><script src="/assets/js/79.912a9200.js" defer></script>
+  </body>
+</html>
