@@ -12,5 +12,5 @@ features:
     details: 知识点衔接紧密,注释明白,逻辑清晰。
   - title: 兴趣驱动
     details: 丰富的代码案例,页面效果驱动学习。
-footer: Copyright © 2021 LiMaoXiaoSeng - All Rights Reserved
+footer: Copyright © 2022 LiMaoXiaoSeng - All Rights Reserved
 ---
