@@ -27,5 +27,11 @@ module.exports = [
         '/zh/DevOthers/CloudService/Typora+PicGo+阿里云OSS服务',
         '/zh/DevOthers/CloudService/短信云服务',
       ]
+  },
+  {
+    title: '快递鸟对接',
+    children: [
+        '/zh/DevOthers/KdniaoExpress/使用快递鸟进行电子面单的获取以及打印',
+      ]
   }
 ];
