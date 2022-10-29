@@ -10,7 +10,8 @@ module.exports = [
     title: '其他',
     collapsable: true,
     children: [
-      '/zh/article/如何依靠副业赚钱',
+      '/zh/article/other/如何依靠副业赚钱',
+      '/zh/article/other/电影文件名的小科普',
     ]
   }
 ];
