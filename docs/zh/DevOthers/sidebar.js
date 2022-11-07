@@ -32,6 +32,7 @@ module.exports = [
     title: '快递鸟对接',
     children: [
         '/zh/DevOthers/KdniaoExpress/使用快递鸟进行电子面单的获取以及打印',
+        '/zh/DevOthers/KdniaoExpress/快递鸟物流查询接口java案例',
       ]
   }
 ];
